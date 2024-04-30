@@ -18,6 +18,15 @@ use App\Http\Controllers\Dashboard\ProductController;
 //     return view('users.registration');
 // });
 
+// Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
+// {
+//     // Your other localized routes...
+ 
+//     Livewire::setUpdateRoute(function ($handle) {
+//         return Route::post('/livewire/update', $handle);
+//     });
+// });
+
 Route::get('/', function () {
     return view('website.users.registration');
 });
@@ -63,11 +72,11 @@ Route::post('vendors/productlistshow',[ProductController::class,'productlistshow
 Route::get('vendors/productlist',[ProductController::class,'productlistview'])->name('vendors.productlist');
 // Route::get('vendors/productlist',Producttable::class)->name('vendors.productlist');
 
-
+Route::post('vendors/addbrandname',[ProductController::class,'addbrandname'])->name('vendors.addbrandname');
 ///importdata////////////
 Route::get('import/bulkproduct',[ProductController::class,'bulkimport'])->name('bulk.import');
 Route::post('import/product',[ProductController::class,'importproductdata'])->name('import.product.data');
-
+ 
 Route::post('import/productspecification',[ProductController::class,'importproductspecificationdata'])->name('import.product.specification.data');
 
 Route::post('import/productprimarycost',[ProductController::class,'importproductprimarycostdata'])->name('import.product.primary.cost.data');

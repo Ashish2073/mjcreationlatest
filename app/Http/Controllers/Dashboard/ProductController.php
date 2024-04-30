@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
-
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Models\Productcategory;
 use App\Models\Productbrand;
@@ -25,7 +25,7 @@ class ProductController extends Controller
         $product_specification_headings=Productspecficationheading::select('name','id')->get();
         
         
-        return view('managedashboard.product.add',['product_category'=>$product_category,'product_brands'=>$product_brands,'product_specification_headings'=>$product_specification_headings]);
+        return view('managedashboard.product.add',['product_category'=>$product_category,'product_specification_headings'=>$product_specification_headings,'product_brands'=>$product_brands]);
     }
 
 
@@ -76,6 +76,10 @@ class ProductController extends Controller
     public function saveproduct(Request $request){
 
     
+
+
+     
+       
         
 
         $vendorProduct=new VendorProduct();
@@ -83,7 +87,7 @@ class ProductController extends Controller
 
         $vendorProduct->product_category_id=$request->product_category[count($request->product_category)-1];
         $vendorProduct->product_title=$request->product_title;
-        $vendorProduct->brand_id=2;
+        $vendorProduct->brand_id=($request->product_brand_id); 
         $vendorProduct->product_total_stock_quantity=$request->product_quantity;
         $vendorProduct->discription=$request->product_desc;
         $vendorProduct->product_warrenty=$request->product_warrenty;
@@ -314,8 +318,8 @@ class ProductController extends Controller
             $vendorProducts=VendorProduct::query()
             ->join('product_categories','vendor_products.product_category_id', '=', 'product_categories.id')
             ->join('productbrands','vendor_products.brand_id', '=', 'productbrands.id')
-            ->select('vendor_products.*','product_categories.name as product_categories_name','productbrands.name as brandname');
-            
+            ->select('vendor_products.*','product_categories.name as product_categories_name','productbrands.name as brandname')
+            ->orderBy('vendor_products.created_at','desc');
 
 
             return Datatables::of($vendorProducts)
@@ -358,6 +362,62 @@ class ProductController extends Controller
         }
 
     }
+
+public function addbrandname(Request $request){
+
+
+    $validator = Validator::make($request->all(), [
+        'brandName' => 'required|string|',
+        'brandImage' => 'required|image|mimes:jpeg,jpg,png|max:2048',
+       
+
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json([
+            'sucess'=>false,
+            'errormessage'=>$validator->errors(),
+        ],422);
+
+
+    }
+
+
+    if($request->hasFile('brandImage')){
+        $originName=$request->file('brandImage')->getClientOriginalName();
+        $fileName=pathinfo($originName,PATHINFO_FILENAME);
+        $extension=$request->file('brandImage')->getClientOriginalExtension();
+        $fileName=$fileName.'__'.time().'.'.$extension;
+        $request->file('brandImage')->move(public_path('product/brand'),$fileName);
+      
+        
+
+    }
+
+
+
+
+    $brand = Productbrand::updateOrCreate(
+        ['name' => $request->brandName], // Search criteria
+        ['brand_image_name' => $fileName] // Fields to update or create
+    );
+
+
+      if($brand){
+        return response()->json([
+        'sucess'=>true,
+        'brand'=>$brand,
+    ],200);
+
+}
+   
+
+
+
+
+
+
+}
 
    
 

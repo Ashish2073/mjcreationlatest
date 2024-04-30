@@ -10,6 +10,11 @@ class Productbrand extends Model
     
     use HasFactory;
     protected $table="productbrands";
+    protected $fillable = [
+      'name',
+      'brand_image_name',
+    
+  ];
 
     public static function getProductBrandIdIndexedArray()
     {

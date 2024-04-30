@@ -105,6 +105,7 @@
 
 
     <script src="{{ asset('vendor/livewire/livewire.js') }}"></script>
+
     @yield('page-script')
 
     <script src="{{ asset('js/template.js') }}"></script>
