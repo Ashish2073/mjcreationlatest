@@ -1,32 +1,3 @@
-{{-- <style>
-    .error {
-        color: #ff0000;
-        display: block !important;
-    }
-
-    .lol {
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        flex-wrap: wrap;
-        text-align: center;
-        align-content: center;
-    }
-
-    img {
-        width: 100%;
-        max-width: 300px;
-        border: 1px solid #ccc;
-        box-shadow: 0px 3px 8px #ccc;
-        border-radius: 5px;
-        padding: 4px;
-        display: none;
-    }
-
-    img.show {
-        display: block;
-    }
-</style> --}}
 <div class="col-md-6">
     <label for="" class="form-label">Brand Name</label>
     <div class="input-group">
@@ -77,3 +48,4 @@
             </div>
         </div>
     </div>
+</div>

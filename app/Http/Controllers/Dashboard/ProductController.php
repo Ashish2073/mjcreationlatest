@@ -56,7 +56,7 @@ class ProductController extends Controller
 
             $htmlResponse = '<div class="col-md-4" id="'.$request->selectedtext.'">
             <label for="" class="form-label"> '.$request->selectedtext.' '. 'Category</label>
-            <select onchange="selectSubproductcategory(this)"  class="form-select"
+            <select onchange="selectSubproductcategory(this)" id="select'.$request->selectedtext.'" class="form-select"
                 name="product_category[]" aria-label="Default select example">'
     
                .$optionHtml.
@@ -66,6 +66,7 @@ class ProductController extends Controller
 
                 return response()->json([
                     'sucess'=>true,
+                    'id'=>"select$request->selectedtext",
                     'responsehtml'=>$htmlResponse
                 ],200);
         
