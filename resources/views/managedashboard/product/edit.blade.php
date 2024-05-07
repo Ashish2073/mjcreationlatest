@@ -207,13 +207,13 @@
                                         <label for="inputAddress" id="product_measurment_quantity"
                                             class="form-label">Product
                                             Measurment Quantity</label>
-                                        <input type="number" name="product_measurment_quantity[]['measurment_quantity']"
-                                            class="form-control" id="product_measurment_quantity" autocomplete="off">
+                                        <input type="number" name="product_measurment_quantity[]" class="form-control"
+                                            id="product_measurment_quantity" autocomplete="off">
                                     </div>
                                     <div class="col-md-3 py-3">
                                         <label for="inputAddress" id="product_measurment_quantity"
                                             class="form-label">Price(MRP)</label>
-                                        <input type="number" name="product_measurment_quantity_price[]['price']"
+                                        <input type="number" name="product_measurment_quantity_price[]"
                                             class="form-control" id="" autocomplete="off">
                                     </div>
 
@@ -222,57 +222,23 @@
 
                                     <div class="col-md-3 py-3">
                                         <label for="inputcurrency" class="form-label">Currency Type</label>
-                                        <select id="product_currency_type" name="product_currency_type[]['currency']"
+                                        <select id="product_currency_type" name="product_currency_type[]"
                                             class="form-select">
-                                            <option selected disabled> Please Select Currency type</option>
+                                            <option selected disabled> Unit</option>
                                             <option value="inr">INR</option>
                                             <option value="usd">USD</option>
 
                                         </select>
                                     </div>
 
-
-
                                     <div class="col-md-3 py-3">
                                         <label for="product_stock_quantity" class="form-label">Product Stock
                                             Quantity</label>
-                                        <input type="number" name="product_stock_quantity[]['stock']"
-                                            class="form-control" id="product_stock_quantity" autocompvare="off">
+                                        <input type="number" name="product_stock_quantity[]" class="form-control"
+                                            id="product_stock_quantity" autocompvare="off">
                                     </div>
 
-                                    <div id="colorstock">
-                                        <div class="row" id="colorstockcontainer">
-                                            <div class="col-md-5 py-3">
-                                                <label for="inputcurrency" class="form-label">Select color
-                                                    (optional)</label>
-                                                <select id="product_color_type" name="product_color_type[]['color'][]"
-                                                    class="form-select">
-                                                    <option selected> Please select option</option>
-                                                    <option value="red">Red</option>
-                                                    <option value="green">Green</option>
 
-                                                </select>
-                                            </div>
-
-                                            <div class="col-md-5 py-2">
-                                                <label for="product_stock_quantity" class="form-label">Product Stock
-                                                    Color wise (optional)</label>
-                                                <input type="number"
-                                                    name="product_stock_color_quantity[]['stock_color_wise'][]"
-                                                    class="form-control" id="product_stock_quantity" autocompvare="off">
-                                            </div>
-
-                                            <div class="col-md-2 py-3">
-
-                                                <span class="btn btn-success btn-sm "
-                                                    onclick="addMoreColorStockMeasurmentFiled()">+</span>
-
-
-                                            </div>
-
-                                        </div>
-
-                                    </div>
 
 
 
@@ -281,10 +247,6 @@
                             </div>
 
                         </div>
-
-
-
-
                     </div>
 
 
@@ -593,7 +555,6 @@
         $('#product_measurment_unit').select2();
         $('#product_currency_type').select2();
         $('#product_specification_heading').select2();
-        $('#product_color_type').select2();
 
 
 
@@ -610,14 +571,6 @@
 
         function removeElement(id) {
 
-
-
-            $(`#${id}`).remove();
-        }
-
-
-        function removeElementProductPriceDetail(id) {
-            productpricedetailId--;
             $(`#${id}`).remove();
         }
 
@@ -726,7 +679,7 @@
                                        
                                     </div>
                                     <div>
-                                    <span class="btn btn-danger justify-content-center" style="font-size:unset !important ;margin-top: 45px;" onclick="removeElement('imagecontainer${multipelimageId}',${multipelimageId})">-</span>
+                                    <span class="btn btn-danger justify-content-center" style="font-size:unset !important ;margin-top: 45px;" onclick="removeElement('imagecontainer${multipelimageId}')">-</span>
                                </div>
                                     </label>
 
@@ -738,7 +691,6 @@
 
             $(`#product_gallery`).append(imageHTML);
         }
-
 
 
 
@@ -1037,172 +989,44 @@
                 });
         }
 
-        var colorStockContainerIndex = 0;
-
-        function addMoreColorStockMeasurmentFiled() {
-            colorStockContainerIndex++;
-            var colorStcokHtml = `
-            <div class="row" id="colorstockcontainer${colorStockContainerIndex}">
-            <div class="col-md-5 py-3">
-                                            <label for="product_color_type" class="form-label">Select color
-                                                (optional)</label>
-                                            <select id="product_color_type${colorStockContainerIndex}" name="product_color_type[]['color'][]"
-                                                class="form-select">
-                                                <option selected> Please select option</option>
-                                                <option value="red">Red</option>
-                                                <option value="green">Green</option>
-
-                                            </select>
-                                        </div>
-
-                                        <div class="col-md-5 py-3">
-                                            <label for="product_stock_quantity" class="form-label">Product Stock
-                                                Color wise (optional)</label>
-                                            <input type="number"
-                                                name="product_stock_color_quantity[]['stock_color_wise'][]"
-                                                class="form-control" id="product_stock_quantity" autocompvare="off">
-                                        </div>
-
-                                        <div class="col-md-2 py-3">
-                                            
-                                               
-                                                    <span class="btn btn-danger btn-sm px-3" onclick="removeElement('colorstockcontainer${colorStockContainerIndex}')">-</span>
-                                                    
-                                         
-                                        </div></div>`;
-            $('#colorstock').append(colorStcokHtml);
-            $(`#product_color_type${colorStockContainerIndex}`).select2();
-
-
-        }
-
-        var newColorStockIndex = 0;
-
-        function addNewMoreColorStockMeasurmentFiled(colorStockIndex) {
-
-            newColorStockIndex++;
-            var colorNewStockHtml = `  
-            <div class="row" id="colorstockcontainer${colorStockIndex}${newColorStockIndex}">
-            <div class="col-md-5 py-3">
-                                            <label for="product_color_type${colorStockIndex}${newColorStockIndex}" class="form-label">Select color
-                                                (optional)</label>
-                                            <select id="product_color_type${colorStockIndex}${newColorStockIndex}" name="product_color_type[${colorStockIndex}]['color'][]"
-                                                class="form-select">
-                                                <option selected> Please select option</option>
-                                                <option value="red">Red</option>
-                                                <option value="green">Green</option>
-
-                                            </select>
-                                        </div>
-
-                                        <div class="col-md-5 py-3">
-                                            <label for="product_stock_quantity${colorStockIndex}${newColorStockIndex}" class="form-label">Product Stock
-                                                Color wise (optional)</label>
-                                            <input type="number"
-                                                name="product_stock_color_quantity[${colorStockIndex}]['stock_color_wise'][]"
-                                                class="form-control" id="product_stock_quantity${colorStockIndex}${newColorStockIndex}" autocompvare="off">
-                                        </div>
-
-                                        
-                                            <div class="col-md-2 py-3">
-                                               
-                                                    <span class="btn btn-danger btn-sm px-3" onclick="removeElement('colorstockcontainer${colorStockIndex}${newColorStockIndex}')">-</span>
-                                        
-                                        </div>`;
-            $(`#newcolorstockcontainer${colorStockIndex}`).append(colorNewStockHtml);
-            $(`#product_color_type${colorStockIndex}${newColorStockIndex}`).select2();
-
-        }
-
-
-
-
-
-        var productpricedetailId = 0;
+        var productpricedetailId = 1;
 
         function productpricedetail() {
             productpricedetailId++;
 
-            var productpricedetailHTML = `<div class="row" id="productpricecontainer${productpricedetailId}">
-                                               <div class="col-md-3 py-3">
-                                                   <label for="product_measurment_quantity${productpricedetailId}"
-                                            class="form-label">Product
-                                            Measurment Quantity</label>
-                                        <input type="number" name="product_measurment_quantity[${productpricedetailId}]['measurment_quantity']"
-                                            class="form-control" id="product_measurment_quantity${productpricedetailId}" autocomplete="off">
-                                    </div>
-                                    <div class="col-md-3 py-3">
-                                        <label for="product_measurment_quantity_price${productpricedetailId}"
-                                            class="form-label">Price(MRP)</label>
-                                        <input type="number" name="product_measurment_quantity_price[${productpricedetailId}]['price']"
-                                            class="form-control" id="product_measurment_quantity_price${productpricedetailId}" autocomplete="off">
-                                    </div>
+            var productpricedetailHTML = `  <div class="row" id="productpricecontainer${productpricedetailId}">
+                        <div class="col-md-3 py-3">
+                            <label for="product_measurment_quantity${productpricedetailId}" 
+                                class="form-label">Product
+                                Measurment Quantity</label>
+                            <input type="number" name="product_measurment_quantity[]" class="form-control" id="product_measurment_quantity${productpricedetailId}" autocompvare="off">
+                        </div>
+                        <div class="col-md-3 py-3">
+                            <label for="product_measurment_quantity_price${productpricedetailId}" 
+                                class="form-label">Price(MRP)</label>
+                            <input type="number" name="product_measurment_quantity_price[]"  class="form-control" id="product_measurment_quantity_price${productpricedetailId}" autocompvare="off">
+                        </div>
+                       
+                        <div class="col-md-3 py-3">
+                            <label for="product_currency_type${productpricedetailId}" class="form-label">Currency Type</label>
+                            <select id="product_currency_type${productpricedetailId}" name="product_currency_type[]" class="form-select">
+                                <option selected disabled> Unit</option>
+                                <option value="inr">INR</option>
+                                <option value="usd">USD</option>
 
+                            </select>
+                        </div>
 
-
-
-                                    <div class="col-md-3 py-3">
-                                        <label for="product_currency_type${productpricedetailId}" class="form-label">Currency Type</label>
-                                        <select id="product_currency_type${productpricedetailId}" name="product_currency_type[${productpricedetailId}]['currency']"
-                                            class="form-select">
-                                            <option selected disabled> Please Select Currency type</option>
-                                            <option value="inr">INR</option>
-                                            <option value="usd">USD</option>
-
-                                        </select>
-                                    </div>
-
-
-
-                                    <div class="col-md-3 py-3">
-                                        <label for="product_stock_quantity${productpricedetailId}" class="form-label">Product Stock
-                                            Quantity</label>
-                                        <input type="number" name="product_stock_quantity[${productpricedetailId}]['stock']"
-                                            class="form-control" id="product_stock_quantity${productpricedetailId}" autocompvare="off">
-                                    </div>
-
-                                <div id="newcolorstockcontainer${productpricedetailId}">
-                                    <div class="row" id="colorstock${productpricedetailId}">
-                                        <div class="col-md-5 py-3">
-                                            <label for="product_new_color_type${productpricedetailId}" class="form-label">Select color
-                                                (optional)</label>
-                                            <select id="product_new_color_type${productpricedetailId}" name="product_color_type[${productpricedetailId}]['color'][]"
-                                                class="form-select">
-                                                <option selected> Please select option</option>
-                                                <option value="red">Red</option>
-                                                <option value="green">Green</option>
-
-                                            </select>
-                                        </div>
-
-                                        <div class="col-md-5 py-3">
-                                            <label for="product_stock_quantity${productpricedetailId}" class="form-label">Product Stock
-                                                Color wise (optional)</label>
-                                            <input type="number"
-                                                name="product_stock_color_quantity[${productpricedetailId}]['stock_color_wise'][]"
-                                                class="form-control" id="product_stock_quantity${productpricedetailId}" autocompvare="off">
-                                        </div>
-
-                                      
-                                            <div class="col-md-2 py-3">
-                                                <span class="btn btn-success btn-sm px-3"
-                                                    onclick="addNewMoreColorStockMeasurmentFiled(${productpricedetailId})">+</span>
-                                                   
-                                        </div>
-
-                                    </div>
-                                </div>
-
-
-
-                            
-
-
+                        <div class="col-md-3 py-3">
+                            <label for="product_stock_quantity${productpricedetailId}" 
+                                class="form-label">Product Stock Quantity</label>
+                            <input type="number" name="product_stock_quantity[]"  class="form-control" id="product_stock_quantity${productpricedetailId}" autocompvare="off">
+                        </div>
 
                                    
-                                      <div class="col-md-12 px-5 d-flex justify-content-end">
-                                                   <span class="btn btn-danger btn-sm px-3" onclick="removeElementProductPriceDetail('productpricecontainer${productpricedetailId}')">-</span>
-                                     </div>
+                        <div class="col-md-12 px-5 d-flex justify-content-end">
+                        <span class="btn btn-danger btn-sm px-3" onclick="removeElement('productpricecontainer${productpricedetailId}')">-</span>
+                    </div>
                         
                     </div>`;
 
@@ -1212,8 +1036,6 @@
 
 
             $(`#product_currency_type${productpricedetailId}`).select2();
-
-            $(`#product_new_color_type${productpricedetailId}`).select2();
 
         }
 
@@ -1483,29 +1305,7 @@
                     $("#loader").html("");
                     $("#main_content").removeAttr("class", "demo");
                 },
-                error: function(xhr, status, error) {
-
-                    if (xhr.status == 422) {
-
-                        console.log(xhr.responseJSON.errormessage);
-
-
-
-                    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-                }
+                error: (error) => {},
             });
         });
     </script>

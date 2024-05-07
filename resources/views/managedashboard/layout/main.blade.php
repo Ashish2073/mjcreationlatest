@@ -64,6 +64,7 @@
     {{-- <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script> --}}
     <script src="{{ asset('js/datatables/boostrap5.js') }}"></script>
     <script src="{{ asset('js/select2.min.js') }}"></script>
+
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/js/select2.min.js"></script> --}}
 
 
