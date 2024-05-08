@@ -88,13 +88,14 @@ class ProductController extends Controller
 
 
 
+
+
             $validator = Validator::make($request->all(), [
-                'product_category.*' => 'required',
-                'product_title' => 'required',
+                'product_category' => 'required',
+                'product_title' => 'required|unique:vendor_products',
                 'product_brand_id' => 'required',
                 'product_quantity' => 'required',
-                'product_desc' => 'required',
-                'product_warrenty' => 'required',
+                'product_discription' => 'required',
                 'product_measurment_parameter' => 'required',
                 'product_measurment_unit' => 'required',
                 'product_measurment_price_detail.*.price' => 'required',
@@ -147,13 +148,13 @@ class ProductController extends Controller
             $vendorProduct->product_title = $request->product_title;
             $vendorProduct->brand_id = ($request->product_brand_id);
             $vendorProduct->product_total_stock_quantity = $request->product_quantity;
-            $vendorProduct->discription = $request->product_desc;
+            $vendorProduct->discription = $request->product_discription;
             $vendorProduct->product_warrenty = $request->product_warrenty;
 
 
-            $vendorProduct->measurment_parameter_name = $request->product_mesurment_parameter;
+            $vendorProduct->measurment_parameter_name = $request->product_measurment_parameter;
 
-            $vendorProduct->measurment_unit_name = $request->product_mesurment_unit;
+            $vendorProduct->measurment_unit_name = $request->product_measurment_unit;
 
 
 
@@ -162,11 +163,19 @@ class ProductController extends Controller
             // $vendorProduct->product_other_expenditure_resaon=json_encode($request->product_other_expenditure_resaon)??Null;
 
             // $vendorProduct->product_other_expenditure_currency_type=json_encode($request->product_other_expenditure_currency_type)??Null;
+            $product_specification_modified_data = [];
+            foreach ($request->product_specification as $data) {
+                $product_specification_modified_data['heading'][] = $data['heading'];
+                $product_specification_modified_data['name'][] = $data['name'];
+                $product_specification_modified_data['detail'][] = $data['detail'];
+            }
 
-            $vendorProduct->product_specification_heading = isset($request->product_specification_heading[0]) ? json_encode($request->product_specification_heading) : Null;
-            $vendorProduct->product_specification = json_encode($request->product_specification) ?? Null;
 
-            $vendorProduct->product_specification_details = json_encode($request->product_specification_details) ?? Null;
+
+            $vendorProduct->product_specification_heading = isset($product_specification_modified_data['heading']) ? json_encode($product_specification_modified_data['heading']) : Null;
+            $vendorProduct->product_specification = json_encode($product_specification_modified_data['name']) ?? Null;
+
+            $vendorProduct->product_specification_details = json_encode($product_specification_modified_data['detail']) ?? Null;
 
             // $vendorProduct->product_discount_name=json_encode($request->product_discount_name) ?? Null;
 

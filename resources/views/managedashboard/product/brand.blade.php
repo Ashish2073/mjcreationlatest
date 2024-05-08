@@ -1,7 +1,7 @@
 <div class="col-md-6">
     <label for="" class="form-label">Brand Name</label>
     <div class="input-group">
-        <select name="product_brand_id" id="product_brand_id" class="form-select" data-live-search="true"
+        <select name="product_brand_id" id="product_brand_main_id" class="form-select" data-live-search="true"
             aria-label="Default select example">
             <option selected disabled>Open this select menu</option>
             @foreach ($product_brands as $data)
@@ -11,6 +11,7 @@
 
         <button type="button" id="openModalButton" class="btn btn-primary ">Add option</button>
 
+        <span id="product_brand_id" style="color: red;"></span>
 
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
             aria-hidden="true">

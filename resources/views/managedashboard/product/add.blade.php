@@ -79,7 +79,7 @@
                     <div class="row" id="productcategoryelement">
                         <div class="col-md-4" id="main_product_category">
                             <label for="product_category" class="form-label">Category</label>
-                            <select name="product_category[]" id="product_category"
+                            <select name="product_category[]" id="product_category_main_id"
                                 onchange="selectSubproductcategory(this)" class="form-select"
                                 aria-label="Default select example">
 
@@ -88,6 +88,7 @@
                                     <option value="{{ $data->id }}">{{ ucwords($data->name) }}</option>
                                 @endforeach
                             </select>
+                            <span id="product_category" style="color: red;"></span>
 
 
 
@@ -158,6 +159,7 @@
                     <div class="form-floating">
                         <textarea class="form-control" id="product_desc" name="product_desc" placeholder="Leave a comment here"
                             style="height: 100px"></textarea>
+                        <span id="product_discription" style="color: red;"></span>
                     </div>
                 </div>
 
@@ -180,22 +182,24 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label for="inputAddress" class="form-label">Product Measurment Parameter</label>
-                            <select id="product_measurment_parameter" name="product_measurment_parameter"
+                            <select id="product_measurment_parameter_main_id" name="product_measurment_parameter"
                                 class="form-select">
                                 <option selected disabled> Please Select Parameter</option>
                                 <option value="length">Length</option>
                                 <option value="weight">Weight</option>
                                 <option value="display">Display</option>
                             </select>
+                            <span id="product_measurment_parameter" style="color: red;"></span>
                         </div>
                         <div class="col-md-6">
                             <label for="inputAddress" class="form-label">Product Measurment Parameter Unit</label>
-                            <select id="product_measurment_unit" name="product_measurment_unit" class="form-select">
+                            <select id="product_measurment_unit_main" name="product_measurment_unit" class="form-select">
                                 <option selected disabled> Unit</option>
                                 <option value="m">Meter</option>
                                 <option value="gm">Gm</option>
                                 <option value="inc">Inch</option>
                             </select>
+                            <span id="product_measurment_unit" style="color: red;"></span>
                         </div>
 
 
@@ -211,7 +215,8 @@
                                         <label for="inputAddress" id="product_measurment_quantity"
                                             class="form-label">Product
                                             Measurment Quantity</label>
-                                        <input type="number" name="product_measurment_price_detail[0][measurment_quantity]"
+                                        <input type="number"
+                                            name="product_measurment_price_detail[0][measurment_quantity]"
                                             class="form-control" id="product_measurment_quantity" autocomplete="off">
                                         <span id="product_measurment_price_detail.0.measurment_quantity"
                                             style="color: red;"></span>
@@ -604,10 +609,10 @@
 
 
     <script>
-        $('#product_category').select2();
-        $('#product_brand_id').select2();
-        $('#product_measurment_parameter').select2();
-        $('#product_measurment_unit').select2();
+        $('#product_category_main_id').select2();
+        $('#product_brand_main_id').select2();
+        $('#product_measurment_parameter_main_id').select2();
+        $('#product_measurment_unit_main').select2();
         $('#product_currency_type').select2();
         $('#product_specification_heading').select2();
         $('#product_color_type').select2();
@@ -1370,7 +1375,7 @@
 
 
 
-            formData.append("product_desc", product_desc.getData());
+            formData.append("product_discription", product_desc.getData());
             formData.append("product_warrenty", product_warrenty.getData());
 
             // formData.append(
@@ -1540,6 +1545,18 @@
                     }
 
 
+                    $("#product_category").html(" ");
+                    $("#product_title").html(" ");
+                    $("#product_brand_id").html(" ");
+                    $("#product_quantity").html(" ");
+                    $("#product_discription").html(" ");
+                    $("#product_measurment_parameter").html(" ");
+                    $("#product_measurment_unit").html(" ");
+
+
+
+
+
 
 
 
@@ -1547,6 +1564,10 @@
 
                 },
                 success: (data) => {
+                    toastr.success(
+                        "Product Added Sucessfully"
+                    );
+
 
                     $("#loader").html("");
                     $("#main_content").removeAttr("class", "demo");
@@ -1560,8 +1581,10 @@
 
 
 
+
                         errorMessage = xhr.responseJSON.errormessage;
 
+                        console.log(errorMessage);
 
 
                         for (var fieldName in errorMessage) {
@@ -1572,7 +1595,9 @@
 
                         }
 
-
+                        toastr.error(
+                            "Somthing get wroung"
+                        );
 
 
                         $('#loader').html('');
