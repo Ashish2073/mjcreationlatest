@@ -78,7 +78,7 @@
                 <div class="col-md-12">
                     <div class="row" id="productcategoryelement">
                         <div class="col-md-4" id="main_product_category">
-                            <label for="" class="form-label">Category</label>
+                            <label for="product_category" class="form-label">Category</label>
                             <select name="product_category[]" id="product_category"
                                 onchange="selectSubproductcategory(this)" class="form-select"
                                 aria-label="Default select example">
@@ -115,6 +115,8 @@
                             <label for="" class="form-label">Title</label>
                             <input type="text" name="product_title" class="form-control" id="inputEmail4"
                                 autocomplete="off">
+
+                            <span id="product_title" style="color: red;"></span>
                         </div>
                     </div>
 
@@ -145,6 +147,8 @@
                             <label for="" class="form-label">Product Quantity</label>
                             <input type="number" name="product_quantity" class="form-control" id="inputEmail4"
                                 autocomplete="off">
+
+                            <span id="product_quantity" style="color: red;"></span>
                         </div>
                     </div>
 
@@ -207,14 +211,17 @@
                                         <label for="inputAddress" id="product_measurment_quantity"
                                             class="form-label">Product
                                             Measurment Quantity</label>
-                                        <input type="number" name="product_measurment_quantity[]['measurment_quantity']"
+                                        <input type="number" name="product_measurment_price_detail[0][measurment_quantity]"
                                             class="form-control" id="product_measurment_quantity" autocomplete="off">
+                                        <span id="product_measurment_price_detail.0.measurment_quantity"
+                                            style="color: red;"></span>
                                     </div>
                                     <div class="col-md-3 py-3">
                                         <label for="inputAddress" id="product_measurment_quantity"
                                             class="form-label">Price(MRP)</label>
-                                        <input type="number" name="product_measurment_quantity_price[]['price']"
+                                        <input type="number" name="product_measurment_price_detail[0][price]"
                                             class="form-control" id="" autocomplete="off">
+                                        <span id="product_measurment_price_detail.0.price" style="color: red;"></span>
                                     </div>
 
 
@@ -222,13 +229,14 @@
 
                                     <div class="col-md-3 py-3">
                                         <label for="inputcurrency" class="form-label">Currency Type</label>
-                                        <select id="product_currency_type" name="product_currency_type[]['currency']"
-                                            class="form-select">
+                                        <select id="product_currency_type"
+                                            name="product_measurment_price_detail[0][currency]" class="form-select">
                                             <option selected disabled> Please Select Currency type</option>
                                             <option value="inr">INR</option>
                                             <option value="usd">USD</option>
 
                                         </select>
+                                        <span id="product_measurment_price_detail.0.currency" style="color: red;"></span>
                                     </div>
 
 
@@ -236,8 +244,9 @@
                                     <div class="col-md-3 py-3">
                                         <label for="product_stock_quantity" class="form-label">Product Stock
                                             Quantity</label>
-                                        <input type="number" name="product_stock_quantity[]['stock']"
+                                        <input type="number" name="product_measurment_price_detail[0][stock]"
                                             class="form-control" id="product_stock_quantity" autocompvare="off">
+                                        <span id="product_measurment_price_detail.0.stock" style="color: red;"></span>
                                     </div>
 
                                     <div id="colorstock">
@@ -245,7 +254,8 @@
                                             <div class="col-md-5 py-3">
                                                 <label for="inputcurrency" class="form-label">Select color
                                                     (optional)</label>
-                                                <select id="product_color_type" name="product_color_type[]['color'][]"
+                                                <select id="product_color_type"
+                                                    name="product_measurment_price_detail[0][color][]"
                                                     class="form-select">
                                                     <option selected> Please select option</option>
                                                     <option value="red">Red</option>
@@ -258,7 +268,7 @@
                                                 <label for="product_stock_quantity" class="form-label">Product Stock
                                                     Color wise (optional)</label>
                                                 <input type="number"
-                                                    name="product_stock_color_quantity[]['stock_color_wise'][]"
+                                                    name="product_measurment_price_detail[0][stock_color_wise][]"
                                                     class="form-control" id="product_stock_quantity" autocompvare="off">
                                             </div>
 
@@ -342,8 +352,8 @@
                     <div class="row">
                         <div class="col-md-6 px-5" id="specification_heading">
                             <label for="product_specification_heading" class="form-label">Specification Heading</label>
-                            <select id="product_specification_heading" name="product_specification_heading[]"
-                                class="form-select">
+                            <select id="product_specification_heading" name="product_specification[0][heading]"
+                                class="form-select ">
                                 <option selected disabled>Please Select heading</option>
                                 @foreach ($product_specification_headings as $data)
                                     <option value="{{ $data->name }}">{{ ucwords($data->name) }}</option>
@@ -351,21 +361,24 @@
 
 
                             </select>
+                            <span id="product_specification.0.heading" style="color: red;"></span>
                         </div>
 
 
                         <div class="col-md-6 px-5">
-                            <label for="product_specfication" class="form-label">Name</label>
-                            <input type="text" name="product_specification[]" class="form-control"
-                                id="product_specfication" autocomplete="off">
+                            <label for="product_specification" class="form-label">Name</label>
+                            <input type="text" name="product_specification[0][name]" class="form-control"
+                                id="product_specification" autocomplete="off">
+
+                            <span id="product_specification.0.name" style="color: red;"></span>
                         </div>
                     </div>
                     <div class="col-md-12 px-5">
                         <label for="product_specification_details" class="form-label">Detail</label>
                         <div class="form-floating">
-                            <textarea class="form-control" name="product_specification_details[]" placeholder="Leave a comment here"
+                            <textarea class="form-control" name="product_specification[0][detail]" placeholder="Leave a comment here"
                                 id="product_specification_details" style="height: 100px"></textarea>
-
+                            <span id="product_specification.0.detail" style="color: red;"></span>
                         </div>
 
 
@@ -489,7 +502,11 @@
 
                 <h4 class="mt-5">Product Different Color Image(optional)</h4>
 
-                <span class="btn btn-success btn-sm px-3" onclick="addMoreImagefordiffentcolorContainer()">+</span>
+                <div class="col-md-12 px-5 d-flex justify-content-end">
+                    <span class="btn btn-success btn-sm px-3" onclick="addMoreImagefordiffentcolorContainer()">+</span>
+                </div>
+
+
                 <div class="col-md-12 card py-4" id="addMoreImagefordiffentcolorContainer">
 
                     <div class="col-md-12 pl-2">
@@ -598,7 +615,7 @@
 
 
 
-        var specification_heading = $("#specification_heading").html();
+        var specification_heading = $("#product_specification_heading").html();
 
         function isset(variable) {
             return typeof variable !== 'undefined' && variable !== null;
@@ -619,6 +636,12 @@
         function removeElementProductPriceDetail(id) {
             productpricedetailId--;
             $(`#${id}`).remove();
+        }
+
+        function removeElementSpecfication(id) {
+            productspecification--;
+            $(`#${id}`).remove();
+
         }
 
 
@@ -862,9 +885,11 @@
 
 
 </div>
+<div class="col-md-12 px-5 d-flex justify-content-end">
+                        <span class="btn btn-danger btn-sm px-3" onclick="removeElement('addMoreImagefordiffentcolorContainer${addMoreImagefordiffentcolorContainerId}')">-</span>
+                    </div>
 
 
-<span class="btn btn-danger justify-content-center" style="font-size:unset !important ;margin-top: 45px;" onclick="removeElement('addMoreImagefordiffentcolorContainer${addMoreImagefordiffentcolorContainerId}')">-</span>
 
 
 </div>`;
@@ -985,7 +1010,7 @@
                 });
         }
 
-        var productspecification = 1;
+        var productspecification = 0;
 
         var productSpecficationTextarea = [];
 
@@ -994,31 +1019,40 @@
 
             var specificationHTML = `  <div class="row" id="productspecification${productspecification}">
                            <div class="col-md-6 px-5 mt-5" id="specification_heading${productspecification}">
-                           ${specification_heading}
+                            <label for="product_specification_heading${productspecification}" class="form-label">Specification Heading</label>
+                            <select id="product_specification_heading${productspecification}" name="product_specification[${productspecification}][heading]"
+                                class="form-select ">
+                            ${specification_heading}
+                            </select>
+                            <span id="product_specification.${productspecification}.heading" style="color: red;"></span>
                             </div>
                           <div class="col-md-6 px-5 mt-5" >
                           
                             <label for="product_specfication${productspecification}" class="form-label">Name</label>
-                            <input type="text" name="product_specification[]" class="form-control"
+                            <input type="text" name="product_specification[${productspecification}][name]" class="form-control"
                                 id="product_specfication${productspecification}" autocompvare="off">
+                                <span id="product_specification.${productspecification}.name" style="color: red;"></span>
                         </div>
                         
                         <div class="col-md-12 px-5">
                            
                             <label for="product_specification_details${productspecification}" class="form-label">Detail</label>
                             <div class="form-floating">
-                            <textarea class="form-control" name="product_specification_details[]" placeholder="Leave a comment here"
+                            <textarea class="form-control" name="product_specification[${productspecification}][detail]" placeholder="Leave a comment here"
                                 id="product_specification_details${productspecification}" style="height: 100px"></textarea>
-                            </div>
+                                <span id="product_specification.${productspecification}.detail" style="color: red;"></span>
+                                </div>
                         
                         <div class="col-md-12 px-5 d-flex justify-content-end">
-                        <span class="btn btn-danger btn-sm px-3" onclick="removeElement('productspecification${productspecification}')">-</span>
+                        <span class="btn btn-danger btn-sm px-3" onclick="removeElementSpecfication('productspecification${productspecification}')">-</span>
                     </div>
                         
 
                     </div>`;
 
             $("#productspecfictaioncontainer").append(specificationHTML);
+            $(`#product_specification_heading${productspecification}`).select2();
+
 
             ClassicEditor.create(
                     document.querySelector(
@@ -1035,6 +1069,8 @@
                 .catch((error) => {
                     console.error(error);
                 });
+
+
         }
 
         var colorStockContainerIndex = 0;
@@ -1046,7 +1082,7 @@
             <div class="col-md-5 py-3">
                                             <label for="product_color_type" class="form-label">Select color
                                                 (optional)</label>
-                                            <select id="product_color_type${colorStockContainerIndex}" name="product_color_type[]['color'][]"
+                                            <select id="product_color_type${colorStockContainerIndex}" name="product_measurment_price_detail[0][color][]"
                                                 class="form-select">
                                                 <option selected> Please select option</option>
                                                 <option value="red">Red</option>
@@ -1059,7 +1095,7 @@
                                             <label for="product_stock_quantity" class="form-label">Product Stock
                                                 Color wise (optional)</label>
                                             <input type="number"
-                                                name="product_stock_color_quantity[]['stock_color_wise'][]"
+                                                name="product_measurment_price_detail[0][stock_color_wise][]"
                                                 class="form-control" id="product_stock_quantity" autocompvare="off">
                                         </div>
 
@@ -1086,7 +1122,7 @@
             <div class="col-md-5 py-3">
                                             <label for="product_color_type${colorStockIndex}${newColorStockIndex}" class="form-label">Select color
                                                 (optional)</label>
-                                            <select id="product_color_type${colorStockIndex}${newColorStockIndex}" name="product_color_type[${colorStockIndex}]['color'][]"
+                                            <select id="product_color_type${colorStockIndex}${newColorStockIndex}" name="product_measurment_price_detail[${colorStockIndex}][color][]"
                                                 class="form-select">
                                                 <option selected> Please select option</option>
                                                 <option value="red">Red</option>
@@ -1099,7 +1135,7 @@
                                             <label for="product_stock_quantity${colorStockIndex}${newColorStockIndex}" class="form-label">Product Stock
                                                 Color wise (optional)</label>
                                             <input type="number"
-                                                name="product_stock_color_quantity[${colorStockIndex}]['stock_color_wise'][]"
+                                                name="product_measurment_price_detail[${colorStockIndex}][stock_color_wise][]"
                                                 class="form-control" id="product_stock_quantity${colorStockIndex}${newColorStockIndex}" autocompvare="off">
                                         </div>
 
@@ -1124,87 +1160,93 @@
             productpricedetailId++;
 
             var productpricedetailHTML = `<div class="row" id="productpricecontainer${productpricedetailId}">
-                                               <div class="col-md-3 py-3">
-                                                   <label for="product_measurment_quantity${productpricedetailId}"
-                                            class="form-label">Product
-                                            Measurment Quantity</label>
-                                        <input type="number" name="product_measurment_quantity[${productpricedetailId}]['measurment_quantity']"
-                                            class="form-control" id="product_measurment_quantity${productpricedetailId}" autocomplete="off">
-                                    </div>
-                                    <div class="col-md-3 py-3">
-                                        <label for="product_measurment_quantity_price${productpricedetailId}"
-                                            class="form-label">Price(MRP)</label>
-                                        <input type="number" name="product_measurment_quantity_price[${productpricedetailId}]['price']"
-                                            class="form-control" id="product_measurment_quantity_price${productpricedetailId}" autocomplete="off">
-                                    </div>
+    <div class="col-md-3 py-3">
+        <label for="product_measurment_quantity${productpricedetailId}" class="form-label">Product
+            Measurment Quantity</label>
+        <input type="number" name="product_measurment_price_detail[${productpricedetailId}][measurment_quantity]"
+            class="form-control" id="product_measurment_quantity${productpricedetailId}" autocomplete="off">
+        <span id="product_measurment_price_detail.${productpricedetailId}.measurment_quantity"
+            style="color: red;"></span>
+
+
+    </div>
+    <div class="col-md-3 py-3">
+        <label for="product_measurment_quantity_price${productpricedetailId}" class="form-label">Price(MRP)</label>
+        <input type="number" name="product_measurment_price_detail[${productpricedetailId}][price]"
+            class="form-control" id="product_measurment_quantity_price${productpricedetailId}" autocomplete="off">
+        <span id="product_measurment_price_detail.${productpricedetailId}.price" style="color: red;"></span>
+
+    </div>
+
+
+
+    <div class="col-md-3 py-3">
+        <label for="product_currency_type${productpricedetailId}" class="form-label">Currency Type</label>
+        <select id="product_currency_type${productpricedetailId}"
+            name="product_measurment_price_detail[${productpricedetailId}][currency]" class="form-select">
+            <option selected disabled> Please Select Currency type</option>
+            <option value="inr">INR</option>
+            <option value="usd">USD</option>
+
+        </select>
+        <span id="product_measurment_price_detail.${productpricedetailId}.currency" style="color: red;"></span>
+    </div>
+
+
+
+    <div class="col-md-3 py-3">
+        <label for="product_stock_quantity${productpricedetailId}" class="form-label">Product Stock
+            Quantity</label>
+        <input type="number" name="product_measurment_price_detail[${productpricedetailId}][stock]"
+            class="form-control" id="product_stock_quantity${productpricedetailId}" autocompvare="off">
+        <span id="product_measurment_price_detail.${productpricedetailId}.stock" style="color: red;"></span>
+    </div>
+
+    <div id="newcolorstockcontainer${productpricedetailId}">
+        <div class="row" id="colorstock${productpricedetailId}">
+            <div class="col-md-5 py-3">
+                <label for="product_new_color_type${productpricedetailId}" class="form-label">Select color
+                    (optional)</label>
+                <select id="product_new_color_type${productpricedetailId}"
+                    name="product_measurment_price_detail[${productpricedetailId}][color][]" class="form-select">
+                    <option selected> Please select option</option>
+                    <option value="red">Red</option>
+                    <option value="green">Green</option>
+
+                </select>
+            </div>
+
+            <div class="col-md-5 py-3">
+                <label for="product_stock_quantity${productpricedetailId}" class="form-label">Product Stock
+                    Color wise (optional)</label>
+                <input type="number"
+                    name="product_measurment_price_detail[${productpricedetailId}][stock_color_wise][]"
+                    class="form-control" id="product_stock_quantity${productpricedetailId}" autocompvare="off">
+            </div>
+
+
+            <div class="col-md-2 py-3">
+                <span class="btn btn-success btn-sm px-3"
+                    onclick="addNewMoreColorStockMeasurmentFiled(${productpricedetailId})">+</span>
+
+            </div>
+
+        </div>
+    </div>
 
 
 
 
-                                    <div class="col-md-3 py-3">
-                                        <label for="product_currency_type${productpricedetailId}" class="form-label">Currency Type</label>
-                                        <select id="product_currency_type${productpricedetailId}" name="product_currency_type[${productpricedetailId}]['currency']"
-                                            class="form-select">
-                                            <option selected disabled> Please Select Currency type</option>
-                                            <option value="inr">INR</option>
-                                            <option value="usd">USD</option>
-
-                                        </select>
-                                    </div>
 
 
 
-                                    <div class="col-md-3 py-3">
-                                        <label for="product_stock_quantity${productpricedetailId}" class="form-label">Product Stock
-                                            Quantity</label>
-                                        <input type="number" name="product_stock_quantity[${productpricedetailId}]['stock']"
-                                            class="form-control" id="product_stock_quantity${productpricedetailId}" autocompvare="off">
-                                    </div>
 
-                                <div id="newcolorstockcontainer${productpricedetailId}">
-                                    <div class="row" id="colorstock${productpricedetailId}">
-                                        <div class="col-md-5 py-3">
-                                            <label for="product_new_color_type${productpricedetailId}" class="form-label">Select color
-                                                (optional)</label>
-                                            <select id="product_new_color_type${productpricedetailId}" name="product_color_type[${productpricedetailId}]['color'][]"
-                                                class="form-select">
-                                                <option selected> Please select option</option>
-                                                <option value="red">Red</option>
-                                                <option value="green">Green</option>
+    <div class="col-md-12 px-5 d-flex justify-content-end">
+        <span class="btn btn-danger btn-sm px-3"
+            onclick="removeElementProductPriceDetail('productpricecontainer${productpricedetailId}')">-</span>
+    </div>
 
-                                            </select>
-                                        </div>
-
-                                        <div class="col-md-5 py-3">
-                                            <label for="product_stock_quantity${productpricedetailId}" class="form-label">Product Stock
-                                                Color wise (optional)</label>
-                                            <input type="number"
-                                                name="product_stock_color_quantity[${productpricedetailId}]['stock_color_wise'][]"
-                                                class="form-control" id="product_stock_quantity${productpricedetailId}" autocompvare="off">
-                                        </div>
-
-                                      
-                                            <div class="col-md-2 py-3">
-                                                <span class="btn btn-success btn-sm px-3"
-                                                    onclick="addNewMoreColorStockMeasurmentFiled(${productpricedetailId})">+</span>
-                                                   
-                                        </div>
-
-                                    </div>
-                                </div>
-
-
-
-                            
-
-
-
-                                   
-                                      <div class="col-md-12 px-5 d-flex justify-content-end">
-                                                   <span class="btn btn-danger btn-sm px-3" onclick="removeElementProductPriceDetail('productpricecontainer${productpricedetailId}')">-</span>
-                                     </div>
-                        
-                    </div>`;
+</div>`;
 
 
 
@@ -1358,13 +1400,13 @@
 
 
             formData.append(
-                "product_specification_details[0]",
+                "product_specification[0][detail]",
                 product_specification_details.getData()
             );
             var productSpecficationTextareaLength = productSpecficationTextarea.length;
             for (var i = 1; i <= productSpecficationTextareaLength; i++) {
                 formData.append(
-                    `product_specification_details[${i}]`,
+                    `product_specification[${i}][detail]`,
                     productSpecficationTextarea[i - 1].getData()
                 );
             }
@@ -1477,9 +1519,35 @@
                     $("#loader").html("<div></div>");
 
                     $("#main_content").attr("class", "demo");
+
+                    for (let i = 0; i <= productpricedetailId; i++) {
+
+                        $(`[id="product_measurment_price_detail.${i}.measurment_quantity"]`).html(" ");
+                        $(`[id="product_measurment_price_detail.${i}.stock"]`).html(" ");
+                        $(`[id="product_measurment_price_detail.${i}.price"]`).html(" ");
+                        $(`[id="product_measurment_price_detail.${i}.currency"]`).html(" ");
+
+                    }
+
+                    for (let k = 0; k <= productspecification; k++) {
+
+                        console.log($(`[id="product_specification.${k}.heading"]`).html());
+                        $(`[id="product_specification.${k}.heading"]`).html(" ");
+                        $(`[id="product_specification.${k}.detail"]`).html(" ");
+                        $(`[id="product_specification.${k}.name"]`).html(" ");
+
+
+                    }
+
+
+
+
+
+
+
                 },
                 success: (data) => {
-                    console.log(data);
+
                     $("#loader").html("");
                     $("#main_content").removeAttr("class", "demo");
                 },
@@ -1487,8 +1555,28 @@
 
                     if (xhr.status == 422) {
 
-                        console.log(xhr.responseJSON.errormessage);
 
+
+
+
+
+                        errorMessage = xhr.responseJSON.errormessage;
+
+
+
+                        for (var fieldName in errorMessage) {
+
+                            if (errorMessage.hasOwnProperty(fieldName)) {
+                                $(`[id="${fieldName}"]`).html(errorMessage[fieldName][0]);
+                            }
+
+                        }
+
+
+
+
+                        $('#loader').html('');
+                        $('#main_content').removeAttr('class', 'demo');
 
 
                     }

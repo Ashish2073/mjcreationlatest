@@ -7,17 +7,17 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @livewireStyles
-    <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" type="text/css" media="screen" />
     <link rel="stylesheet" href="{{ asset('fontawesome/font-awesome.min.css') }}" type="text/css" media="screen" />
     <link rel="stylesheet" href="{{ asset('css/main.css') }}" type="text/css" media="screen" />
 
 
 
-
     <link rel="stylesheet" href="{{ asset('css/fontgoogleapis.css') }}" type="text/css" media="screen" />
     <link rel="stylesheet" href="{{ asset('fontawesome/font-awesome.w3.css') }}" type="text/css" media="screen" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet" />
+
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> --}}
 
     <link rel="stylesheet" type="text/css" href="{{ asset('css/vendor.bundle.base.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/maps/style.css.map') }}">
@@ -33,10 +33,9 @@
 
     <link rel="stylesheet" type="text/css" href="{{ asset('css/datatables/boostrap.min.css') }}">
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/datatables/boostrap5.css') }}">
+    {{-- <link rel="stylesheet" type="text/css" href="{{ asset('css/datatables/boostrap5.css') }}"> --}}
 
     <link rel="stylesheet" type="text/css" href="{{ asset('css/toaster.min.css') }}">
-
 
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('js/jquery.js') }}"></script>
@@ -67,6 +66,7 @@
     <script src="{{ asset('js/datatables/boostrap5.js') }}"></script>
     <script src="{{ asset('js/select2.min.js') }}"></script>
 
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/js/select2.min.js"></script> --}}
 
 
 
@@ -108,6 +108,7 @@
 
 
     <script src="{{ asset('vendor/livewire/livewire.js') }}"></script>
+
     @yield('page-script')
 
     <script src="{{ asset('js/template.js') }}"></script>
