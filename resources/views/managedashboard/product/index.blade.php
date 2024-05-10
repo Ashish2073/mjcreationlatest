@@ -21,8 +21,10 @@
             <thead>
                 <tr>
                     {{-- <th>No</th> --}}
+                    <th>Sr No.</th>
                     <th>Product Title </th>
                     <th>Total Product Quantity</th>
+                    <th>Product Image </th>
 
                     <th>Product Category </th>
                     <th>Brandname</th>
@@ -50,6 +52,7 @@
             var table = $('.data-table').DataTable({
 
 
+
                 processing: true,
                 serverSide: true,
                 fixedHeader: true,
@@ -69,6 +72,15 @@
 
                 },
                 columns: [{
+                        data: 'DT_RowIndex', // Serial number column
+                        name: 'serial_number',
+                        orderable: false,
+                        searchable: false,
+
+                    },
+
+
+                    {
                         data: 'product_title',
                         name: 'product_title',
                         searchable: true
@@ -77,6 +89,14 @@
                         data: 'product_total_stock_quantity',
                         name: 'product_total_stock_quantity',
                         searchable: true
+                    },
+                    {
+
+                        data: 'product_image',
+                        name: 'product_image',
+                        orderable: false,
+                        searchable: false,
+
                     },
                     {
                         data: 'product_categories_name',
@@ -106,7 +126,11 @@
                     }
 
 
-                ]
+                ],
+                language: {
+                    // Customization for the "Entries per page" text
+                    lengthMenu: "Show _MENU_ Entries per Page"
+                }
 
 
             });

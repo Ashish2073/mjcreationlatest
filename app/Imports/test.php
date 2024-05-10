@@ -31,6 +31,8 @@ class ProductPrimaryCostImport implements ToCollection, WithHeadingRow
         });
 
 
+        dd($records);
+
 
 
         $productNameIdArr = Productcategory::getNameIdIndexedArray();

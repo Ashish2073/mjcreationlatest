@@ -1,118 +1,248 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    @livewireStyles
-    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" type="text/css" media="screen" />
-    <link rel="stylesheet" href="{{ asset('fontawesome/font-awesome.min.css') }}" type="text/css" media="screen" />
-    <link rel="stylesheet" href="{{ asset('css/main.css') }}" type="text/css" media="screen" />
 
-
-
-    <link rel="stylesheet" href="{{ asset('css/fontgoogleapis.css') }}" type="text/css" media="screen" />
-    <link rel="stylesheet" href="{{ asset('fontawesome/font-awesome.w3.css') }}" type="text/css" media="screen" />
-    <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet" />
-
-    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> --}}
-
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/vendor.bundle.base.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/maps/style.css.map') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/adminstyle.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('fontawesome/font-awesome.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('fontawesome/font-awesome.w3.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('vendorcss/ti-icons/css/themify-icons.css') }}">
-
-
-
-
-
-
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/datatables/boostrap.min.css') }}">
-
-    {{-- <link rel="stylesheet" type="text/css" href="{{ asset('css/datatables/boostrap5.css') }}"> --}}
-
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/toaster.min.css') }}">
-
-    <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('js/jquery.js') }}"></script>
-
-    <script src="{{ asset('js/toaster.min.js') }}"></script>
-    <script src="{{ asset('graph/Chart.min.js') }}"></script>
-    <script src="{{ asset('js/vendor.bundle.base.js') }}"></script>
-    <script src="{{ asset('js/documentation.js') }}"></script>
-    <script src="{{ asset('js/file-upload.js') }}"></script>
-    <script src="{{ asset('js/hoverable-collapse.js') }}"></script>
-    <script src="{{ asset('js/tabs.js') }}"></script>
-
-    <script src="{{ asset('js/todolist.js') }}"></script>
-    <script src="{{ asset('js/tooltips.js') }}"></script>
-    <script src="{{ asset('js/off-canvas.js') }}"></script>
-    <script src="{{ asset('js/dashboard.js') }}"></script>
-    <script src="{{ asset('js/jquery.validation.min.js') }}"></script>
-    <script src="{{ asset('js/additional.method.js') }}"></script>
-    <script src="{{ asset('js/jquery.form.js') }}"></script>
-    <script src="{{ asset('js/main.js') }}"></script>
-    <script src="{{ asset('tailwindcss/tailwind.js') }}"></script>
-    <script src="{{ asset('ckeditor5/ckeditor.js') }}"></script>
-    {{-- <script src="{{ asset('js/addproduct.js') }}"></script> --}}
-
-    {{-- <script src="{{ asset('js/datatable.js') }}"></script> --}}
-    <script src="{{ asset('js/datatables/datatables2.0.5.js') }}"></script>
-    {{-- <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script> --}}
-    <script src="{{ asset('js/datatables/boostrap5.js') }}"></script>
-    <script src="{{ asset('js/select2.min.js') }}"></script>
-
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/js/select2.min.js"></script> --}}
-
-
-
-    {{-- <script type="module" src="{{ url('resources/js/app.js') }} "></script> --}}
-
-
-
-
-
-
-
-
-
-    <title>@yield('title')</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
 </head>
 
-<body class="">
+<link rel='stylesheet'
+    href='https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.0.0-beta.3/assets/owl.carousel.min.css'>
+<link rel='stylesheet'
+    href='https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.0.0-beta.3/assets/owl.theme.default.min.css'>
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
 
-    <div class="container-scroller">
+<style>
+    .outer {
+        margin: 0 auto;
+        max-width: 800px;
+    }
 
+    #big .item {
+        /* background: #ec6e46; */
+        padding: 120px 0px;
+        margin: 2px;
+        color: #FFF;
+        border-radius: 3px;
+        text-align: center;
+    }
 
+    #thumbs .item {
+        background: #C9C9C9;
+        height: 70px;
+        line-height: 70px;
+        padding: 0px;
+        margin: 2px;
+        color: #FFF;
+        border-radius: 3px;
+        text-align: center;
+        cursor: pointer;
+    }
 
-        @include('managedashboard.layout.navbar')
+    #thumbs .item h1 {
+        font-size: 18px;
+    }
 
-        <div class="container-fluid page-body-wrapper">
+    #thumbs .current .item {
+        /* background: #FF5722; */
+    }
 
+    .owl-theme .owl-nav [class*='owl-'] {
+        -webkit-transition: all .3s ease;
+        transition: all .3s ease;
+    }
 
+    .owl-theme .owl-nav [class*='owl-'].disabled:hover {
+        background-color: #D6D6D6;
+    }
 
-            @include('managedashboard.layout.sidebar')
+    #big.owl-theme {
+        position: relative;
+    }
 
-            {{-- @livewire('livewire.managedashboard.layout.sidebar') --}}
+    #big.owl-theme .owl-next,
+    #big.owl-theme .owl-prev {
+        background: #333;
+        width: 22px;
+        line-height: 40px;
+        height: 40px;
+        margin-top: -20px;
+        position: absolute;
+        text-align: center;
+        top: 50%;
+    }
 
-            @yield('content')
+    #big.owl-theme .owl-prev {
+        left: 10px;
+    }
+
+    #big.owl-theme .owl-next {
+        right: 10px;
+    }
+
+    #thumbs.owl-theme .owl-next,
+    #thumbs.owl-theme .owl-prev {
+        background: #333;
+    }
+</style>
+
+<body>
+    <div class="outer">
+        <div id="big" class="owl-carousel owl-theme">
+            <div class="item">
+                <img src="{{ asset('img/cart.png') }}" width="100" height="300" />
+            </div>
+            <div class="item">
+                <img src="{{ asset('img/image-10.png') }}" width="100" height="300" />
+            </div>
+            <div class="item">
+                <img src="{{ asset('img/image-11.png') }}" width="100" height="300" />
+            </div>
 
         </div>
+        <div id="thumbs" class="owl-carousel owl-theme">
+            <div class="item">
+                <img src="{{ asset('img/cart.png') }}" width="50" height="50" />
+            </div>
+            <div class="item">
+                <img src="{{ asset('img/image-10.png') }}" width="50" height="50" />
+            </div>
+            <div class="item">
+                <img src="{{ asset('img/image-11.png') }}" width="50" height="50" />
+            </div>
 
+
+        </div>
     </div>
 
-
-
-    <script src="{{ asset('vendor/livewire/livewire.js') }}"></script>
-
-    @yield('page-script')
-
-    <script src="{{ asset('js/template.js') }}"></script>
-
 </body>
+
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        var bigimage = $("#big");
+        var thumbs = $("#thumbs");
+        //var totalslides = 10;
+        var syncedSecondary = true;
+
+        bigimage
+            .owlCarousel({
+                items: 1,
+                slideSpeed: 2000,
+                nav: true,
+                autoplay: true,
+                dots: false,
+                loop: true,
+                responsiveRefreshRate: 200,
+                navText: [
+                    '<i class="fa fa-arrow-left" aria-hidden="true"></i>',
+                    '<i class="fa fa-arrow-right" aria-hidden="true"></i>'
+                ]
+            })
+            .on("changed.owl.carousel", syncPosition);
+
+        thumbs
+            .on("initialized.owl.carousel", function() {
+                thumbs
+                    .find(".owl-item")
+                    .eq(0)
+                    .addClass("current");
+            })
+            .owlCarousel({
+                items: 2,
+                dots: true,
+                nav: true,
+                navText: [
+                    '<i class="fa fa-arrow-left" aria-hidden="true"></i>',
+                    '<i class="fa fa-arrow-right" aria-hidden="true"></i>'
+                ],
+                smartSpeed: 200,
+                slideSpeed: 500,
+                slideBy: 4,
+                responsiveRefreshRate: 100
+            })
+            .on("changed.owl.carousel", syncPosition2);
+
+        function syncPosition(el) {
+            //if loop is set to false, then you have to uncomment the next line
+            //var current = el.item.index;
+
+            //to disable loop, comment this block
+            var count = el.item.count - 1;
+            var current = Math.round(el.item.index - el.item.count / 2 - 0.5);
+
+            if (current < 0) {
+                current = count;
+            }
+            if (current > count) {
+                current = 0;
+            }
+            //to this
+            thumbs
+                .find(".owl-item")
+                .removeClass("current")
+                .eq(current)
+                .addClass("current");
+            var onscreen = thumbs.find(".owl-item.active").length - 1;
+            var start = thumbs
+                .find(".owl-item.active")
+                .first()
+                .index();
+            var end = thumbs
+                .find(".owl-item.active")
+                .last()
+                .index();
+
+            if (current > end) {
+                thumbs.data("owl.carousel").to(current, 100, true);
+            }
+            if (current < start) {
+                thumbs.data("owl.carousel").to(current - onscreen, 100, true);
+            }
+        }
+
+        function syncPosition2(el) {
+            if (syncedSecondary) {
+                var number = el.item.index;
+                bigimage.data("owl.carousel").to(number, 100, true);
+            }
+        }
+
+        thumbs.on("click", ".owl-item", function(e) {
+            e.preventDefault();
+            var number = $(this).index();
+            bigimage.data("owl.carousel").to(number, 300, true);
+        });
+    });
+</script>
+{{-- <script>
+    $(document).ready(function() {
+        var currentIndex = 0;
+        var sliderImages = $(".slider-img");
+        var interval = 3000; // Change this value to adjust the interval (in milliseconds)
+
+        function showImage(index) {
+            var imgSrc = $(sliderImages[index]).attr("src");
+            $("#mainImg").attr("src", imgSrc);
+        }
+
+        function nextImage() {
+            currentIndex = (currentIndex + 1) % sliderImages.length;
+            showImage(currentIndex);
+        }
+
+        var sliderInterval = setInterval(nextImage, interval);
+
+        $(".slider-img").click(function() {
+            clearInterval(sliderInterval); // Stop autoplay when user interacts with the slider
+            var imgSrc = $(this).attr("src");
+            $("#mainImg").attr("src", imgSrc);
+        });
+    });
+</script> --}}
 
 </html>

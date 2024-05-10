@@ -27,7 +27,11 @@
                             <span><i class="fa fa-linkedin"></i></span>
                         </div>
                         <div class="log-sign">
-                            <div>Login/Signup</div>
+                            @if (request()->segment(2) == 'home')
+                                <a href="{{ route('users-login') }}" style="color:white">profile</a>
+                            @else
+                                <a href="{{ route('users-login') }}" style="color:white">Login</a>/Signup
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -76,12 +80,11 @@
         </div>
     </div>
 </section>
-
 <section class="menu-bg">
     <div class="container">
         <div class="row">
             <nav class="navbar navbar-expand-lg navbar-light">
-                <div class="container-fluid">
+                <div class="">
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">

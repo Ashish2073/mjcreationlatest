@@ -1696,7 +1696,7 @@
 
                         let brandOptionHtml =
                             `<option value="${data.brand.id}">${data.brand.name}</option>`;
-                        $("#product_brand_id").append(brandOptionHtml);
+                        $("#product_brand_main_id").append(brandOptionHtml);
 
                         $('#loader').html('');
                         $('#main_content').removeAttr('class', 'demo');

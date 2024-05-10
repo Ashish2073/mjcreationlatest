@@ -404,8 +404,16 @@ class ProductController extends Controller
                 ->orderBy('vendor_products.created_at', 'desc');
 
 
+
             return Datatables::of($vendorProducts)
                 ->addIndexColumn()
+                ->addColumn('product_image', function ($row) {
+                    $url = asset("product/banner/{$row->product_banner_image}");
+
+                    $productimg = "<img src={$url} width='30' height='50' />";
+
+                    return $productimg;
+                })
                 // ->addColumn('product_title',function ($row) {
                 //     return $row->product_title;
                 // })->addIndexColumn()
@@ -430,6 +438,7 @@ class ProductController extends Controller
 
                 // })->addIndexColumn()
 
+
                 ->addColumn('action', function ($row) {
                     $btn = '<button type="button" href="edit/' . $row->id . '" class="edit btn btn-primary btn-sm">Edit</button>';
                     $btn .= '<button type="button" data-id="' . $row->id . '" class="delete btn btn-danger btn-sm">Delete</button>';
@@ -437,7 +446,7 @@ class ProductController extends Controller
                 })
 
 
-                ->rawColumns(['action'])
+                ->rawColumns(['action', 'product_image'])
                 ->make(true);
 
 

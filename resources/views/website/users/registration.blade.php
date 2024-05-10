@@ -404,10 +404,18 @@
                                 $('#loader').html('');
                                 $('#main_content').removeAttr('class',
                                     'demo');
+                                $("#timer-countdown").html("You allready varified user");
+                                $('#otp1').val(" ");
+                                $('#otp2').val(" ");
+                                $('#otp3').val(" ");
+                                $('#otp4').val(" ");
+                                $('#otp5').val(" ");
+                                $('#otp6').val(" ");
 
-                                otpFieldScript();
-                                otpLifeTime();
-                                $("#timer").val(2);
+
+
+
+
 
                                 window.location.href = "{{ url('users/home') }}";
 
@@ -578,6 +586,8 @@
 
                     },
                     success: (data) => {
+                        $('#loader').html('');
+                        $('#main_content').removeAttr('class', 'demo');
 
 
                         window.location.href = "{{ url('users/home') }}";
