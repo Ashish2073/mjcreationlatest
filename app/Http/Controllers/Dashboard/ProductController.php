@@ -402,12 +402,15 @@ class ProductController extends Controller
 
         $productmeasurmentname = ProductMeasurmentName::select('name', 'id')->get();
 
+        $productmeasurmentunitname = ProductMeasurmentUnit::select('name', 'id')->get();
+
 
         return view('managedashboard.product.index', [
             'product_category' => $product_category,
             'product_specification_headings' => $product_specification_headings,
             'product_brands' => $product_brands,
-            'productmeasurmentname' => $productmeasurmentname
+            'productmeasurmentname' => $productmeasurmentname,
+            'productmeasurmentunitname' => $productmeasurmentunitname
         ]);
 
 
@@ -439,29 +442,7 @@ class ProductController extends Controller
 
                     return $productimg;
                 })
-                // ->addColumn('product_title',function ($row) {
-                //     return $row->product_title;
-                // })->addIndexColumn()
 
-
-                // ->addColumn('product_total_stock_quantity',function ($row) {
-                //     return $row->product_total_stock_quantity;
-                // })->addIndexColumn()
-
-                // ->addColumn('product_categories_name',function ($row){
-                //     return $row->product_categories_name;
-
-                // })->addIndexColumn()
-
-                // ->addColumn('brandname',function ($row){
-                //     return $row->bandname;
-
-                // })->addIndexColumn()
-
-                // ->addColumn('created_at',function ($row){
-                //     return $row->created_at;
-
-                // })->addIndexColumn()
 
 
                 ->addColumn('action', function ($row) {
@@ -604,6 +585,83 @@ class ProductController extends Controller
 
     }
 
+
+    public function productmeasurmentsave(Request $request)
+    {
+
+        Validator::extend('unique_measurement_parameter', function ($attribute, $value, $parameters, $validator) {
+            $parameterCount = ProductMeasurmentName::where('name', $value)->count();
+            return $parameterCount === 0;
+        });
+
+        // Define custom error messages
+        $messages = [
+            'unique_measurement_parameter' => 'Parameter Name Already Exists',
+        ];
+        $validator = Validator::make($request->all(), [
+            'measurment_parameter_name' => [
+                'required',
+                'unique_measurement_parameter'
+            ]
+
+
+
+
+
+        ], $messages);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'sucess' => false,
+                'errormessage' => $validator->errors(),
+            ], 422);
+
+
+        }
+
+
+
+
+
+
+        $parameter = ProductMeasurmentName::updateOrCreate(
+            ['name' => $request->measurment_parameter_name], // Search criteria
+
+        );
+
+
+        if ($parameter) {
+            return response()->json([
+                'sucess' => true,
+                'parameter' => $parameter,
+            ], 200);
+
+        }
+
+
+    }
+
+
+    public function productmeasurmentunitsave(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'measurment_parameter_unit_name' => 'required|string|unique:product_measurment_units',
+
+
+
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'sucess' => false,
+                'errormessage' => $validator->errors(),
+            ], 422);
+
+
+        }
+
+    }
 
 
 

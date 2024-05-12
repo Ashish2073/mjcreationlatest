@@ -81,6 +81,7 @@ Route::get('vendors/productlist', [ProductController::class, 'productlistview'])
 
 Route::post('vendors/addbrandname', [ProductController::class, 'addbrandname'])->name('vendors.addbrandname');
 ///importdata////////////
+
 Route::get('import/bulkproduct', [ProductController::class, 'bulkimport'])->name('bulk.import');
 Route::post('import/product', [ProductController::class, 'importproductdata'])->name('import.product.data');
 
@@ -89,3 +90,7 @@ Route::post('import/productspecification', [ProductController::class, 'importpro
 Route::post('import/productprimarycost', [ProductController::class, 'importproductprimarycostdata'])->name('import.product.primary.cost.data');
 
 Route::post('product/image', [ProductController::class, 'productimage'])->name('product.image');
+
+Route::post('product/addmeasurmentname', [ProductController::class, 'productmeasurmentsave'])->name('product.addmeasurmentname');
+
+Route::post('product/addmeasurmentunitname', [ProductController::class, 'productmeasurmentunitsave'])->name('product.addmeasurmentunitname');

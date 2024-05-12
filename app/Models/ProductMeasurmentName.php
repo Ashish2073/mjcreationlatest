@@ -9,4 +9,10 @@ class ProductMeasurmentName extends Model
 {
     use HasFactory;
     protected $table = "product_measurment_parameters";
+
+    protected $fillable = [
+        'name',
+
+
+    ];
 }

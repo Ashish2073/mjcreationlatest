@@ -14,7 +14,7 @@
         <button type="button" id="{{ $openModalButton ?? 'openMeasurmentModalButton' }}" class="btn btn-primary ">Add
             option</button>
 
-        <span id="{{ $spanerror ?? 'product_measurment_parameter' }}" style="color: red;"></span>
+        <span id="{{ $seletspanerror ?? 'product_measurment_parameter' }}" style="color: red;"></span>
 
         <div class="modal fade" id="{{ $modal_id ?? 'myModal' }}" tabindex="-1" role="dialog"
             aria-labelledby="exampleModalLabel" aria-hidden="true">

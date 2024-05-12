@@ -13,7 +13,7 @@
     </style>
 
 
-    @include('managedashboard.layout.loader')
+    {{-- @include('managedashboard.layout.loader') --}}
 
 
 
@@ -399,7 +399,6 @@
 
 
     <script>
-        console.log('helllppppppppp');
         $('#product_category_main_id').select2();
         $('#product_brand_main_id').select2();
         $('#product_measurment_parameter_main_id').select2();
@@ -1545,6 +1544,191 @@
 
 
 
+
+
+
+                    }
+                });
+
+
+
+
+
+            });
+
+
+
+
+
+
+        });
+
+
+        $('#openMeasurmentModalButton').on('click', function() {
+
+            $('#myModalMeasurmentParameterName').modal('show');
+            $('#exampleModalLabelMeasurmentParameterName').html('Add New MeasurMent Parameter');
+
+
+
+            $('#submitMeasurementParameterForm').on('click', function() {
+
+                var formData = new FormData();
+
+                formData.append('measurment_parameter_name', $('#product_measurment_name_id').val());
+
+
+                $.ajax({
+                    url: "{{ route('product.addmeasurmentname') }}",
+                    type: 'POST',
+                    data: formData,
+                    async: false,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    headers: {
+                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                    },
+
+                    beforeSend: function() {
+                        $("#loader").html("<div></div>");
+
+                        $("#main_content").attr("class", "demo");
+                    },
+
+                    success: (data) => {
+
+
+
+                        let OptionHtml =
+                            `<option value="${data.parameter.id}">${data.parameter.name}</option>`;
+                        $("#product_measurment_parameter_main_id").append(OptionHtml);
+
+                        $('#loader').html('');
+                        $('#main_content').removeAttr('class', 'demo');
+
+                        $('#myModalMeasurmentParameterName').modal("hide");
+                        toastr.success(
+                            "brand add Sucessfully"
+                        );
+
+                    },
+                    error: function(xhr, status, error) {
+
+                        if (xhr.status == 422) {
+                            var errorMessageBrand = xhr.responseJSON.errormessage;
+
+                            for (fieldName in errorMessageBrand) {
+
+                                if (errorMessageBrand.hasOwnProperty(fieldName)) {
+
+                                    $(`[id="mesaurement_parameter_error_id"`).html(
+                                        errorMessageBrand[
+                                            fieldName][
+                                            0
+                                        ]);
+
+                                }
+
+                            }
+
+                            $('#loader').html('');
+                            $('#main_content').removeAttr('class', 'demo');
+
+                        }
+
+
+
+                    }
+                });
+
+
+
+
+
+            });
+
+
+
+
+
+
+        });
+
+
+        $('#openMeasurmentUnitModalButton').on('click', function() {
+
+            $('#myModalMeasurmentParameterUnitName').modal('show');
+            $('#exampleModalLabelMeasurmentParameterUnitName').html('Add New MeasurMent Parameter Unit');
+
+
+
+            $('#submitMeasurementParameterUnitForm').on('click', function() {
+
+                var formData = new FormData();
+
+                formData.append('measurment_parameter_unit_name', $('#product_measurment_unit_name_id')
+                    .val());
+
+
+                $.ajax({
+                    url: "{{ route('product.addmeasurmentunitname') }}",
+                    type: 'POST',
+                    data: formData,
+                    async: false,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    headers: {
+                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                    },
+
+                    beforeSend: function() {
+                        $("#loader").html("<div></div>");
+
+                        $("#main_content").attr("class", "demo");
+                    },
+
+                    success: (data) => {
+
+
+
+                        let OptionHtml =
+                            `<option value="${data.brand.id}">${data.brand.name}</option>`;
+                        $("#product_measurment_unit_main").append(OptionHtml);
+
+                        $('#loader').html('');
+                        $('#main_content').removeAttr('class', 'demo');
+
+                        $('#myModalMeasurmentParameterUnitName').modal("hide");
+                        toastr.success(
+                            "brand add Sucessfully"
+                        );
+
+                    },
+                    error: function(xhr, status, error) {
+
+                        if (xhr.status == 422) {
+                            var errorMessageBrand = xhr.responseJSON.errormessage;
+
+                            for (fieldName in errorMessageBrand) {
+
+                                if (errorMessageBrand.hasOwnProperty(fieldName)) {
+
+                                    $(`[id="mesaurement_parameter_unit_error_id"`).html(
+                                        errorMessageBrand[
+                                            fieldName][
+                                            0
+                                        ]);
+
+                                }
+
+                            }
+
+                            $('#loader').html('');
+                            $('#main_content').removeAttr('class', 'demo');
+
+                        }
 
 
 

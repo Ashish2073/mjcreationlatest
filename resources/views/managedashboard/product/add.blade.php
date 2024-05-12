@@ -191,12 +191,13 @@
                         'selectdata' => $productmeasurmentname,
                         'submitbtnid' => 'submitMeasurementParameterForm',
                         'input_name' => 'measurment_parameter_name',
+                        'input__id' => 'product_measurment_name_id',
                         'type' => 'text',
                         'span_error_id' => 'mesaurement_parameter_error_id',
                         'openModalButton' => 'openMeasurmentModalButton',
                         'select_name' => 'product_measurment_parameter',
                         'select_label' => 'Product Measurment Parameter',
-                        'spanerror' => 'product_measurment_parameter',
+                        'seletspanerror' => 'product_measurment_parameter',
                     ])
 
 
@@ -206,7 +207,10 @@
 
 
 
-                    <div class="col-md-6">
+
+
+
+                    {{-- <div class="col-md-6">
                         <label for="inputAddress" class="form-label">Product Measurment Parameter Unit</label>
                         <select id="product_measurment_unit_main" name="product_measurment_unit" class="form-select">
                             <option selected disabled> Unit</option>
@@ -215,7 +219,24 @@
                             <option value="inc">Inch</option>
                         </select>
                         <span id="product_measurment_unit" style="color: red;"></span>
-                    </div>
+                    </div> --}}
+
+
+                    @include('managedashboard.product.measurmentparameter', [
+                        'modal_id' => 'myModalMeasurmentParameterUnitName',
+                        'modal_label' => 'exampleModalLabelMeasurmentParameterUnitName',
+                        'select_id' => 'product_measurment_unit_main',
+                        'selectdata' => $productmeasurmentunitname,
+                        'submitbtnid' => 'submitMeasurementParameterUnitForm',
+                        'input_name' => 'measurment_parameter_unit_name',
+                        'input__id' => 'product_measurment_unit_name_id',
+                        'type' => 'text',
+                        'span_error_id' => 'mesaurement_parameter_unit_error_id',
+                        'openModalButton' => 'openMeasurmentUnitModalButton',
+                        'select_name' => 'product_measurment_unit',
+                        'select_label' => 'Product Measurment Unit Name',
+                        'seletspanerror' => 'product_measurment_unit',
+                    ])
 
 
 
