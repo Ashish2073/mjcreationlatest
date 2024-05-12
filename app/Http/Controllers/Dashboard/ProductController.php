@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Models\Productcategory;
 use App\Models\Productbrand;
 use App\Models\VendorProduct;
+use App\Models\ProductMeasurmentName;
+use App\Models\ProductMeasurmentUnit;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\VendorProductImport;
 use App\Models\Productspecficationheading;
@@ -16,6 +18,7 @@ use App\Imports\ProductPrimaryCostImport;
 use Yajra\DataTables\Facades\Datatables;
 use Illuminate\Support\Facades\DB;
 use App\Models\ProductPriceDetail;
+use Illuminate\Support\Facades\View;
 
 class ProductController extends Controller
 {
@@ -59,7 +62,7 @@ class ProductController extends Controller
 
         $htmlResponse = '<div class="col-md-4" id="' . $request->selectedtext . '">
             <label for="" class="form-label"> ' . $request->selectedtext . ' ' . 'Category</label>
-            <select onchange="selectSubproductcategory(this)" id="select' . $request->selectedtext . '" class="form-select"
+            <select onchange="selectSubproductcategory(this)" id="select' . $request->selectedtext . '" class="form-select product_category_main"
                 name="product_category[]" aria-label="Default select example">'
 
             . $optionHtml .
@@ -388,7 +391,29 @@ class ProductController extends Controller
 
     function productlistview(Request $request)
     {
-        return view('managedashboard.product.index');
+
+
+
+        $product_category = Productcategory::where('parent_id', 0)->get();
+
+        $product_brands = Productbrand::select('name', 'id')->get();
+
+        $product_specification_headings = Productspecficationheading::select('name', 'id')->get();
+
+        $productmeasurmentname = ProductMeasurmentName::select('name', 'id')->get();
+
+
+        return view('managedashboard.product.index', [
+            'product_category' => $product_category,
+            'product_specification_headings' => $product_specification_headings,
+            'product_brands' => $product_brands,
+            'productmeasurmentname' => $productmeasurmentname
+        ]);
+
+
+
+
+
 
     }
     public function productlistshow(Request $request)
@@ -410,7 +435,7 @@ class ProductController extends Controller
                 ->addColumn('product_image', function ($row) {
                     $url = asset("product/banner/{$row->product_banner_image}");
 
-                    $productimg = "<img src={$url} width='30' height='50' />";
+                    $productimg = "<img src={$url} width='30' id='openModalImageShow' height='50' onclick='showProductImage({$row->id})' />";
 
                     return $productimg;
                 })
@@ -440,8 +465,8 @@ class ProductController extends Controller
 
 
                 ->addColumn('action', function ($row) {
-                    $btn = '<button type="button" href="edit/' . $row->id . '" class="edit btn btn-primary btn-sm">Edit</button>';
-                    $btn .= '<button type="button" data-id="' . $row->id . '" class="delete btn btn-danger btn-sm">Delete</button>';
+                    $btn = '<button type="button" onclick="editProduct(' . $row->id . ',' . $row->product_category_id . ')" class="edit btn btn-primary btn-sm">Edit</button>';
+                    $btn .= '<button type="button" onclick="deleteProduct(' . $row->id . ')" class="delete btn btn-danger btn-sm">Delete</button>';
                     return $btn;
                 })
 
@@ -511,6 +536,73 @@ class ProductController extends Controller
 
     }
 
+
+
+    public function productimage(Request $request)
+    {
+        $ProductImage = VendorProduct::where('id', $request->ProductId)->select('product_image_gallery')->first();
+
+        $imageGallery = json_decode($ProductImage->product_image_gallery, true);
+
+
+        $responsehtml = view::make('managedashboard.product.productimageshow', ['imageGallery' => $imageGallery])->render();
+
+
+        return response()->json([
+            'sucess' => true,
+            'responsehtml' => $responsehtml
+        ], 200);
+
+
+
+    }
+
+
+
+    public function editproduct(Request $request)
+    {
+
+
+        $product_category = Productcategory::where('parent_id', 0)->get();
+
+        $product_sub_category_by_id = Productcategory::where('id', $request->ProductCategoryId)->select('parent_id', 'name', 'id')->first();
+
+        $product_sub_category = Productcategory::where('parent_id', $product_sub_category_by_id->parent_id)->get();
+
+
+
+        $product_brands = Productbrand::select('name', 'id')->get();
+
+        $product_specification_heading_edit = Productspecficationheading::select('name', 'id')->get();
+
+
+
+        $vendorProducts = VendorProduct::join('product_categories', 'vendor_products.product_category_id', '=', 'product_categories.id')
+            ->join('productbrands', 'vendor_products.brand_id', '=', 'productbrands.id')
+            ->select('vendor_products.*', 'product_categories.name as product_categories_name', 'productbrands.name as brandname', 'productbrands.id as brandsid')
+            ->where('vendor_products.id', $request->ProductId) // Example condition: filter by status
+            ->get();
+
+
+
+
+
+
+        $responsehtml = view::make('managedashboard.product.edit', ['product_sub_category_by_id' => $product_sub_category_by_id, 'product_specification_heading_edit' => $product_specification_heading_edit, 'product_category' => $product_category, 'product_brands' => $product_brands, 'vendorProducts' => $vendorProducts, 'product_sub_category' => $product_sub_category])->render();
+
+
+        return response()->json([
+            'sucess' => true,
+            'responsehtml' => $responsehtml
+        ], 200);
+
+
+
+
+
+
+
+    }
 
 
 

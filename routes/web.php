@@ -70,6 +70,9 @@ Route::post('vendors/subproduct-categories', [ProductController::class, 'handleC
 
 Route::post('vendors/saveproduct', [ProductController::class, 'saveproduct'])->name('vendor-saveproduct');
 
+Route::post('vendors/editproduct', [ProductController::class, 'editproduct'])->name('vendor.editproduct');
+
+
 Route::post('vendors/product-textarea-image-upload', [ProductController::class, 'textareaimageupload'])->name('product-textarea-image-upload');
 
 Route::post('vendors/productlistshow', [ProductController::class, 'productlistshow'])->name('vendors.productlistshow');
@@ -84,3 +87,5 @@ Route::post('import/product', [ProductController::class, 'importproductdata'])->
 Route::post('import/productspecification', [ProductController::class, 'importproductspecificationdata'])->name('import.product.specification.data');
 
 Route::post('import/productprimarycost', [ProductController::class, 'importproductprimarycostdata'])->name('import.product.primary.cost.data');
+
+Route::post('product/image', [ProductController::class, 'productimage'])->name('product.image');

@@ -1,54 +1,133 @@
-<!DOCTYPE html>
-<html lang="en">
+<style>
+    .outer {
+        margin: 0 auto;
+        max-width: 800px;
+    }
 
-<head>
-    <meta charset="UTF-8">
+    #big .item {
+        /* background: #ec6e46; */
+        padding: 120px 0px;
+        margin: 2px;
+        color: #FFF;
+        border-radius: 3px;
+        text-align: center;
+    }
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Document</title>
-</head>
+    #thumbs .item {
+        background: #C9C9C9;
+        height: 70px;
+        line-height: 70px;
+        padding: 0px;
+        margin: 2px;
+        color: #FFF;
+        border-radius: 3px;
+        text-align: center;
+        cursor: pointer;
+    }
 
-<link rel='stylesheet'
-    href='https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.0.0-beta.3/assets/owl.carousel.min.css'>
-<link rel='stylesheet'
-    href='https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.0.0-beta.3/assets/owl.theme.default.min.css'>
-<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+    #thumbs .item h1 {
+        font-size: 18px;
+    }
+
+    #thumbs .current .item {
+        /* background: #FF5722; */
+    }
+
+    .owl-theme .owl-nav [class*='owl-'] {
+        -webkit-transition: all .3s ease;
+        transition: all .3s ease;
+    }
+
+    .owl-theme .owl-nav [class*='owl-'].disabled:hover {
+        background-color: #D6D6D6;
+    }
+
+    #big.owl-theme {
+        position: relative;
+    }
+
+    #big.owl-theme .owl-next,
+    #big.owl-theme .owl-prev {
+        background: #333;
+        width: 22px;
+        line-height: 40px;
+        height: 40px;
+        margin-top: -20px;
+        position: absolute;
+        text-align: center;
+        top: 50%;
+    }
+
+    #big.owl-theme .owl-prev {
+        left: 10px;
+    }
+
+    #big.owl-theme .owl-next {
+        right: 10px;
+    }
+
+    #thumbs.owl-theme .owl-next,
+    #thumbs.owl-theme .owl-prev {
+        background: #333;
+    }
+</style>
 
 
-<body>
-    <div class="outer">
-        <div id="big" class="owl-carousel owl-theme">
+
+
+
+<h1>Product Gallery Image </h1>
+<div class="outer">
+    <div id="big" class="owl-carousel owl-theme">
+
+        @for ($i = 0; $i < count($imageGallery); $i++)
             <div class="item">
-                <img src="{{ asset('product/gallery/vision__1715181685.jpg') }}" width="100" height="300" />
+                <img style="height: 300px;width:500px" src="{{ asset('product/gallery/' . $imageGallery[$i]) }}"
+                    alt="productgalleryImage" />
+            </div>
+        @endfor
+        {{-- <div class="item">
+                <img src="{{ asset('img/image-10.png') }}" width="100" height="300" />
             </div>
             <div class="item">
-                <img src="{{ asset('product/gallery/vision__1715181685.jpg') }}" width="100" height="300" />
-            </div>
-            <div class="item">
-                <img src="{{ asset('product/gallery/linkidin__1715183092.png') }}" width="100" height="300" />
-            </div>
+                <img src="{{ asset('img/image-11.png') }}" width="100" height="300" />
+            </div> --}}
 
-        </div>
-        <div id="thumbs" class="owl-carousel owl-theme">
-            <div class="item">
-                <img src="{{ asset('product/gallery/vision__1715181685.jpg') }}" width="30" height="50" />
-            </div>
-            <div class="item">
-                <img src="{{ asset('product/gallery/vision__1715181685.jpg') }}" width="30" height="50" />
-            </div>
-            <div class="item">
-                <img src="{{ asset('product/gallery/linkidin__1715183092.png') }}" width="30" height="50" />
-            </div>
-
-
-        </div>
     </div>
+    <div id="thumbs" class="owl-carousel owl-theme">
 
-</body>
+        @for ($i = 0; $i < count($imageGallery); $i++)
+            <div class="item">
+                <img style="height:90px;width:400px" src="{{ asset('product/gallery/' . $imageGallery[$i]) }}"
+                    alt="productgalleryImage" />
+            </div>
+        @endfor
+        {{-- <div class="item">
+                <img src="{{ asset('img/cart.png') }}" width="50" height="50" />
+            </div> --}}
+        {{-- <div class="item">
+                <img src="{{ asset('img/image-10.png') }}" width="50" height="50" />
+            </div>
+            <div class="item">
+                <img src="{{ asset('img/image-11.png') }}" width="50" height="50" />
+            </div> --}}
 
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    </div>
+</div>
+
+
+<!-- Modal content goes here -->
+
+
+
+
+
+
+
+
+
+
 <script>
     $(document).ready(function() {
         var bigimage = $("#big");
@@ -80,7 +159,7 @@
                     .addClass("current");
             })
             .owlCarousel({
-                items: 3,
+                items: 2,
                 dots: true,
                 nav: true,
                 navText: [
@@ -146,30 +225,3 @@
         });
     });
 </script>
-{{-- <script>
-    $(document).ready(function() {
-        var currentIndex = 0;
-        var sliderImages = $(".slider-img");
-        var interval = 3000; // Change this value to adjust the interval (in milliseconds)
-
-        function showImage(index) {
-            var imgSrc = $(sliderImages[index]).attr("src");
-            $("#mainImg").attr("src", imgSrc);
-        }
-
-        function nextImage() {
-            currentIndex = (currentIndex + 1) % sliderImages.length;
-            showImage(currentIndex);
-        }
-
-        var sliderInterval = setInterval(nextImage, interval);
-
-        $(".slider-img").click(function() {
-            clearInterval(sliderInterval); // Stop autoplay when user interacts with the slider
-            var imgSrc = $(this).attr("src");
-            $("#mainImg").attr("src", imgSrc);
-        });
-    });
-</script> --}}
-
-</html>
