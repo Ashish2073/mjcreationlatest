@@ -1436,15 +1436,6 @@
             $('#exampleModalLabel').html('Add New Brand');
 
 
-
-
-
-
-
-
-
-
-
             $('#submitBrandAddForm').on('click', function() {
 
 

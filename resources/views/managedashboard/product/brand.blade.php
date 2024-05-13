@@ -10,7 +10,8 @@
             @endforeach
         </select>
 
-        <button type="button" id="openModalButton" onclick="openModal()" class="btn btn-primary ">Add option</button>
+        <button type="button" id="{{ $openModalButton ?? 'openModalButton' }}" class="btn btn-primary ">Add
+            option</button>
 
         <span id="{{ $selectbranderrorid ?? 'product_brand_id' }}" style="color: red;"></span>
 

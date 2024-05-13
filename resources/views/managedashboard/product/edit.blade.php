@@ -90,7 +90,7 @@
                     <div class="col-md-4" id="main_product_category_edit">
                         <label for="product_category" class="form-label">Category</label>
                         <select name="product_category[]" id="product_category_main"
-                            onchange="selectSubproductcategory(this)" class="form-select product_category_main"
+                            onchange="selectSubproductcategoryEdit(this)" class="form-select product_category_main"
                             aria-label="Default select example">
 
                             <option selected disabled>Open this select menu</option>
@@ -109,7 +109,7 @@
                     <div class="col-md-4" id="{{ $product_sub_category_by_id->name }}">
                         <label for="product_category"
                             class="form-label">{{ ucwords($product_sub_category_by_id->name) }}</label>
-                        <select name="product_category[]" id="" onchange="selectSubproductcategory(this)"
+                        <select name="product_category[]" id="" onchange="selectSubproductcategoryEdit(this)"
                             class="form-select product_category_main" aria-label="Default select example">
 
                             <option selected disabled>Open this select menu</option>
@@ -164,6 +164,7 @@
                             'select_id' => 'product_brand_main_edit_id',
                             'productbranddataid' => $productdata->brandsid,
                             'submitbrandformid' => 'submitBrandEditForm',
+                            'openModalButton' => 'openModalButtonEdit',
                             'brandname' => 'brandNameEdit',
                             'brandnameerror' => 'brandNameEditError',
                             'brandimage' => 'brandImageEdit',
@@ -291,10 +292,11 @@
                         <div class="row g-3 form-group">
                             <div class="col-md-12 card " id="productpricecontaineredit">
                                 <div class="col-md-12 py-4 d-flex justify-content-end">
-                                    <span class="btn btn-success btn-sm px-3" onclick="productpricedetail()">+</span>
+                                    <span class="btn btn-success btn-sm px-3"
+                                        onclick="productpricedetailEdit()">+</span>
                                 </div>
                                 @foreach ($productpricedetails as $k => $productpricedata)
-                                    <div class="row">
+                                    <div class="row" id="productpricecontaineredit{{ $k }}">
                                         <div class="col-md-3 py-3">
                                             <label for="inputAddress"
                                                 id="product_measurment_quantity{{ $k }}"
@@ -396,10 +398,12 @@
                                             @endfor
                                         </div>
 
-
-
-
-
+                                        @if ($k > 0)
+                                            <div class="col-md-12 px-5 d-flex justify-content-end">
+                                                <span class="btn btn-danger btn-sm px-3"
+                                                    onclick="removeElementProductPriceDetailEdit('productpricecontaineredit{{ $k }}')">-</span>
+                                            </div>
+                                        @endif
                                     </div>
                                 @endforeach
 
@@ -650,8 +654,9 @@
 
 
 
-    function openModal() {
 
+
+    $('#openModalButtonEdit').on('click', function() {
         $('#myModalEdit').modal('show');
         $('#exampleModalLabelEdit').html('Add New Brand');
 
@@ -715,7 +720,8 @@
 
                             if (errorMessageBrand.hasOwnProperty(fieldName)) {
 
-                                $(`[id="${fieldName}EditError"]`).html(errorMessageBrand[fieldName][
+                                $(`[id="${fieldName}EditError"]`).html(errorMessageBrand[
+                                    fieldName][
                                     0
                                 ]);
 
@@ -738,7 +744,9 @@
         });
 
 
-    }
+
+
+    });
 
 
 
@@ -762,12 +770,12 @@
     }
 
 
-    function removeElementProductPriceDetail(id) {
+    function removeElementProductPriceDetailEdit(id) {
         productpricedetailId--;
         $(`#${id}`).remove();
     }
 
-    function removeElementSpecfication(id) {
+    function removeElementSpecficationEdit(id) {
         productspecification--;
         $(`#${id}`).remove();
 
@@ -1174,7 +1182,7 @@
                             </div>
                     
                     <div class="col-md-12 px-5 d-flex justify-content-end">
-                    <span class="btn btn-danger btn-sm px-3" onclick="removeElementSpecfication('productspecification${productspecification}')">-</span>
+                    <span class="btn btn-danger btn-sm px-3" onclick="removeElementSpecficationEdit('productspecification${productspecification}')">-</span>
                 </div>
                     
 
@@ -1286,7 +1294,7 @@
 
     var productpricedetailId = 0;
 
-    function productpricedetail() {
+    function productpricedetailEdit() {
         productpricedetailId++;
 
         var productpricedetailHTML = `<div class="row" id="productpricecontaineredit${productpricedetailId}">
@@ -1373,7 +1381,7 @@
 
 <div class="col-md-12 px-5 d-flex justify-content-end">
     <span class="btn btn-danger btn-sm px-3"
-        onclick="removeElementProductPriceDetail('productpricecontaineredit${productpricedetailId}')">-</span>
+        onclick="removeElementProductPriceDetailEdit('productpricecontaineredit${productpricedetailId}')">-</span>
 </div>
 
 </div>`;
@@ -1455,7 +1463,7 @@
             });
     }
 
-    function selectSubproductcategory(selectElement) {
+    function selectSubproductcategoryEdit(selectElement) {
         var selectedvalue = selectElement.value;
         var selectedtext = selectElement.options[selectElement.selectedIndex].text;
 
