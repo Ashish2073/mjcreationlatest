@@ -218,7 +218,7 @@
 
                 <div class="col-md-12 card py-4">
                     <div class="row">
-                        <div class="col-md-6">
+                        {{-- <div class="col-md-6">
                             <label for="inputAddress" class="form-label">Product Measurment Parameter</label>
                             <select id="product_measurment_parameter_main_edit_id" name="product_measurment_parameter"
                                 class="form-select">
@@ -229,8 +229,34 @@
                             </select>
 
                             <span id="product_measurment_parameter" style="color: red;"></span>
-                        </div>
-                        <div class="col-md-6">
+                        </div> --}}
+
+
+                        @include('managedashboard.product.measurmentparameter', [
+                            'modal_id' => 'myModalMeasurmentParameterNameEdit',
+                            'modal_label' => 'exampleModalLabelMeasurmentParameterNameEdit',
+                            'select_id' => 'product_measurment_parameter_main_edit_id',
+                            'selectdata' => $productmeasurmentname,
+                            'selectedid' => $productdata->measurment_parameter_name,
+                            'submitbtnid' => 'submitMeasurementParameterFormEdit',
+                            'input_name' => 'measurment_parameter_name',
+                            'input__id' => 'product_measurment_name_edit_id',
+                            'type' => 'text',
+                            'span_error_id' => 'mesaurement_parameter_error_edit_id',
+                            'openModalButton' => 'openMeasurmentModalButtonEdit',
+                            'select_name' => 'product_measurment_parameter',
+                            'select_label' => 'Product Measurment Parameter',
+                            'seletspanerror' => 'product_measurment_parameter_edit',
+                        ])
+
+
+
+
+
+
+
+
+                        {{-- <div class="col-md-6">
                             <label for="inputAddress" class="form-label">Product Measurment Parameter Unit</label>
                             <select id="product_measurment_unit_main_edit" name="product_measurment_unit"
                                 class="form-select">
@@ -240,7 +266,25 @@
                                 <option value="inc">Inch</option>
                             </select>
                             <span id="product_measurment_unit" style="color: red;"></span>
-                        </div>
+                        </div> --}}
+
+
+                        @include('managedashboard.product.measurmentparameter', [
+                            'modal_id' => 'myModalMeasurmentParameterUnitEdit',
+                            'modal_label' => 'exampleModalLabelMeasurmentParameterUnitEdit',
+                            'select_id' => 'product_measurment_unit_main_edit',
+                            'selectdata' => $productmeasurmentunitname,
+                            'selectedid' => $productdata->measurment_unit_name,
+                            'submitbtnid' => 'submitMeasurementParameterUnitFormEdit',
+                            'input_name' => 'measurment_parameter_unit_name',
+                            'input__id' => 'product_measurment_unit_name_edit_id',
+                            'type' => 'text',
+                            'span_error_id' => 'mesaurement_parameter_unit_error_edit_id',
+                            'openModalButton' => 'openMeasurmentUnitModalButtonEdit',
+                            'select_name' => 'product_measurment_unit',
+                            'select_label' => 'Product Measurment Unit',
+                            'seletspanerror' => 'product_measurment_unit_edit',
+                        ])
 
 
 
@@ -249,96 +293,119 @@
                                 <div class="col-md-12 py-4 d-flex justify-content-end">
                                     <span class="btn btn-success btn-sm px-3" onclick="productpricedetail()">+</span>
                                 </div>
-
-                                <div class="row">
-                                    <div class="col-md-3 py-3">
-                                        <label for="inputAddress" id="product_measurment_quantity"
-                                            class="form-label">Product
-                                            Measurment Quantity</label>
-                                        <input type="number"
-                                            name="product_measurment_price_detail[0][measurment_quantity]"
-                                            class="form-control" id="product_measurment_quantity" autocomplete="off">
-                                        <span id="product_measurment_price_detail.0.measurment_quantity"
-                                            style="color: red;"></span>
-                                    </div>
-                                    <div class="col-md-3 py-3">
-                                        <label for="inputAddress" id="product_measurment_quantity_price"
-                                            class="form-label">Price(MRP)</label>
-                                        <input type="number" name="product_measurment_price_detail[0][price]"
-                                            class="form-control" id="" autocomplete="off">
-                                        <span id="product_measurment_price_detail.0.price" style="color: red;"></span>
-                                    </div>
-
-
-
-
-                                    <div class="col-md-3 py-3">
-                                        <label for="inputcurrency" class="form-label">Currency Type</label>
-                                        <select id="product_currency_type_edit"
-                                            name="product_measurment_price_detail[0][currency]" class="form-select">
-                                            <option selected disabled> Please Select Currency type</option>
-                                            <option value="inr">INR</option>
-                                            <option value="usd">USD</option>
-
-                                        </select>
-                                        <span id="product_measurment_price_detail.0.currency"
-                                            style="color: red;"></span>
-                                    </div>
-
-
-
-                                    <div class="col-md-3 py-3">
-                                        <label for="product_stock_quantity" class="form-label">Product Stock
-                                            Quantity</label>
-                                        <input type="number" name="product_measurment_price_detail[0][stock]"
-                                            class="form-control" id="product_stock_quantity" autocompvare="off">
-                                        <span id="product_measurment_price_detail.0.stock" style="color: red;"></span>
-                                    </div>
-
-                                    <div id="colorstock">
-                                        <div class="row" id="colorstockcontainer">
-                                            <div class="col-md-5 py-3">
-                                                <label for="inputcurrency" class="form-label">Select color
-                                                    (optional)</label>
-                                                <select id="product_color_type_edit"
-                                                    name="product_measurment_price_detail[0][color][]"
-                                                    class="form-select">
-                                                    <option selected> Please select option</option>
-                                                    <option value="red">Red</option>
-                                                    <option value="green">Green</option>
-
-                                                </select>
-                                            </div>
-
-                                            <div class="col-md-5 py-2">
-                                                <label for="product_stock_quantity" class="form-label">Product Stock
-                                                    Color wise (optional)</label>
-                                                <input type="number"
-                                                    name="product_measurment_price_detail[0][stock_color_wise][]"
-                                                    class="form-control" id="product_stock_quantity"
-                                                    autocompvare="off">
-                                            </div>
-
-                                            <div class="col-md-2 py-3">
-
-                                                <span class="btn btn-success btn-sm "
-                                                    onclick="addMoreColorStockMeasurmentFiled()">+</span>
-
-
-                                            </div>
-
+                                @foreach ($productpricedetails as $k => $productpricedata)
+                                    <div class="row">
+                                        <div class="col-md-3 py-3">
+                                            <label for="inputAddress"
+                                                id="product_measurment_quantity{{ $k }}"
+                                                class="form-label">Product
+                                                Measurment Quantity</label>
+                                            <input type="number"
+                                                name="product_measurment_price_detail[{{ $k }}][measurment_quantity]"
+                                                value="{{ $productpricedata->measurment_quantity }}"
+                                                class="form-control" id="product_measurment_quantity"
+                                                autocomplete="off">
+                                            <span
+                                                id="product_measurment_price_detail.{{ $k }}.measurment_quantity"
+                                                style="color: red;"></span>
+                                        </div>
+                                        <div class="col-md-3 py-3">
+                                            <label for="inputAddress" id="product_measurment_quantity_price"
+                                                class="form-label">Price(MRP)</label>
+                                            <input type="number"
+                                                name="product_measurment_price_detail[{{ $k }}][price]"
+                                                value="{{ $productpricedata->price }}" class="form-control"
+                                                id="" autocomplete="off">
+                                            <span id="product_measurment_price_detail.{{ $k }}.price"
+                                                style="color: red;"></span>
                                         </div>
 
+
+
+
+                                        <div class="col-md-3 py-3">
+                                            <label for="inputcurrency" class="form-label ">Currency Type</label>
+                                            <select id="product_currency_type_edit{{ $k }}"
+                                                name="product_measurment_price_detail[{{ $k }}][currency]"
+                                                class="form-select ">
+                                                <option selected disabled> Please Select Currency type</option>
+                                                <option @if ($productpricedata->currency == 'inr') selected @endif
+                                                    value="inr">INR</option>
+                                                <option @if ($productpricedata->currency == 'usd') selected @endif
+                                                    value="usd">USD</option>
+
+                                            </select>
+                                            <span id="product_measurment_price_detail.{{ $k }}.currency"
+                                                style="color: red;"></span>
+                                        </div>
+
+
+
+                                        <div class="col-md-3 py-3">
+                                            <label for="product_stock_quantity" class="form-label">Product Stock
+                                                Quantity</label>
+                                            <input type="number"
+                                                name="product_measurment_price_detail[{{ $k }}][stock]"
+                                                value="{{ $productpricedata->stock }}" class="form-control"
+                                                id="product_stock_quantity" autocompvare="off">
+                                            <span id="product_measurment_price_detail.{{ $k }}.stock"
+                                                style="color: red;"></span>
+                                        </div>
+
+                                        @php $productColor=json_decode($productpricedata->color, true); @endphp
+
+                                        <div id="colorstock">
+                                            @for ($c = 0; $c < count($productColor); $c++)
+                                                <div class="row" id="colorstockcontainer{{ $k }}">
+                                                    <div class="col-md-5 py-3">
+                                                        <label for="inputcurrency" class="form-label">Select color
+                                                            (optional)
+                                                        </label>
+                                                        <select id="product_color_type_edit{{ $k }}"
+                                                            name="product_measurment_price_detail[{{ $k }}][color][]"
+                                                            class="form-select">
+                                                            <option selected> Please select option</option>
+                                                            <option value="red">Red</option>
+                                                            <option value="green">Green</option>
+
+                                                        </select>
+                                                    </div>
+
+
+
+                                                    <div class="col-md-5 py-2">
+                                                        <label for="product_stock_quantity" class="form-label">Product
+                                                            Stock
+                                                            Color wise (optional)</label>
+                                                        <input type="number"
+                                                            name="product_measurment_price_detail[{{ $k }}][stock_color_wise][]"
+                                                            class="form-control"
+                                                            id="product_stock_quantity{{ $k }}"
+                                                            autocompvare="off">
+                                                    </div>
+
+                                                    <div class="col-md-2 py-3">
+
+                                                        <span class="btn btn-success btn-sm "
+                                                            onclick="addMoreColorStockMeasurmentFiled()">+</span>
+
+
+                                                    </div>
+
+                                                </div>
+                                            @endfor
+                                        </div>
+
+
+
+
+
                                     </div>
-
-
-
-                                </div>
+                                @endforeach
 
                             </div>
 
                         </div>
-
 
 
 
@@ -565,9 +632,22 @@
     $('#product_brand_main_edit_id').select2();
     $('#product_measurment_parameter_main_edit_id').select2();
     $('#product_measurment_unit_main_edit').select2();
-    $('#product_currency_type_edit').select2();
+
+
+    for (let i = 0; i <= {{ $k }}; i++) {
+
+        $(`#product_currency_type_edit${i}`).select2();
+        $(`#product_color_type_edit${i}`).select2();
+    }
+
+
+
+
     $('#product_specification_heading_edit').select2();
-    $('#product_color_type_edit').select2();
+
+
+
+
 
 
     function openModal() {
@@ -635,8 +715,6 @@
 
                             if (errorMessageBrand.hasOwnProperty(fieldName)) {
 
-
-
                                 $(`[id="${fieldName}EditError"]`).html(errorMessageBrand[fieldName][
                                     0
                                 ]);
@@ -645,26 +723,10 @@
 
                         }
 
-                        // if (isset(xhr.responseJSON.errormessage.brandNameEdit[0])) {
-                        //     $("#brandNameEditError").html(xhr.responseJSON.errormessage
-                        //         .brandNameEdit[0])
-                        // }
 
-                        // if (isset(xhr.responseJSON.errormessage.brandImageEdit[0])) {
-                        //     $("#brandImageEditError").html(xhr.responseJSON.errormessage
-                        //         .brandImageEdit[0])
-
-                        // }
-
-                        // toastr.error(
-                        //     xhr.responseJSON.errormessage
-                        // );
                         $('#loader').html('');
                         $('#main_content').removeAttr('class', 'demo');
-                        // $("#timer").val(2);
-                        // otpFieldScript();
-                        // otpLifeTime();
-                        // otpvarification();
+
 
                     }
 
@@ -1708,4 +1770,194 @@
 
         };
     }
+
+
+
+    $('#openMeasurmentModalButtonEdit').on('click', function() {
+
+        $('#myModalMeasurmentParameterNameEdit').modal('show');
+        $('#exampleModalLabelMeasurmentParameterNameEdit').html('Add New MeasurMent Parameter');
+
+
+
+        $('#submitMeasurementParameterFormEdit').on('click', function() {
+
+            var formData = new FormData();
+
+            formData.append('measurment_parameter_name', $('#product_measurment_name_edit_id')
+                .val());
+
+
+            $.ajax({
+                url: "{{ route('product.addmeasurmentname') }}",
+                type: 'POST',
+                data: formData,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                },
+
+                beforeSend: function() {
+                    $("#loader").html("<div></div>");
+
+                    $("#main_content").attr("class", "demo");
+                },
+
+                success: (data) => {
+
+
+
+                    let OptionHtml =
+                        `<option value="${data.parameter.id}">${data.parameter.name}</option>`;
+                    $("#product_measurment_parameter_main_id").append(OptionHtml);
+
+                    $("#product_measurment_parameter_main_edit_id").append(OptionHtml);
+
+                    $('#loader').html('');
+                    $('#main_content').removeAttr('class', 'demo');
+
+                    $('#myModalMeasurmentParameterNameEdit').modal("hide");
+                    toastr.success(
+                        "Measurment Parameter Added Successfully"
+                    );
+
+                },
+                error: function(xhr, status, error) {
+
+                    if (xhr.status == 422) {
+                        var errorMessageBrand = xhr.responseJSON.errormessage;
+
+                        for (fieldName in errorMessageBrand) {
+
+                            if (errorMessageBrand.hasOwnProperty(fieldName)) {
+
+                                $(`[id="mesaurement_parameter_error_edit_id"`).html(
+                                    errorMessageBrand[
+                                        fieldName][
+                                        0
+                                    ]);
+
+                            }
+
+                        }
+
+                        $('#loader').html('');
+                        $('#main_content').removeAttr('class', 'demo');
+
+                    }
+
+
+
+                }
+            });
+
+
+
+
+
+        });
+
+
+
+
+
+
+    });
+
+    $('#openMeasurmentUnitModalButtonEdit').on('click', function() {
+
+        $('#myModalMeasurmentParameterUnitEdit').modal('show');
+        $('#exampleModalLabelMeasurmentParameterUnitEdit').html('Add New MeasurMent Parameter Unit');
+
+
+
+        $('#submitMeasurementParameterUnitFormEdit').on('click', function() {
+
+            var formData = new FormData();
+
+            formData.append('measurment_parameter_unit_name', $('#product_measurment_unit_name_edit_id')
+                .val());
+
+
+            $.ajax({
+                url: "{{ route('product.addmeasurmentunitname') }}",
+                type: 'POST',
+                data: formData,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                },
+
+                beforeSend: function() {
+                    $("#loader").html("<div></div>");
+
+                    $("#main_content").attr("class", "demo");
+                },
+
+                success: (data) => {
+
+
+
+                    let OptionHtml =
+                        `<option value="${data.parameter.id}">${data.parameter.name}</option>`;
+                    $("#product_measurment_unit_main").append(OptionHtml);
+
+                    $("#product_measurment_unit_main_edit").append(OptionHtml);
+
+                    $('#loader').html('');
+                    $('#main_content').removeAttr('class', 'demo');
+
+                    $('#myModalMeasurmentParameterUnitEdit').modal("hide");
+                    toastr.success(
+                        "Product Unit add Sucessfully"
+                    );
+
+                },
+                error: function(xhr, status, error) {
+
+                    if (xhr.status == 422) {
+                        var errorMessageBrand = xhr.responseJSON.errormessage;
+
+                        for (fieldName in errorMessageBrand) {
+
+                            if (errorMessageBrand.hasOwnProperty(fieldName)) {
+
+                                $(`[id="mesaurement_parameter_unit_error_edit_id"`).html(
+                                    errorMessageBrand[
+                                        fieldName][
+                                        0
+                                    ]);
+
+                            }
+
+                        }
+
+                        $('#loader').html('');
+                        $('#main_content').removeAttr('class', 'demo');
+
+                    }
+
+
+
+                }
+            });
+
+
+
+
+
+        });
+
+
+
+
+
+
+    });
 </script>

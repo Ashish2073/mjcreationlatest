@@ -8,5 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Productspecficationheading extends Model
 {
     use HasFactory;
-    protected $table="products_specification_headings";
+    protected $table = "products_specification_headings";
+
+    protected $fillable = [
+        'name',
+
+
+    ];
 }

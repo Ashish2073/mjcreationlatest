@@ -410,7 +410,7 @@
 
 
 
-        var specification_heading = $("#product_specification_heading").html();
+        var specification_heading_html = $("#product_specification_heading").html();
 
         function isset(variable) {
             return typeof variable !== 'undefined' && variable !== null;
@@ -817,7 +817,7 @@
                             <label for="product_specification_heading${productspecification}" class="form-label">Specification Heading</label>
                             <select id="product_specification_heading${productspecification}" name="product_specification[${productspecification}][heading]"
                                 class="form-select ">
-                            ${specification_heading}
+                            ${ specification_heading_html}
                             </select>
                             <span id="product_specification.${productspecification}.heading" style="color: red;"></span>
                             </div>
@@ -1694,7 +1694,7 @@
 
 
                         let OptionHtml =
-                            `<option value="${data.brand.id}">${data.brand.name}</option>`;
+                            `<option value="${data.parameter.id}">${data.parameter.name}</option>`;
                         $("#product_measurment_unit_main").append(OptionHtml);
 
                         $('#loader').html('');
@@ -1702,7 +1702,7 @@
 
                         $('#myModalMeasurmentParameterUnitName').modal("hide");
                         toastr.success(
-                            "brand add Sucessfully"
+                            "Product Unit add Sucessfully"
                         );
 
                     },
@@ -1716,6 +1716,121 @@
                                 if (errorMessageBrand.hasOwnProperty(fieldName)) {
 
                                     $(`[id="mesaurement_parameter_unit_error_id"`).html(
+                                        errorMessageBrand[
+                                            fieldName][
+                                            0
+                                        ]);
+
+                                }
+
+                            }
+
+                            $('#loader').html('');
+                            $('#main_content').removeAttr('class', 'demo');
+
+                        }
+
+
+
+                    }
+                });
+
+
+
+
+
+            });
+
+
+
+
+
+
+        });
+
+
+
+        $('#openSpecificationHeadingModalButton').on('click', function() {
+
+            $('#myModalSpecificationHeading').modal('show');
+            $('#exampleModalSpecificHeading').html('Add New  Specification Heading');
+
+
+
+            $('#submitSpecificationForm').on('click', function() {
+
+                var formData = new FormData();
+
+                formData.append('product_specification_heading_name', $(
+                        '#product_specification_heading_name_id')
+                    .val());
+
+
+                $.ajax({
+                    url: "{{ route('product.addspecificationheading') }}",
+                    type: 'POST',
+                    data: formData,
+                    async: false,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    headers: {
+                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                    },
+
+                    beforeSend: function() {
+                        $("#loader").html("<div></div>");
+
+                        $("#main_content").attr("class", "demo");
+                    },
+
+                    success: (data) => {
+
+
+
+                        let OptionHtml =
+                            `<option value="${data.parameter.id}">${data.parameter.name}</option>`;
+                        $("#product_specification_heading").append(OptionHtml);
+
+                        console.log(specification_heading_html);
+
+                        specification_heading_html = specification_heading_html + OptionHtml;
+
+                        console.log(specification_heading_html);
+
+                        if (isset(productspecification)) {
+                            for (let i = 0; i <= productspecification; i++) {
+                                $(`#product_specification_heading${i}`).append(OptionHtml);
+
+
+
+                            }
+                        }
+
+
+
+
+                        $('#loader').html('');
+                        $('#main_content').removeAttr('class', 'demo');
+
+                        $('#myModalSpecificationHeading').modal("hide");
+                        toastr.success(
+                            "Heading  add Sucessfully"
+                        );
+
+                    },
+                    error: function(xhr, status, error) {
+
+                        if (xhr.status == 422) {
+                            var errorMessageBrand = xhr.responseJSON.errormessage;
+
+                            for (fieldName in errorMessageBrand) {
+
+                                if (errorMessageBrand.hasOwnProperty(fieldName)) {
+
+
+
+                                    $(`[id="product_specification_heading_error_id"`).html(
                                         errorMessageBrand[
                                             fieldName][
                                             0

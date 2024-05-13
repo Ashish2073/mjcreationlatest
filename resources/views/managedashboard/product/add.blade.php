@@ -377,7 +377,7 @@
 
 
                     </div>
-
+id="specification_heading"
 
                 </div> --}}
 
@@ -390,7 +390,27 @@
                     <span class="btn btn-success btn-sm px-3" onclick="addMoreProductspecification()">+</span>
                 </div>
                 <div class="row">
-                    <div class="col-md-6 px-5" id="specification_heading">
+
+                    @include('managedashboard.product.measurmentparameter', [
+                        'modal_id' => 'myModalSpecificationHeading',
+                        'modal_label' => 'exampleModalSpecificHeading',
+                        'select_id' => 'product_specification_heading',
+                        'selectdata' => $product_specification_headings,
+                        'submitbtnid' => 'submitSpecificationForm',
+                        'input_name' => 'product_specification_heading_name',
+                        'input__id' => 'product_specification_heading_name_id',
+                        'type' => 'text',
+                        'span_error_id' => 'product_specification_heading_error_id',
+                        'openModalButton' => 'openSpecificationHeadingModalButton',
+                        'select_name' => 'product_specification[0][heading]',
+                        'select_label' => 'Specification Heading',
+                        'seletspanerror' => 'product_specification.0.heading',
+                    ])
+
+
+
+
+                    {{-- <div class="col-md-6 px-5" >
                         <label for="product_specification_heading" class="form-label">Specification Heading</label>
                         <select id="product_specification_heading" name="product_specification[0][heading]"
                             class="form-select ">
@@ -402,7 +422,7 @@
 
                         </select>
                         <span id="product_specification.0.heading" style="color: red;"></span>
-                    </div>
+                    </div> --}}
 
 
                     <div class="col-md-6 px-5">

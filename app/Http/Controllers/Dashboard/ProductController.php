@@ -557,19 +557,41 @@ class ProductController extends Controller
         $product_specification_heading_edit = Productspecficationheading::select('name', 'id')->get();
 
 
+        $productmeasurmentname = ProductMeasurmentName::select('name', 'id')->get();
+
+        $productmeasurmentunitname = ProductMeasurmentUnit::select('name', 'id')->get();
+
+
+        $productpricedetails = ProductPriceDetail::where('product_id', $request->ProductId)->get();
+
+
+
+
 
         $vendorProducts = VendorProduct::join('product_categories', 'vendor_products.product_category_id', '=', 'product_categories.id')
             ->join('productbrands', 'vendor_products.brand_id', '=', 'productbrands.id')
-            ->select('vendor_products.*', 'product_categories.name as product_categories_name', 'productbrands.name as brandname', 'productbrands.id as brandsid')
-            ->where('vendor_products.id', $request->ProductId) // Example condition: filter by status
+            ->select(
+                'vendor_products.*',
+                'product_categories.name as product_categories_name',
+                'productbrands.name as brandname',
+                'productbrands.id as brandsid'
+            )
+            ->where('vendor_products.id', $request->ProductId)
             ->get();
 
 
+        $responsehtml = view::make('managedashboard.product.edit', [
+            'product_sub_category_by_id' => $product_sub_category_by_id,
+            'product_specification_heading_edit' => $product_specification_heading_edit,
+            'product_category' => $product_category,
+            'product_brands' => $product_brands,
+            'vendorProducts' => $vendorProducts,
+            'product_sub_category' => $product_sub_category,
+            'productmeasurmentname' => $productmeasurmentname,
+            'productmeasurmentunitname' => $productmeasurmentunitname,
+            'productpricedetails' => $productpricedetails,
 
-
-
-
-        $responsehtml = view::make('managedashboard.product.edit', ['product_sub_category_by_id' => $product_sub_category_by_id, 'product_specification_heading_edit' => $product_specification_heading_edit, 'product_category' => $product_category, 'product_brands' => $product_brands, 'vendorProducts' => $vendorProducts, 'product_sub_category' => $product_sub_category])->render();
+        ])->render();
 
 
         return response()->json([
@@ -593,6 +615,8 @@ class ProductController extends Controller
             $parameterCount = ProductMeasurmentName::where('name', $value)->count();
             return $parameterCount === 0;
         });
+
+
 
         // Define custom error messages
         $messages = [
@@ -645,12 +669,21 @@ class ProductController extends Controller
     public function productmeasurmentunitsave(Request $request)
     {
 
+        Validator::extend('unique_measurement_parameter_unit', function ($attribute, $value, $parameters, $validator) {
+            $parameterCount = ProductMeasurmentUnit::where('name', $value)->count();
+            return $parameterCount === 0;
+        });
+
+        $messages = [
+            'unique_measurement_parameter_unit' => 'Unit Name Already Exists',
+        ];
+
         $validator = Validator::make($request->all(), [
-            'measurment_parameter_unit_name' => 'required|string|unique:product_measurment_units',
+            'measurment_parameter_unit_name' => ['required', 'string', 'unique_measurement_parameter_unit'],
 
 
 
-        ]);
+        ], $messages);
 
         if ($validator->fails()) {
             return response()->json([
@@ -660,6 +693,67 @@ class ProductController extends Controller
 
 
         }
+
+
+        $parameter = ProductMeasurmentUnit::updateOrCreate(
+            ['name' => $request->measurment_parameter_unit_name], // Search criteria
+
+        );
+
+
+        if ($parameter) {
+            return response()->json([
+                'sucess' => true,
+                'parameter' => $parameter,
+            ], 200);
+
+        }
+
+    }
+
+
+    public function productaddspecificationheading(Request $request)
+    {
+
+        Validator::extend('unique_product_specification_heading', function ($attribute, $value, $parameters, $validator) {
+            $parameterCount = Productspecficationheading::where('name', $value)->count();
+            return $parameterCount === 0;
+        });
+
+        $messages = [
+            'unique_product_specification_heading' => 'Heading Name Already Exists',
+        ];
+
+        $validator = Validator::make($request->all(), [
+            'product_specification_heading_name' => ['required', 'string', 'unique_product_specification_heading'],
+
+
+
+        ], $messages);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'sucess' => false,
+                'errormessage' => $validator->errors(),
+            ], 422);
+
+
+        }
+
+        $parameter = Productspecficationheading::updateOrCreate(
+            ['name' => $request->product_specification_heading_name], // Search criteria
+
+        );
+
+
+        if ($parameter) {
+            return response()->json([
+                'sucess' => true,
+                'parameter' => $parameter,
+            ], 200);
+
+        }
+
 
     }
 

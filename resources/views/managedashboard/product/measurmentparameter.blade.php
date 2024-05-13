@@ -2,11 +2,11 @@
     <label for="" class="form-label">{{ $select_label ?? 'Product Measurment Parameter' }} </label>
     <div class="input-group">
         <select name="{{ $select_name ?? 'product_measurment_parameter' }}"
-            id="{{ $select_id ?? 'product_measurment_parameter_main_id' }}" class="form-select" data-live-search="true"
+            id="{{ $select_id ?? 'product_measurment_parameter_main_id' }}" class="form-select"
             aria-label="Default select example">
             <option selected disabled>Open this select menu</option>
             @foreach ($selectdata as $data)
-                <option @if ($productbranddataid ?? 0 === $data->id) selected @endif value="{{ $data->id }}">
+                <option @if ($selectedid ?? 0 === $data->id) selected @endif value="{{ $data->id }}">
                     {{ ucwords($data->name) }}</option>
             @endforeach
         </select>

@@ -94,3 +94,5 @@ Route::post('product/image', [ProductController::class, 'productimage'])->name('
 Route::post('product/addmeasurmentname', [ProductController::class, 'productmeasurmentsave'])->name('product.addmeasurmentname');
 
 Route::post('product/addmeasurmentunitname', [ProductController::class, 'productmeasurmentunitsave'])->name('product.addmeasurmentunitname');
+
+Route::post('product/addspecificationheading', [ProductController::class, 'productaddspecificationheading'])->name('product.addspecificationheading');
