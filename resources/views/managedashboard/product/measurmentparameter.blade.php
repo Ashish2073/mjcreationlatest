@@ -2,7 +2,8 @@
     <label for="" class="form-label">{{ $select_label ?? 'Product Measurment Parameter' }} </label>
     <div class="input-group">
         <select name="{{ $select_name ?? 'product_measurment_parameter' }}"
-            id="{{ $select_id ?? 'product_measurment_parameter_main_id' }}" class="form-select"
+            id="{{ $select_id ?? 'product_measurment_parameter_main_id' }}"
+            class="form-select {{ $selectindexchange ?? 'selectspecficationindexchange' }}"
             aria-label="Default select example">
             <option selected disabled>Open this select menu</option>
             @foreach ($selectdata as $data)
