@@ -298,27 +298,28 @@
                                 @foreach ($productpricedetails as $k => $productpricedata)
                                     <div class="row" id="productpricecontaineredit{{ $k }}">
                                         <div class="col-md-3 py-3">
-                                            <label for="inputAddress"
-                                                id="product_measurment_quantity{{ $k }}"
+                                            <label for="product_measurment_quantity_edit{{ $k }}"
                                                 class="form-label">Product
                                                 Measurment Quantity</label>
                                             <input type="number"
                                                 name="product_measurment_price_detail[{{ $k }}][measurment_quantity]"
                                                 value="{{ $productpricedata->measurment_quantity }}"
-                                                class="form-control" id="product_measurment_quantity"
+                                                class="form-control"
+                                                id="product_measurment_quantity_edit{{ $k }}"
                                                 autocomplete="off">
                                             <span
-                                                id="product_measurment_price_detail.{{ $k }}.measurment_quantity"
+                                                id="product_measurment_price_detailedit.{{ $k }}.measurment_quantity"
                                                 style="color: red;"></span>
                                         </div>
                                         <div class="col-md-3 py-3">
-                                            <label for="inputAddress" id="product_measurment_quantity_price"
+                                            <label for="product_measurment_quantity_price_edit{{ $k }}"
                                                 class="form-label">Price(MRP)</label>
                                             <input type="number"
                                                 name="product_measurment_price_detail[{{ $k }}][price]"
                                                 value="{{ $productpricedata->price }}" class="form-control"
-                                                id="" autocomplete="off">
-                                            <span id="product_measurment_price_detail.{{ $k }}.price"
+                                                id="product_measurment_quantity_price_edit{{ $k }}"
+                                                autocomplete="off">
+                                            <span id="product_measurment_price_detailedit.{{ $k }}.price"
                                                 style="color: red;"></span>
                                         </div>
 
@@ -326,7 +327,8 @@
 
 
                                         <div class="col-md-3 py-3">
-                                            <label for="inputcurrency" class="form-label ">Currency Type</label>
+                                            <label for="product_currency_type_edit{{ $k }}"
+                                                class="form-label ">Currency Type</label>
                                             <select id="product_currency_type_edit{{ $k }}"
                                                 name="product_measurment_price_detail[{{ $k }}][currency]"
                                                 class="form-select ">
@@ -337,33 +339,40 @@
                                                     value="usd">USD</option>
 
                                             </select>
-                                            <span id="product_measurment_price_detail.{{ $k }}.currency"
+                                            <span
+                                                id="product_measurment_price_detailedit.{{ $k }}.currency"
                                                 style="color: red;"></span>
                                         </div>
 
 
 
                                         <div class="col-md-3 py-3">
-                                            <label for="product_stock_quantity" class="form-label">Product Stock
+                                            <label for="product_stock_quantity_edit{{ $k }}"
+                                                class="form-label">Product Stock
                                                 Quantity</label>
                                             <input type="number"
                                                 name="product_measurment_price_detail[{{ $k }}][stock]"
                                                 value="{{ $productpricedata->stock }}" class="form-control"
-                                                id="product_stock_quantity" autocompvare="off">
-                                            <span id="product_measurment_price_detail.{{ $k }}.stock"
+                                                id="product_stock_quantity_edit{{ $k }}"
+                                                autocompvare="off">
+                                            <span id="product_measurment_price_detailedit.{{ $k }}.stock"
                                                 style="color: red;"></span>
                                         </div>
 
                                         @php $productColor=json_decode($productpricedata->color, true); @endphp
 
-                                        <div id="colorstock">
+                                        <div id="colorstockedit{{ $k }}">
                                             @for ($c = 0; $c < count($productColor); $c++)
-                                                <div class="row" id="colorstockcontainer{{ $k }}">
+                                                <div class="row"
+                                                    id="colorstockcontainer{{ $k }}{{ $c }}">
                                                     <div class="col-md-5 py-3">
-                                                        <label for="inputcurrency" class="form-label">Select color
+                                                        <label
+                                                            for="product_color_type_edit{{ $k }}{{ $c }}"
+                                                            class="form-label">Select color
                                                             (optional)
                                                         </label>
-                                                        <select id="product_color_type_edit{{ $k }}"
+                                                        <select
+                                                            id="product_color_type_edit{{ $k }}{{ $c }}"
                                                             name="product_measurment_price_detail[{{ $k }}][color][]"
                                                             class="form-select">
                                                             <option selected> Please select option</option>
@@ -376,23 +385,35 @@
 
 
                                                     <div class="col-md-5 py-2">
-                                                        <label for="product_stock_quantity" class="form-label">Product
+                                                        <label
+                                                            for="product_stock_quantity_color_edit{{ $k }}{{ $c }}"
+                                                            class="form-label">Product
                                                             Stock
                                                             Color wise (optional)</label>
                                                         <input type="number"
                                                             name="product_measurment_price_detail[{{ $k }}][stock_color_wise][]"
                                                             class="form-control"
-                                                            id="product_stock_quantity{{ $k }}"
+                                                            id="product_stock_quantity_color_edit{{ $k }}{{ $c }}"
                                                             autocompvare="off">
                                                     </div>
 
                                                     <div class="col-md-2 py-3">
 
                                                         <span class="btn btn-success btn-sm "
-                                                            onclick="addMoreColorStockMeasurmentFiled()">+</span>
+                                                            onclick="addMoreColorStockMeasurmentFiledEdit({{ $k }})">+</span>
 
 
                                                     </div>
+                                                    @if ($c > 0)
+                                                        <div class="col-md-2 py-3">
+
+
+                                                            <span class="btn btn-danger btn-sm px-3"
+                                                                onclick="removeElementEdit('colorstockcontainer{{ $k }}{{ $c }}')">-</span>
+
+
+                                                        </div>
+                                                    @endif
 
                                                 </div>
                                             @endfor
@@ -419,49 +440,106 @@
                 </div>
 
 
+                @php $productspecficationdata=json_decode($productdata->product_specification_heading, true); @endphp
+                @php $productspecificationnamedata=json_decode($productdata->product_specification, true); @endphp
+
+                @php $productspecificationdetaildata=json_decode($productdata->product_specification_details, true); @endphp
+
+                {{-- {{ dd($productspecificationnamedata, $productspecficationdata) }} --}}
 
 
                 <h4 class="mt-5">Specification</h4>
                 <div class="col-md-12 card py-4" id="productspecfictaioncontaineredit">
                     <div class="col-md-12 px-5 d-flex justify-content-end">
-                        <span class="btn btn-success btn-sm px-3" onclick="addMoreProductspecification()">+</span>
+                        <span class="btn btn-success btn-sm px-3" onclick="addMoreProductspecificationEdit()">+</span>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6 px-5" id="specification_heading_edit">
-                            <label for="product_specification_heading_edit" class="form-label">Specification
-                                Heading</label>
-                            <select id="product_specification_heading_edit" name="product_specification[0][heading]"
-                                class="form-select ">
-                                <option selected disabled>Please Select heading</option>
-                                @foreach ($product_specification_heading_edit as $data)
-                                    <option value="{{ $data->name }}">{{ ucwords($data->name) }}</option>
-                                @endforeach
+                    @for ($l = 0; $l < count($productspecficationdata); $l++)
+                        <div class="row" id="productspecificationedit{{ $l }}">
 
 
-                            </select>
-                            <span id="product_specification.0.heading" style="color: red;"></span>
+                            @if ($l == 0)
+                                @include('managedashboard.product.measurmentparameter', [
+                                    'modal_id' => 'myModalSpecificationHeadingEdit',
+                                    'modal_label' => 'exampleModalSpecificHeadingEdit',
+                                    'select_id' => 'product_specification_heading_edit',
+                                    'selectedid' => $productspecficationdata[$l],
+                                    'selectdata' => $product_specification_heading_edit,
+                                    'submitbtnid' => 'submitSpecificationFormEdit',
+                                    'input_name' => 'product_specification_heading_name',
+                                    'input__id' => 'product_specification_heading_name_edit_id',
+                                    'type' => 'text',
+                                    'span_error_id' => 'product_specification_heading_error_edit_id',
+                                    'openModalButton' => 'openSpecificationHeadingModalButtonEdit',
+                                    'select_name' => 'product_specification[0][heading]',
+                                    'select_label' => 'Specification Heading',
+                                    'seletspanerror' => 'product_specificationedit.0.heading',
+                                ])
+                            @else
+                                <div class="col-md-6 px-5" id="specification_heading_edit{{ $l }}">
+                                    <label for="product_specification_heading_edit{{ $l }}"
+                                        class="form-label">Specification
+                                        Heading</label>
+                                    <select id="product_specification_heading_edit{{ $l }}"
+                                        name="product_specification[{{ $l }}][heading]"
+                                        class="form-select ">
+                                        <option selected disabled>Please Select heading</option>
+                                        @foreach ($product_specification_heading_edit as $data)
+                                            <option @if ($productspecficationdata[$l] == $data->id) selected @endif
+                                                value="{{ $data->id }}">{{ ucwords($data->name) }}</option>
+                                        @endforeach
+
+
+                                    </select>
+                                    <span id="product_specificationedit.{{ $l }}.heading"
+                                        style="color: red;"></span>
+                                </div>
+                            @endif
+
+
+                            <div class="col-md-6 px-5">
+                                <label for="product_specificationedit" class="form-label">Name</label>
+                                <input type="text" name="product_specification[{{ $l }}][name]"
+                                    class="form-control" id="product_specificationedit{{ $l }}"
+                                    value="{{ $productspecificationnamedata[$l] }}" autocomplete="off">
+
+                                <span id="product_specificationedit.{{ $l }}.name"
+                                    style="color: red;"></span>
+                            </div>
+
+                            <div class="col-md-12 px-5">
+                                <label for="product_specification_details_edit" class="form-label">Detail</label>
+                                <div class="form-floating">
+                                    <textarea class="form-control" name="product_specification[{{ $l }}][detail]"
+                                        placeholder="Leave a comment here" id="product_specification_details_edit{{ $l }}"
+                                        style="height: 100px">{{ $productspecificationdetaildata[$l] }}</textarea>
+                                    <span id="product_specificationedit.{{ $l }}.detail"
+                                        style="color: red;"></span>
+                                </div>
+
+                                @if ($l > 0)
+                                    <div class="col-md-12 px-5 d-flex justify-content-end">
+                                        <span class="btn btn-danger btn-sm px-3"
+                                            onclick="removeElementSpecficationEdit('productspecificationedit{{ $l }}')">-</span>
+                                    </div>
+                                @endif
+
+
+                            </div>
                         </div>
+                    @endfor
+
+                    <div class="col-md-6 px-5" hidden id="specification_heading_edit_hidden">
 
 
-                        <div class="col-md-6 px-5">
-                            <label for="product_specification" class="form-label">Name</label>
-                            <input type="text" name="product_specification[0][name]" class="form-control"
-                                id="product_specification" autocomplete="off">
+                        <option selected disabled>Please Select heading</option>
+                        @foreach ($product_specification_heading_edit as $data)
+                            <option value="{{ $data->name }}">{{ ucwords($data->name) }}</option>
+                        @endforeach
 
-                            <span id="product_specification.0.name" style="color: red;"></span>
-                        </div>
+
+
+
                     </div>
-                    <div class="col-md-12 px-5">
-                        <label for="product_specification_details_edit" class="form-label">Detail</label>
-                        <div class="form-floating">
-                            <textarea class="form-control" name="product_specification[0][detail]" placeholder="Leave a comment here"
-                                id="product_specification_details_edit" style="height: 100px"></textarea>
-                            <span id="product_specification.0.detail" style="color: red;"></span>
-                        </div>
-
-
-                    </div>
-
 
 
 
@@ -638,10 +716,15 @@
     $('#product_measurment_unit_main_edit').select2();
 
 
-    for (let i = 0; i <= {{ $k }}; i++) {
+    for (let i = 0; i < {{ $k }}; i++) {
 
-        $(`#product_currency_type_edit${i}`).select2();
-        $(`#product_color_type_edit${i}`).select2();
+        for (let m = 0; m < {{ $c }}; m++) {
+            $(`#product_currency_type_edit${i}`).select2();
+            $(`#product_color_type_edit${i}${m}`).select2();
+
+        }
+
+
     }
 
 
@@ -752,7 +835,7 @@
 
 
 
-    var specification_heading = $("#product_specification_heading_edit").html();
+    var specification_heading_html_edit = $("#specification_heading_edit_hidden").html();
 
     function isset(variable) {
         return typeof variable !== 'undefined' && variable !== null;
@@ -762,7 +845,7 @@
 
 
 
-    function removeElement(id) {
+    function removeElementEdit(id) {
 
 
 
@@ -771,12 +854,14 @@
 
 
     function removeElementProductPriceDetailEdit(id) {
-        productpricedetailId--;
+        productpricedetailIdindex--;
         $(`#${id}`).remove();
+
     }
 
     function removeElementSpecficationEdit(id) {
-        productspecification--;
+
+        productspecificationedit--;
         $(`#${id}`).remove();
 
     }
@@ -840,21 +925,25 @@
     //         console.error(error);
     //     });
 
-    // var product_specification_details_edit;
+    var productSpecficationTextareaEdit = [];
 
+    for (let j = 0; j < {{ $l }}; j++) {
 
+        $(`#product_specification_heading_edit${j+1}`).select2();
 
-    ClassicEditor.create(document.querySelector("#product_specification_details_edit"), {
-            ckfinder: {
-                uploadUrl: `{{ route('product-textarea-image-upload') . '?_token=' . csrf_token() }}`,
-            },
-        })
-        .then((newEditor) => {
-            product_specification_details_edit = newEditor;
-        })
-        .catch((error) => {
-            console.error(error);
-        });
+        ClassicEditor.create(document.querySelector(`#product_specification_details_edit${j}`), {
+                ckfinder: {
+                    uploadUrl: `{{ route('product-textarea-image-upload') . '?_token=' . csrf_token() }}`,
+                },
+            })
+            .then((newEditor) => {
+                productSpecficationTextareaEdit.push(newEditor);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+
+    }
 
     function previewBeforeUpload(id) {
         console.log(id);
@@ -887,7 +976,7 @@
                                    
                                 </div>
                                 <div>
-                                <span class="btn btn-danger justify-content-center" style="font-size:unset !important ;margin-top: 45px;" onclick="removeElement('imagecontainer${multipelimageId}',${multipelimageId})">-</span>
+                                <span class="btn btn-danger justify-content-center" style="font-size:unset !important ;margin-top: 45px;" onclick="removeElementEdit('imagecontainer${multipelimageId}',${multipelimageId})">-</span>
                            </div>
                                 </label>
 
@@ -934,7 +1023,7 @@
                                            
                                         </div>
                                         <div>
-                                        <span class="btn btn-danger justify-content-center" style="font-size:unset !important ;margin-top: 45px;" onclick="removeElement('imagecontainer${containerColorId}${multiplcolorimageId}')">-</span>
+                                        <span class="btn btn-danger justify-content-center" style="font-size:unset !important ;margin-top: 45px;" onclick="removeElementEdit('imagecontainer${containerColorId}${multiplcolorimageId}')">-</span>
                                    </div>
                                         </label>
 
@@ -1024,7 +1113,7 @@
 
 </div>
 <div class="col-md-12 px-5 d-flex justify-content-end">
-                    <span class="btn btn-danger btn-sm px-3" onclick="removeElement('addMoreImagefordiffentcolorContainer${addMoreImagefordiffentcolorContainerId}')">-</span>
+                    <span class="btn btn-danger btn-sm px-3" onclick="removeElementEdit('addMoreImagefordiffentcolorContainer${addMoreImagefordiffentcolorContainerId}')">-</span>
                 </div>
 
 
@@ -1062,7 +1151,7 @@
 
     //                                     </div>
     //                                     <div>
-    //                                     <span class="btn btn-danger justify-content-center" style="font-size:unset !important ;margin-top: 45px;" onclick="removeElement('imagecontainer-color-${imagecolorintialId}')">-</span>
+    //                                     <span class="btn btn-danger justify-content-center" style="font-size:unset !important ;margin-top: 45px;" onclick="removeElementEdit('imagecontainer-color-${imagecolorintialId}')">-</span>
     //                                </div>
     //                                     </label>
 
@@ -1120,7 +1209,7 @@
                     </div>
 
                     <div class="col-md-12 px-5 d-flex justify-content-end">
-                    <span class="btn btn-danger btn-sm px-3" onclick="removeElement('morediscountcontainer${discountcontainer}')">-</span>
+                    <span class="btn btn-danger btn-sm px-3" onclick="removeElementEdit('morediscountcontainer${discountcontainer}')">-</span>
                 </div>
                     
                     
@@ -1148,53 +1237,54 @@
             });
     }
 
-    var productspecification = 0;
+    var productspecificationedit = {{ $l }};
 
-    var productSpecficationTextarea = [];
+    console.log(productspecificationedit);
 
-    function addMoreProductspecification() {
-        productspecification++;
 
-        var specificationHTML = `  <div class="row" id="productspecification${productspecification}">
-                       <div class="col-md-6 px-5 mt-5" id="specification_heading_edit${productspecification}">
-                        <label for="product_specification_heading_edit${productspecification}" class="form-label">Specification Heading</label>
-                        <select id="product_specification_heading_edit${productspecification}" name="product_specification[${productspecification}][heading]"
-                            class="form-select ">
-                        ${specification_heading}
-                        </select>
-                        <span id="product_specification.${productspecification}.heading" style="color: red;"></span>
-                        </div>
-                      <div class="col-md-6 px-5 mt-5" >
+
+    function addMoreProductspecificationEdit() {
+        productspecificationedit++;
+
+        var specificationHTML = `  <div class="row" id="productspecificationedit${productspecificationedit}">
+                                        <div class="col-md-6 px-5 mt-5" id="specification_heading_edit${productspecificationedit}">
+                                                 <label for="product_specification_heading_edit${productspecificationedit}" class="form-label">Specification Heading</label>
+                                                 <select id="product_specification_heading_edit${productspecificationedit}" name="product_specification[${productspecificationedit-1}][heading]"
+                                                  class="form-select ">
+                                                  ${specification_heading_html_edit}
+                                                  </select>
+                                                  <span id="product_specificationedit.${productspecificationedit-1}.heading" style="color: red;"></span>
+                                         </div>
+                                                    <div class="col-md-6 px-5 mt-5" >
                       
-                        <label for="product_specfication${productspecification}" class="form-label">Name</label>
-                        <input type="text" name="product_specification[${productspecification}][name]" class="form-control"
-                            id="product_specfication${productspecification}" autocompvare="off">
-                            <span id="product_specification.${productspecification}.name" style="color: red;"></span>
-                    </div>
+                                                        <label for="product_specfication${productspecificationedit}" class="form-label">Name</label>
+                                                        <input type="text" name="product_specification[${productspecificationedit-1}][name]" class="form-control"
+                                                        id="product_specfication${productspecificationedit}" autocompvare="off">
+                                                        <span id="product_specificationedit.${productspecificationedit-1}.name" style="color: red;"></span>
+                                                    </div>
                     
-                    <div class="col-md-12 px-5">
+                                        <div class="col-md-12 px-5">
                        
-                        <label for="product_specification_details_edit${productspecification}" class="form-label">Detail</label>
-                        <div class="form-floating">
-                        <textarea class="form-control" name="product_specification[${productspecification}][detail]" placeholder="Leave a comment here"
-                            id="product_specification_details_edit${productspecification}" style="height: 100px"></textarea>
-                            <span id="product_specification.${productspecification}.detail" style="color: red;"></span>
-                            </div>
+                                                   <label for="product_specification_details_edit${productspecificationedit}" class="form-label">Detail</label>
+                                            <div class="form-floating">
+                                                <textarea class="form-control" name="product_specification[${productspecificationedit-1}][detail]" placeholder="Leave a comment here"
+                                                 id="product_specification_details_edit${productspecificationedit}" style="height: 100px"></textarea>
+                                                 <span id="product_specificationedit.${productspecificationedit-1}.detail" style="color: red;"></span>
+                                             </div>
                     
-                    <div class="col-md-12 px-5 d-flex justify-content-end">
-                    <span class="btn btn-danger btn-sm px-3" onclick="removeElementSpecficationEdit('productspecification${productspecification}')">-</span>
-                </div>
-                    
-
-                </div>`;
+                                          <div class="col-md-12 px-5 d-flex justify-content-end">
+                                           <span class="btn btn-danger btn-sm px-3" onclick="removeElementSpecficationEdit('productspecificationedit${productspecificationedit}')">-</span>
+                                          </div>
+                                     </div>
+                                </div>`;
 
         $("#productspecfictaioncontaineredit").append(specificationHTML);
-        $(`#product_specification_heading_edit${productspecification}`).select2();
+        $(`#product_specification_heading_edit${productspecificationedit}`).select2();
 
 
         ClassicEditor.create(
                 document.querySelector(
-                    `#product_specification_details_edit${productspecification}`
+                    `#product_specification_details_edit${productspecificationedit}`
                 ), {
                     ckfinder: {
                         uploadUrl: `{{ route('product-textarea-image-upload') . '?_token=' . csrf_token() }}`,
@@ -1202,7 +1292,7 @@
                 }
             )
             .then((newEditor) => {
-                productSpecficationTextarea.push(newEditor);
+                productSpecficationTextareaEdit.push(newEditor);
             })
             .catch((error) => {
                 console.error(error);
@@ -1211,16 +1301,17 @@
 
     }
 
-    var colorStockContainerIndex = 0;
+    var colorStockContainerIndex = {{ $c }};
 
-    function addMoreColorStockMeasurmentFiled() {
+    function addMoreColorStockMeasurmentFiledEdit(id) {
+        let domid = id;
         colorStockContainerIndex++;
         var colorStcokHtml = `
-        <div class="row" id="colorstockcontainer${colorStockContainerIndex}">
+        <div class="row" id="colorstockcontainer${domid}${colorStockContainerIndex}">
         <div class="col-md-5 py-3">
                                         <label for="product_color_type_edit" class="form-label">Select color
                                             (optional)</label>
-                                        <select id="product_color_type_edit${colorStockContainerIndex}" name="product_measurment_price_detail[0][color][]"
+                                        <select id="product_color_type_edit${domid}${colorStockContainerIndex}" name="product_measurment_price_detail[${domid}][color][]"
                                             class="form-select">
                                             <option selected> Please select option</option>
                                             <option value="red">Red</option>
@@ -1230,123 +1321,123 @@
                                     </div>
 
                                     <div class="col-md-5 py-3">
-                                        <label for="product_stock_quantity" class="form-label">Product Stock
+                                        <label for="product_stock_quantity_color_edit${domid}${colorStockContainerIndex}" class="form-label">Product Stock
                                             Color wise (optional)</label>
                                         <input type="number"
-                                            name="product_measurment_price_detail[0][stock_color_wise][]"
-                                            class="form-control" id="product_stock_quantity" autocompvare="off">
+                                            name="product_measurment_price_detail[${domid}][stock_color_wise][]"
+                                            class="form-control" id="product_stock_quantity_color_edit${domid}${colorStockContainerIndex}" autocompvare="off">
                                     </div>
 
                                     <div class="col-md-2 py-3">
                                         
                                            
-                                                <span class="btn btn-danger btn-sm px-3" onclick="removeElement('colorstockcontainer${colorStockContainerIndex}')">-</span>
+                                                <span class="btn btn-danger btn-sm px-3" onclick="removeElementEdit('colorstockcontainer${domid}${colorStockContainerIndex}')">-</span>
                                                 
                                      
                                     </div></div>`;
-        $('#colorstock').append(colorStcokHtml);
-        $(`#product_color_type_edit${colorStockContainerIndex}`).select2();
+        $(`#colorstockedit${domid}`).append(colorStcokHtml);
+        $(`#product_color_type_edit${domid}${colorStockContainerIndex}`).select2();
 
 
     }
 
-    var newColorStockIndex = 0;
+    // var newColorStockIndex = 0;
 
-    function addNewMoreColorStockMeasurmentFiled(colorStockIndex) {
+    // function addNewMoreColorStockMeasurmentFiled(colorStockIndex) {
 
-        newColorStockIndex++;
-        var colorNewStockHtml = `  
-        <div class="row" id="colorstockcontainer${colorStockIndex}${newColorStockIndex}">
-        <div class="col-md-5 py-3">
-                                        <label for="product_color_type_edit${colorStockIndex}${newColorStockIndex}" class="form-label">Select color
-                                            (optional)</label>
-                                        <select id="product_color_type_edit${colorStockIndex}${newColorStockIndex}" name="product_measurment_price_detail[${colorStockIndex}][color][]"
-                                            class="form-select">
-                                            <option selected> Please select option</option>
-                                            <option value="red">Red</option>
-                                            <option value="green">Green</option>
+    //     newColorStockIndex++;
+    //     var colorNewStockHtml = `  
+    //     <div class="row" id="colorstockcontainer${colorStockIndex}${newColorStockIndex}">
+    //     <div class="col-md-5 py-3">
+    //                                     <label for="product_color_type_edit${colorStockIndex}${newColorStockIndex}" class="form-label">Select color
+    //                                         (optional)</label>
+    //                                     <select id="product_color_type_edit${colorStockIndex}${newColorStockIndex}" name="product_measurment_price_detail[${colorStockIndex}][color][]"
+    //                                         class="form-select">
+    //                                         <option selected> Please select option</option>
+    //                                         <option value="red">Red</option>
+    //                                         <option value="green">Green</option>
 
-                                        </select>
-                                    </div>
+    //                                     </select>
+    //                                 </div>
 
-                                    <div class="col-md-5 py-3">
-                                        <label for="product_stock_quantity${colorStockIndex}${newColorStockIndex}" class="form-label">Product Stock
-                                            Color wise (optional)</label>
-                                        <input type="number"
-                                            name="product_measurment_price_detail[${colorStockIndex}][stock_color_wise][]"
-                                            class="form-control" id="product_stock_quantity${colorStockIndex}${newColorStockIndex}" autocompvare="off">
-                                    </div>
-
-                                    
-                                        <div class="col-md-2 py-3">
-                                           
-                                                <span class="btn btn-danger btn-sm px-3" onclick="removeElement('colorstockcontainer${colorStockIndex}${newColorStockIndex}')">-</span>
-                                    
-                                    </div>`;
-        $(`#newcolorstockcontainer${colorStockIndex}`).append(colorNewStockHtml);
-        $(`#product_color_type_edit${colorStockIndex}${newColorStockIndex}`).select2();
-
-    }
+    //                                 <div class="col-md-5 py-3">
+    //                                     <label for="product_stock_quantity_edit${colorStockIndex}${newColorStockIndex}" class="form-label">Product Stock
+    //                                         Color wise (optional)</label>
+    //                                     <input type="number"
+    //                                         name="product_measurment_price_detail[${colorStockIndex}][stock_color_wise][]"
+    //                                         class="form-control" id="product_stock_quantity_edit${colorStockIndex}${newColorStockIndex}" autocompvare="off">
+    //                                 </div>
 
 
+    //                                     <div class="col-md-2 py-3">
+
+    //                                             <span class="btn btn-danger btn-sm px-3" onclick="removeElementEdit('colorstockcontainer${colorStockIndex}${newColorStockIndex}')">-</span>
+
+    //                                 </div>`;
+    //     $(`#newcolorstockcontainer${colorStockIndex}`).append(colorNewStockHtml);
+    //     $(`#product_color_type_edit${colorStockIndex}${newColorStockIndex}`).select2();
+
+    // }
 
 
 
-    var productpricedetailId = 0;
+
+
+    var productpricedetailIdindex = {{ $k }};
 
     function productpricedetailEdit() {
-        productpricedetailId++;
+        productpricedetailIdindex++;
 
-        var productpricedetailHTML = `<div class="row" id="productpricecontaineredit${productpricedetailId}">
+        var productpricedetailHTML = `<div class="row" id="productpricecontaineredit${productpricedetailIdindex}">
 <div class="col-md-3 py-3">
-    <label for="product_measurment_quantity${productpricedetailId}" class="form-label">Product
+    <label for="product_measurment_quantity_edit${productpricedetailIdindex}" class="form-label">Product
         Measurment Quantity</label>
-    <input type="number" name="product_measurment_price_detail[${productpricedetailId}][measurment_quantity]"
-        class="form-control" id="product_measurment_quantity${productpricedetailId}" autocomplete="off">
-    <span id="product_measurment_price_detail.${productpricedetailId}.measurment_quantity"
+    <input type="number" name="product_measurment_price_detail[${productpricedetailIdindex}][measurment_quantity]"
+        class="form-control" id="product_measurment_quantity_edit${productpricedetailIdindex}" autocomplete="off">
+    <span id="product_measurment_price_detailedit.${productpricedetailIdindex}.measurment_quantity"
         style="color: red;"></span>
 
 
 </div>
 <div class="col-md-3 py-3">
-    <label for="product_measurment_quantity_price${productpricedetailId}" class="form-label">Price(MRP)</label>
-    <input type="number" name="product_measurment_price_detail[${productpricedetailId}][price]"
-        class="form-control" id="product_measurment_quantity_price${productpricedetailId}" autocomplete="off">
-    <span id="product_measurment_price_detail.${productpricedetailId}.price" style="color: red;"></span>
+    <label for="product_measurment_quantity_price_edit${productpricedetailIdindex}" class="form-label">Price(MRP)</label>
+    <input type="number" name="product_measurment_price_detail[${productpricedetailIdindex}][price]"
+        class="form-control" id="product_measurment_quantity_price_edit${productpricedetailIdindex}" autocomplete="off">
+    <span id="product_measurment_price_detailedit.${productpricedetailIdindex}.price" style="color: red;"></span>
 
 </div>
 
 
 
 <div class="col-md-3 py-3">
-    <label for="product_currency_type_edit${productpricedetailId}" class="form-label">Currency Type</label>
-    <select id="product_currency_type_edit${productpricedetailId}"
-        name="product_measurment_price_detail[${productpricedetailId}][currency]" class="form-select">
+    <label for="product_currency_type_edit${productpricedetailIdindex}" class="form-label">Currency Type</label>
+    <select id="product_currency_type_edit${productpricedetailIdindex}"
+        name="product_measurment_price_detail[${productpricedetailIdindex}][currency]" class="form-select">
         <option selected disabled> Please Select Currency type</option>
         <option value="inr">INR</option>
         <option value="usd">USD</option>
 
     </select>
-    <span id="product_measurment_price_detail.${productpricedetailId}.currency" style="color: red;"></span>
+    <span id="product_measurment_price_detailedit.${productpricedetailIdindex}.currency" style="color: red;"></span>
 </div>
 
 
 
 <div class="col-md-3 py-3">
-    <label for="product_stock_quantity${productpricedetailId}" class="form-label">Product Stock
+    <label for="product_stock_quantity_edit${productpricedetailIdindex}" class="form-label">Product Stock
         Quantity</label>
-    <input type="number" name="product_measurment_price_detail[${productpricedetailId}][stock]"
-        class="form-control" id="product_stock_quantity${productpricedetailId}" autocompvare="off">
-    <span id="product_measurment_price_detail.${productpricedetailId}.stock" style="color: red;"></span>
+    <input type="number" name="product_measurment_price_detail[${productpricedetailIdindex}][stock]"
+        class="form-control" id="product_stock_quantity_edit${productpricedetailIdindex}" autocompvare="off">
+    <span id="product_measurment_price_detailedit.${productpricedetailIdindex}.stock" style="color: red;"></span>
 </div>
 
-<div id="newcolorstockcontainer${productpricedetailId}">
-    <div class="row" id="colorstock${productpricedetailId}">
+<div id="newcolorstockcontainer${productpricedetailIdindex}">
+    <div class="row" id="colorstock${productpricedetailIdindex}">
         <div class="col-md-5 py-3">
-            <label for="product_new_color_type${productpricedetailId}" class="form-label">Select color
+            <label for="product_new_color_type${productpricedetailIdindex}" class="form-label">Select color
                 (optional)</label>
-            <select id="product_new_color_type${productpricedetailId}"
-                name="product_measurment_price_detail[${productpricedetailId}][color][]" class="form-select">
+            <select id="product_new_color_type${productpricedetailIdindex}"
+                name="product_measurment_price_detail[${productpricedetailIdindex}][color][]" class="form-select">
                 <option selected> Please select option</option>
                 <option value="red">Red</option>
                 <option value="green">Green</option>
@@ -1355,17 +1446,17 @@
         </div>
 
         <div class="col-md-5 py-3">
-            <label for="product_stock_quantity${productpricedetailId}" class="form-label">Product Stock
+            <label for="product_stock_quantity_edit${productpricedetailIdindex}" class="form-label">Product Stock
                 Color wise (optional)</label>
             <input type="number"
-                name="product_measurment_price_detail[${productpricedetailId}][stock_color_wise][]"
-                class="form-control" id="product_stock_quantity${productpricedetailId}" autocompvare="off">
+                name="product_measurment_price_detail[${productpricedetailIdindex}][stock_color_wise][]"
+                class="form-control" id="product_stock_quantity_edit${productpricedetailIdindex}" autocompvare="off">
         </div>
 
 
         <div class="col-md-2 py-3">
             <span class="btn btn-success btn-sm px-3"
-                onclick="addNewMoreColorStockMeasurmentFiled(${productpricedetailId})">+</span>
+                onclick="addMoreColorStockMeasurmentFiledEdit(${productpricedetailIdindex})">+</span>
 
         </div>
 
@@ -1381,7 +1472,7 @@
 
 <div class="col-md-12 px-5 d-flex justify-content-end">
     <span class="btn btn-danger btn-sm px-3"
-        onclick="removeElementProductPriceDetailEdit('productpricecontaineredit${productpricedetailId}')">-</span>
+        onclick="removeElementProductPriceDetailEdit('productpricecontaineredit${productpricedetailIdindex}')">-</span>
 </div>
 
 </div>`;
@@ -1391,9 +1482,9 @@
         $("#productpricecontaineredit").append(productpricedetailHTML);
 
 
-        $(`#product_currency_type_edit${productpricedetailId}`).select2();
+        $(`#product_currency_type_edit${productpricedetailIdindex}`).select2();
 
-        $(`#product_new_color_type${productpricedetailId}`).select2();
+        $(`#product_new_color_type${productpricedetailIdindex}`).select2();
 
     }
 
@@ -1435,7 +1526,7 @@
                         </div>
                     </div>
                     <div class="col-md-12 px-5 d-flex justify-content-end">
-                    <span class="btn btn-danger btn-sm px-3" onclick="removeElement('otherexpendurecost${otherExpendureId}')">-</span>
+                    <span class="btn btn-danger btn-sm px-3" onclick="removeElementEdit('otherexpendurecost${otherExpendureId}')">-</span>
                 </div>
 
                 </div>`;
@@ -1666,21 +1757,22 @@
 
                 $("#main_content").attr("class", "demo");
 
-                for (let i = 0; i <= productpricedetailId; i++) {
+                for (let i = 0; i <= productpricedetailIdindex; i++) {
 
-                    $(`[id="product_measurment_price_detail.${i}.measurment_quantity"]`).html(" ");
-                    $(`[id="product_measurment_price_detail.${i}.stock"]`).html(" ");
-                    $(`[id="product_measurment_price_detail.${i}.price"]`).html(" ");
-                    $(`[id="product_measurment_price_detail.${i}.currency"]`).html(" ");
+                    $(`[id="product_measurment_price_detailedit.${i}.measurment_quantity"]`).html(
+                        " ");
+                    $(`[id="product_measurment_price_detailedit.${i}.stock"]`).html(" ");
+                    $(`[id="product_measurment_price_detailedit.${i}.price"]`).html(" ");
+                    $(`[id="product_measurment_price_detailedit.${i}.currency"]`).html(" ");
 
                 }
 
                 for (let k = 0; k <= productspecification; k++) {
 
-                    console.log($(`[id="product_specification.${k}.heading"]`).html());
-                    $(`[id="product_specification.${k}.heading"]`).html(" ");
-                    $(`[id="product_specification.${k}.detail"]`).html(" ");
-                    $(`[id="product_specification.${k}.name"]`).html(" ");
+                    console.log($(`[id="product_specificationedit.${k}.heading"]`).html());
+                    $(`[id="product_specificationedit.${k}.heading"]`).html(" ");
+                    $(`[id="product_specificationedit.${k}.detail"]`).html(" ");
+                    $(`[id="product_specificationedit.${k}.name"]`).html(" ");
 
 
                 }
@@ -1937,6 +2029,127 @@
                             if (errorMessageBrand.hasOwnProperty(fieldName)) {
 
                                 $(`[id="mesaurement_parameter_unit_error_edit_id"`).html(
+                                    errorMessageBrand[
+                                        fieldName][
+                                        0
+                                    ]);
+
+                            }
+
+                        }
+
+                        $('#loader').html('');
+                        $('#main_content').removeAttr('class', 'demo');
+
+                    }
+
+
+
+                }
+            });
+
+
+
+
+
+        });
+
+
+
+
+
+
+    });
+
+
+    $('#openSpecificationHeadingModalButtonEdit').on('click', function() {
+
+        $('#myModalSpecificationHeadingEdit').modal('show');
+        $('#exampleModalSpecificHeadingEdit').html('Add New  Specification Heading');
+
+
+
+        $('#submitSpecificationFormEdit').on('click', function() {
+
+            var formData = new FormData();
+
+            formData.append('product_specification_heading_name', $(
+                    '#product_specification_heading_name_edit_id')
+                .val());
+
+
+            $.ajax({
+                url: "{{ route('product.addspecificationheading') }}",
+                type: 'POST',
+                data: formData,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                },
+
+                beforeSend: function() {
+                    $("#loader").html("<div></div>");
+
+                    $("#main_content").attr("class", "demo");
+                },
+
+                success: (data) => {
+
+
+
+                    let OptionHtml =
+                        `<option value="${data.parameter.id}">${data.parameter.name}</option>`;
+                    $("#product_specification_heading").append(OptionHtml);
+
+                    $("#product_specification_heading_edit").append(OptionHtml);
+
+
+
+                    specification_heading_html = specification_heading_html + OptionHtml;
+
+                    specification_heading_html_edit = specification_heading_html_edit +
+                        OptionHtml;
+
+
+
+
+                    if (isset(productspecificationedit)) {
+                        for (let i = 0; i <= productspecificationedit; i++) {
+                            $(`#product_specification_heading${i}`).append(OptionHtml);
+                            $(`#product_specification_heading_edit${i}`).append(OptionHtml);
+
+
+
+                        }
+                    }
+
+
+
+
+                    $('#loader').html('');
+                    $('#main_content').removeAttr('class', 'demo');
+
+                    $('#myModalSpecificationHeadingEdit').modal("hide");
+                    toastr.success(
+                        "Heading  add Sucessfully"
+                    );
+
+                },
+                error: function(xhr, status, error) {
+
+                    if (xhr.status == 422) {
+                        var errorMessageBrand = xhr.responseJSON.errormessage;
+
+                        for (fieldName in errorMessageBrand) {
+
+                            if (errorMessageBrand.hasOwnProperty(fieldName)) {
+
+
+
+                                $(`[id="product_specification_heading_error_edit_id"`).html(
                                     errorMessageBrand[
                                         fieldName][
                                         0
