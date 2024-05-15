@@ -1,17 +1,25 @@
+<style>
+    .select2-container--default .select2-selection--single {
+        height: 40px !important;
+    }
+</style>
+
 <div class="col-md-6">
     <label for="" class="form-label">Brand Name</label>
     <div class="input-group">
-        <select name="product_brand_id" id="{{ $select_id ?? 'product_brand_main_id' }}" class="form-select"
-            data-live-search="true" aria-label="Default select example">
-            <option selected disabled>Open this select menu</option>
-            @foreach ($product_brands as $data)
-                <option @if ($productbranddataid ?? 0 === $data->id) selected @endif value="{{ $data->id }}">
-                    {{ ucwords($data->name) }}</option>
-            @endforeach
-        </select>
+        <div class="d-flex">
+            <select name="product_brand_id" id="{{ $select_id ?? 'product_brand_main_id' }}" class="form-select"
+                data-live-search="true" aria-label="Default select example">
+                <option selected disabled>Open this select menu</option>
+                @foreach ($product_brands as $data)
+                    <option @if ($productbranddataid ?? 0 === $data->id) selected @endif value="{{ $data->id }}">
+                        {{ ucwords($data->name) }}</option>
+                @endforeach
+            </select>
 
-        <button type="button" id="{{ $openModalButton ?? 'openModalButton' }}" class="btn btn-primary ">Add
-            option</button>
+            <button type="button" id="{{ $openModalButton ?? 'openModalButton' }}" class="btn btn-primary ml-2">Add
+                option</button>
+        </div>
 
         <span id="{{ $selectbranderrorid ?? 'product_brand_id' }}" style="color: red;"></span>
 

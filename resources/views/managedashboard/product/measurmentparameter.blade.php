@@ -1,19 +1,29 @@
+<style>
+    .select2-container--default .select2-selection--single {
+        height: 40px !important;
+    }
+</style>
+
+
 <div class="col-md-6">
     <label for="" class="form-label">{{ $select_label ?? 'Product Measurment Parameter' }} </label>
     <div class="input-group">
-        <select name="{{ $select_name ?? 'product_measurment_parameter' }}"
-            id="{{ $select_id ?? 'product_measurment_parameter_main_id' }}"
-            class="form-select {{ $selectindexchange ?? 'selectspecficationindexchange' }}"
-            aria-label="Default select example">
-            <option selected disabled>Open this select menu</option>
-            @foreach ($selectdata as $data)
-                <option @if ($selectedid ?? 0 === $data->id) selected @endif value="{{ $data->id }}">
-                    {{ ucwords($data->name) }}</option>
-            @endforeach
-        </select>
+        <div class="d-flex">
+            <select name="{{ $select_name ?? 'product_measurment_parameter' }}"
+                id="{{ $select_id ?? 'product_measurment_parameter_main_id' }}"
+                class="form-select {{ $selectindexchange ?? 'selectspecficationindexchange' }}"
+                aria-label="Default select example">
+                <option selected disabled>Open this select menu</option>
+                @foreach ($selectdata as $data)
+                    <option @if ($selectedid ?? 0 === $data->id) selected @endif value="{{ $data->id }}">
+                        {{ ucwords($data->name) }}</option>
+                @endforeach
+            </select>
 
-        <button type="button" id="{{ $openModalButton ?? 'openMeasurmentModalButton' }}" class="btn btn-primary ">Add
-            option</button>
+            <button type="button" id="{{ $openModalButton ?? 'openMeasurmentModalButton' }}"
+                class="btn btn-primary ml-2">Add
+                option</button>
+        </div>
 
         <span id="{{ $seletspanerror ?? 'product_measurment_parameter' }}" style="color: red;"></span>
 

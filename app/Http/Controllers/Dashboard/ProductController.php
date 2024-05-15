@@ -93,7 +93,6 @@ class ProductController extends Controller
 
 
 
-
             $validator = Validator::make($request->all(), [
                 'product_category' => 'required',
                 'product_title' => 'required|unique:vendor_products',
@@ -447,8 +446,8 @@ class ProductController extends Controller
 
 
                 ->addColumn('action', function ($row) {
-                    $btn = '<button type="button" onclick="editProduct(' . $row->id . ',' . $row->product_category_id . ')" class="edit btn btn-primary btn-sm">Edit</button>';
-                    $btn .= '<button type="button" onclick="deleteProduct(' . $row->id . ')" class="delete btn btn-danger btn-sm">Delete</button>';
+                    $btn = '<button type="button" onclick="editProduct(' . $row->id . ',' . $row->product_category_id . ')" class="edit btn btn-primary mr-2"><i class="ti-pencil-alt"></i></button>';
+                    $btn .= '<button type="button" onclick="deleteProduct(' . $row->id . ')" class="delete btn btn-danger "><i class="ti-trash"></i></button>';
                     return $btn;
                 })
 
@@ -768,7 +767,7 @@ class ProductController extends Controller
 
         try {
 
-
+            dd($request->all());
 
 
 
