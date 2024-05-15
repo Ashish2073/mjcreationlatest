@@ -70,6 +70,8 @@ Route::post('vendors/subproduct-categories', [ProductController::class, 'handleC
 
 Route::post('vendors/saveproduct', [ProductController::class, 'saveproduct'])->name('vendor-saveproduct');
 
+Route::post('vendors/updateproduct', [ProductController::class, 'updateproduct'])->name('vendors.updateproduct');
+
 Route::post('vendors/editproduct', [ProductController::class, 'editproduct'])->name('vendor.editproduct');
 
 

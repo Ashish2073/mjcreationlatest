@@ -83,7 +83,7 @@
                 {{-- <button class="btn btn-success btn-sm ">Add More Product</button> --}}
             </div>
         </div>
-        <form class="row g-3" id="vendorform" enctype="multipart/form-data">
+        <form class="row g-3" id="vendorformedit" enctype="multipart/form-data">
 
             <div class="col-md-12">
                 <div class="row" id="productcategoryelementedit">
@@ -118,7 +118,7 @@
                                     {{ ucwords($data->name) }}</option>
                             @endforeach
                         </select>
-                        <span id="product_category" style="color:red"></span>
+                        <span id="product_categoryedit" style="color:red"></span>
 
 
 
@@ -139,6 +139,10 @@
 
 
             @foreach ($vendorProducts as $productdata)
+
+
+
+                <input type="hidden" value="{{ $productdata->id }}" name="product_id" />
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-4">
@@ -146,7 +150,7 @@
                             <input type="text" name="product_title" class="form-control" id="inputEmail4"
                                 value="{{ $productdata->product_title }}" autocomplete="off">
 
-                            <span id="product_title" style="color: red;"></span>
+                            <span id="product_titleedit" style="color: red;"></span>
                         </div>
                     </div>
 
@@ -170,7 +174,7 @@
                             'brandimage' => 'brandImageEdit',
                             'brandImagepreviewupload' => 'brandImageEditpreviewupload',
                             'brandImageediterror' => 'brandImageEditError',
-                            'selectbranderrorid' => 'product_brand_edit_id',
+                            'selectbranderrorid' => 'product_brand_idedit',
                         ]);
 
 
@@ -188,7 +192,7 @@
                             <input type="number" name="product_quantity" class="form-control" id="inputEmail4"
                                 value="{{ $productdata->product_total_stock_quantity }}" autocomplete="off">
 
-                            <span id="product_quantity" style="color: red;"></span>
+                            <span id="product_quantityedit" style="color: red;"></span>
                         </div>
                     </div>
 
@@ -198,7 +202,7 @@
                     <div class="form-floating">
                         <textarea class="form-control" id="product_desc_edit" name="product_desc" placeholder="Leave a comment here"
                             style="height: 100px">{{ $productdata->discription }}</textarea>
-                        <span id="product_discription" style="color: red;"></span>
+                        <span id="product_discriptionedit" style="color: red;"></span>
                     </div>
                 </div>
 
@@ -247,7 +251,7 @@
                             'openModalButton' => 'openMeasurmentModalButtonEdit',
                             'select_name' => 'product_measurment_parameter',
                             'select_label' => 'Product Measurment Parameter',
-                            'seletspanerror' => 'product_measurment_parameter_edit',
+                            'seletspanerror' => 'product_measurment_parameteredit',
                         ])
 
 
@@ -284,7 +288,7 @@
                             'openModalButton' => 'openMeasurmentUnitModalButtonEdit',
                             'select_name' => 'product_measurment_unit',
                             'select_label' => 'Product Measurment Unit',
-                            'seletspanerror' => 'product_measurment_unit_edit',
+                            'seletspanerror' => 'product_measurment_unitedit',
                         ])
 
 
@@ -706,7 +710,7 @@
 
 
             <div class="col-md-12 d-flex justify-content-around py-3">
-                <button class="btn btn-primary btn-sm px-3" id="updatevendorproduct">Save</button>
+                <button class="btn btn-primary btn-sm px-3" id="updatevendorproduct">UPDATE</button>
             </div>
 
 
@@ -729,11 +733,15 @@
     $('#product_measurment_parameter_main_edit_id').select2();
     $('#product_measurment_unit_main_edit').select2();
 
+    $('.measurmentcurrencyindexchange').select2();
+
+    $('.selectspecficationindexchangeEdit').select2();
+
 
     for (let i = 0; i < {{ $k }}; i++) {
 
         for (let m = 0; m < {{ $c }}; m++) {
-            $(`#product_currency_type_edit${i}`).select2();
+            // $(`#product_currency_type_edit${i}`).select2();
             $(`#product_color_type_edit${i}${m}`).select2();
 
         }
@@ -956,7 +964,7 @@
 
 
             selectAreaFields[i].setAttribute('id', `product_specification_heading_edit${i}`);
-            $(`#product_specification_heading_edit${productspecificationedit-1}`).select2();
+            // $(`#product_specification_heading_edit${productspecificationedit-1}`).select2();
 
             //   $product_specification_heading_edit${i}.select2();
         }
@@ -1028,7 +1036,7 @@
 
     for (let j = 0; j < {{ $l }}; j++) {
 
-        $(`#product_specification_heading_edit${j}`).select2();
+        // $(`#product_specification_heading_edit${j}`).select2();
 
         ClassicEditor.create(document.querySelector(`#product_specification_details_edit${j}`), {
                 ckfinder: {
@@ -1342,13 +1350,13 @@
 
     function addMoreProductspecificationEdit() {
 
-        console.log(productspecificationedit);
+
         productspecificationedit++;
-        console.log(productspecificationedit);
+
         var specificationHTMLEdit = `  <div class="row" id="productspecificationedit${productspecificationedit}">
                                         <div class="col-md-6 px-5 mt-5" id="specification_heading_edit${productspecificationedit}">
                                                  <label for="product_specification_heading_edit${productspecificationedit-1}" class="form-label">Specification Heading</label>
-                                                 <select id="product_specification_heading_edit${productspecificationedit-1}" name="product_specification[${productspecificationedit-1}][heading]"
+                                                 <select  name="product_specification[${productspecificationedit-1}][heading]"
                                                   class="form-select selectspecficationindexchangeEdit">
                                                   ${specification_heading_html_edit}
                                                   </select>
@@ -1378,7 +1386,9 @@
                                 </div>`;
 
         $("#productspecfictaioncontaineredit").append(specificationHTMLEdit);
-        $(`#product_specification_heading_edit${productspecificationedit-1}`).select2();
+        // $(`#product_specification_heading_edit${productspecificationedit-1}`).select2();
+
+        $('.selectspecficationindexchangeEdit').select2();
 
 
         ClassicEditor.create(
@@ -1512,7 +1522,7 @@
 
 <div class="col-md-3 py-3">
     <label for="product_currency_type_edit${productpricedetailIdindexedit}" class="form-label">Currency Type</label>
-    <select id="product_currency_type_edit${productpricedetailIdindexedit}"
+    <select 
         name="product_measurment_price_detail[${productpricedetailIdindexedit}][currency]" class="form-select measurmentcurrencyindexchange">
         <option selected disabled> Please Select Currency type</option>
         <option value="inr">INR</option>
@@ -1583,7 +1593,9 @@
         $("#productpricecontaineredit").append(productpricedetailHTML);
 
 
-        $(`#product_currency_type_edit${productpricedetailIdindexedit}`).select2();
+        // $(`#product_currency_type_edit${productpricedetailIdindexedit}`).select2();
+
+        $('.measurmentcurrencyindexchange').select2();
 
         $(`#product_new_color_type${productpricedetailIdindexedit}`).select2();
 
@@ -1700,15 +1712,15 @@
         });
     }
 
-    $("#savevendorproduct").on("click", function(e) {
+    $("#updatevendorproduct").on("click", function(e) {
         e.preventDefault();
 
-        var formData = new FormData($("#vendorform")[0]);
+        var formData = new FormData($("#vendorformedit")[0]);
 
 
 
         formData.append("product_discription", product_desc_edit.getData());
-        formData.append("product_warrenty_edit", product_warrenty_edit.getData());
+        formData.append("product_warrenty", product_warrenty_edit.getData());
 
         // formData.append(
         //     "product_other_expenditure_resaon[0]",
@@ -1736,15 +1748,15 @@
 
 
 
-        formData.append(
-            "product_specification[0][detail]",
-            product_specification_details_edit.getData()
-        );
-        var productspecificationTextareaLength = productspecificationTextarea.length;
-        for (var i = 1; i <= productspecificationTextareaLength; i++) {
+        // formData.append(
+        //     "product_specification[0][detail]",
+        //     product_specification_details_edit.getData()
+        // );
+        var productspecificationTextareaEditLength = productspecificationTextareaEdit.length;
+        for (var i = 0; i < productspecificationTextareaEditLength; i++) {
             formData.append(
                 `product_specification[${i}][detail]`,
-                productspecificationTextarea[i - 1].getData()
+                productspecificationTextareaEdit[i].getData()
             );
         }
 
@@ -1842,7 +1854,7 @@
         formData.append("_token", $('meta[name="csrf-token"]').attr("content"));
 
         $.ajax({
-            url: "{{ route('vendor-saveproduct') }}",
+            url: "{{ route('vendors.updateproduct') }}",
             type: "POST",
             data: formData,
             async: false,
@@ -1870,22 +1882,22 @@
 
                 for (let k = 0; k <= productspecification; k++) {
 
-                    console.log($(`[id="product_specificationedit.${k}.heading"]`).html());
-                    $(`[id="product_specificationedit.${k}.heading"]`).html(" ");
-                    $(`[id="product_specificationedit.${k}.detail"]`).html(" ");
-                    $(`[id="product_specificationedit.${k}.name"]`).html(" ");
+                    console.log($(`[id="product_specificationedit.${k}.headingedit"]`).html());
+                    $(`[id="product_specificationedit.${k}.headingeditedit"]`).html(" ");
+                    $(`[id="product_specificationedit.${k}.detailedit"]`).html(" ");
+                    $(`[id="product_specificationedit.${k}.nameedit"]`).html(" ");
 
 
                 }
 
 
-                $("#product_category").html(" ");
-                $("#product_title").html(" ");
-                $("#product_brand_id").html(" ");
-                $("#product_quantity").html(" ");
-                $("#product_discription").html(" ");
-                $("#product_measurment_parameter").html(" ");
-                $("#product_measurment_unit").html(" ");
+                $("#product_categoryedit").html(" ");
+                $("#product_titleedit").html(" ");
+                $("#product_brand_idedit").html(" ");
+                $("#product_quantityedit").html(" ");
+                $("#product_discriptionedit").html(" ");
+                $("#product_measurment_parameteredit").html(" ");
+                $("#product_measurment_unitedit").html(" ");
 
 
 
@@ -1899,13 +1911,14 @@
             },
             success: (data) => {
                 toastr.success(
-                    "Product Added Sucessfully"
+                    "Product Updated Sucessfully"
                 );
 
 
                 $("#loader").html("");
                 $("#main_content").removeAttr("class", "demo");
-                hideAddForm();
+                // hideAddForm();
+                hideEditForm();
                 dataTable();
 
             },
@@ -1927,7 +1940,7 @@
                     for (var fieldName in errorMessage) {
 
                         if (errorMessage.hasOwnProperty(fieldName)) {
-                            $(`[id="${fieldName}"]`).html(errorMessage[fieldName][0]);
+                            $(`[id="${fieldName}edit"]`).html(errorMessage[fieldName][0]);
                         }
 
                     }
@@ -2214,13 +2227,16 @@
                     specification_heading_html_edit = specification_heading_html_edit +
                         OptionHtml;
 
+                    $('.selectspecficationindexchangeEdit').each(function() {
+                        $(this).append(OptionHtml);
+                    });
 
 
 
                     if (isset(productspecificationedit)) {
                         for (let i = 0; i <= productspecificationedit; i++) {
                             $(`#product_specification_heading${i}`).append(OptionHtml);
-                            $(`#product_specification_heading_edit${i}`).append(OptionHtml);
+                            // $(`#product_specification_heading_edit${i}`).append(OptionHtml);
 
 
 

@@ -19,6 +19,7 @@ use Yajra\DataTables\Facades\Datatables;
 use Illuminate\Support\Facades\DB;
 use App\Models\ProductPriceDetail;
 use Illuminate\Support\Facades\View;
+use Illuminate\Validation\Rule;
 
 class ProductController extends Controller
 {
@@ -754,6 +755,259 @@ class ProductController extends Controller
 
         }
 
+
+    }
+
+
+    public function updateproduct(Request $request)
+    {
+
+
+
+        DB::beginTransaction();
+
+        try {
+
+
+
+
+
+            $validator = Validator::make($request->all(), [
+                'product_category' => 'required',
+                'product_title' => 'required',
+                Rule::unique('vendor_products')->ignore($request->product_id),
+                'product_brand_id' => 'required',
+                'product_quantity' => 'required',
+                'product_discription' => 'required',
+                'product_measurment_parameter' => 'required',
+                'product_measurment_unit' => 'required',
+                'product_measurment_price_detail.*.price' => 'required',
+                'product_measurment_price_detail.*.measurment_quantity' => 'required',
+                'product_measurment_price_detail.*.currency' => 'required',
+                'product_measurment_price_detail.*.stock' => 'required',
+                'product_specification.*.name' => 'required',
+                'product_specification.*.heading' => 'required',
+
+                'product_specification.*.detail' => 'required',
+
+
+
+
+            ], [
+                'product_measurment_price_detail.*.price' => 'Product price required',
+                'product_measurment_price_detail.*.measurment_quantity' => 'Product measurment quantity required',
+                'product_measurment_price_detail.*.currency' => 'Product currency type required',
+                'product_measurment_price_detail.*.stock' => 'Product stock required',
+                'product_specification.*.name' => 'Product specfication required',
+
+                'product_specification.*.detail' => 'Product Specification detail required',
+
+                'product_specification.*.heading' => 'Specification heading field is required',
+            ]);
+
+
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'sucess' => false,
+                    'errormessage' => $validator->errors(),
+
+
+                ], 422);
+
+
+            }
+
+
+
+
+
+
+
+            $vendorProduct = VendorProduct::find($request->product_id);
+            $vendorProduct->vendor_id = 1;
+
+            $vendorProduct->product_category_id = $request->product_category[count($request->product_category) - 1];
+            $vendorProduct->product_title = $request->product_title;
+            $vendorProduct->brand_id = ($request->product_brand_id);
+            $vendorProduct->product_total_stock_quantity = $request->product_quantity;
+            $vendorProduct->discription = $request->product_discription;
+            $vendorProduct->product_warrenty = $request->product_warrenty;
+
+
+            $vendorProduct->measurment_parameter_name = $request->product_measurment_parameter;
+
+            $vendorProduct->measurment_unit_name = $request->product_measurment_unit;
+
+
+
+            // product_color_stock $vendorProduct->product_other_expenditure_cost=json_encode($request->product_other_price) ?? Null;
+
+            // $vendorProduct->product_other_expenditure_resaon=json_encode($request->product_other_expenditure_resaon)??Null;
+
+            // $vendorProduct->product_other_expenditure_currency_type=json_encode($request->product_other_expenditure_currency_type)??Null;
+            $product_specification_modified_data = [];
+            foreach ($request->product_specification as $data) {
+                $product_specification_modified_data['heading'][] = $data['heading'];
+                $product_specification_modified_data['name'][] = $data['name'];
+                $product_specification_modified_data['detail'][] = $data['detail'];
+            }
+
+
+
+            $vendorProduct->product_specification_heading = isset($product_specification_modified_data['heading']) ? json_encode($product_specification_modified_data['heading']) : Null;
+            $vendorProduct->product_specification = json_encode($product_specification_modified_data['name']) ?? Null;
+
+            $vendorProduct->product_specification_details = json_encode($product_specification_modified_data['detail']) ?? Null;
+
+            // $vendorProduct->product_discount_name=json_encode($request->product_discount_name) ?? Null;
+
+            // $vendorProduct->product_discount_percentage=json_encode($request->product_discount_percentage)?? Null;
+
+            // $vendorProduct->product_discount_start_date= json_encode($request->product_discount_start_date)?? Null;
+
+            // $vendorProduct->product_discount_end_date=json_encode($request->product_discount_end_date) ?? Null;
+
+            // $vendorProduct->product_discount_detail=json_encode($request->product_discount_detail) ?? Null;
+
+
+            if ($request->hasFile('product_banner_image')) {
+                $originName = $request->file('product_banner_image')->getClientOriginalName();
+                $fileName = pathinfo($originName, PATHINFO_FILENAME);
+                $extension = $request->file('product_banner_image')->getClientOriginalExtension();
+                $fileName = $fileName . '__' . time() . '.' . $extension;
+                $request->file('product_banner_image')->move(public_path('product/banner'), $fileName);
+
+                $vendorProduct->product_banner_image = $fileName;
+
+            }
+
+            if ($request->hasFile('product_image_gallery')) {
+
+                $product_image_file_name = [];
+                foreach ($request->file('product_image_gallery') as $image) {
+                    $originName = $image->getClientOriginalName();
+                    $fileName = pathinfo($originName, PATHINFO_FILENAME);
+                    $extension = $image->getClientOriginalExtension();
+
+                    $fileName = $fileName . '__' . time() . '.' . $extension;
+
+
+                    $image->move(public_path('product/gallery'), $fileName);
+
+                    array_push($product_image_file_name, $fileName);
+
+                }
+
+
+                $vendorProduct->product_image_gallery = json_encode($product_image_file_name);
+
+
+
+
+
+            }
+
+            if ($request->hasFile('product_color_banner_image')) {
+
+                $product_color_banner_image_file_name = [];
+                foreach ($request->file('product_color_banner_image') as $image) {
+
+                    $originName = $image->getClientOriginalName();
+                    $fileName = pathinfo($originName, PATHINFO_FILENAME);
+                    $extension = $image->getClientOriginalExtension();
+
+                    $fileName = $fileName . '__' . time() . '.' . $extension;
+
+
+                    $image->move(public_path('product/gallery'), $fileName);
+
+                    array_push($product_color_banner_image_file_name, $fileName);
+
+                }
+
+
+                $vendorProduct->product_color_banner_image = json_encode($product_color_banner_image_file_name);
+
+
+
+
+
+            }
+
+
+            if (isset($request->product_color_image_gallery)) {
+                $product_color_image_gallery_file_name = [];
+                foreach ($request->product_color_image_gallery as $k => $images) {
+
+
+
+                    foreach ($images as $l => $img) {
+
+                        $originName = $img->getClientOriginalName();
+                        $fileName = pathinfo($originName, PATHINFO_FILENAME);
+                        $extension = $img->getClientOriginalExtension();
+
+                        $fileName = $fileName . '__' . time() . '.' . $extension;
+
+
+                        $img->move(public_path('product/gallery'), $fileName);
+
+                        $product_color_image_gallery_file_name[$k][$l] = $fileName;
+
+
+                    }
+
+                }
+                $vendorProduct->product_color_image_gallery = json_encode($product_color_image_gallery_file_name);
+            }
+
+            $vendorProduct->save();
+
+            if ($vendorProduct) {
+
+
+                ProductPriceDetail::where('product_id', $request->product_id)->delete();
+
+                $productMeasurmentPriceDeatildata = $request->product_measurment_price_detail;
+                foreach ($productMeasurmentPriceDeatildata as &$item) {
+                    $item['color'] = json_encode($item['color']);
+                    $item['stock_color_wise'] = json_encode($item['stock_color_wise']);
+                    $item['product_id'] = $vendorProduct->id;
+                }
+
+
+                ProductPriceDetail::insert($productMeasurmentPriceDeatildata);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            }
+
+
+
+
+            DB::commit();
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json([
+                'sucess' => false,
+                'errormessage' => $e->getMessage(),
+            ], 500);
+        }
 
     }
 
