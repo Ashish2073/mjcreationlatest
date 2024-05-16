@@ -62,6 +62,15 @@
 <section id="main_content">
 
 
+    {{-- <div class="content-header-left text-md-left position-absolute right-5 mt-4">
+        <div class="form-group">
+            <a @if (!Route::is('vendors.productlist')) wire:navigate  href="{{ route('vendors.productlist') }}" @else href="javascript:void(0)" @endif
+                style="width: 55px;height:50px" class="btn-icon btn btn-danger btn-round btn-sm">
+                <i class="ti-close"></i>
+            </a>
+        </div>
+    </div> --}}
+
     <div class="content-header-left text-md-left position-absolute right-5 mt-4">
         <div class="form-group">
             <button onclick="hideEditForm()" style="width: 55px;height:50px"
@@ -70,7 +79,7 @@
             </button>
         </div>
     </div>
-
+    {{-- hideEditForm() --}}
 
 
 
@@ -747,60 +756,64 @@
                         onclick="addMoreColorImageEdit({{ $w }})">+</span>
                 </div>
 
-
-                <div class="row">
-                    <div class="col-md-12 pl-2">
-                        <label for="inputAddress" class="form-label">Please select Image</label>
-                        <div class="form">
-
-                            @php $subcolorImagecategory=$productdatacolorimagegallery[$w]; @endphp
-
-                            @php $subcolorImagecategorylength=count($subcolorImagecategory); @endphp
+                @if (isset($productdatacolorimagegallery[$w]))
+                    <div class="row">
+                        <div class="col-md-12 pl-2">
+                            <label for="inputAddress" class="form-label">Please select Image</label>
+                            <div class="form">
 
 
+                                @php $subcolorImagecategory=$productdatacolorimagegallery[$w]; @endphp
 
-                            <div class="grid" id="product_color_gallery_edit_{{ $w }}">
-                                @for ($v = 0; $v < $subcolorImagecategorylength; $v++)
-                                    <div class="form-element"
-                                        id="imagecontainer{{ $w }}{{ $v }}"
-                                        onclick="previewBeforeUploadEdit('file-color-edit-{{ $w }}-{{ $v }}')">
-
-                                        <input type="hidden" value="{{ $subcolorImagecategory[$v] }}"
-                                            class="product_color_image_gallery_existing{{ $w }}"
-                                            name="product_color_image_gallery_existing[{{ $w }}][]" />
+                                @php $subcolorImagecategorylength=count($subcolorImagecategory); @endphp
 
 
 
-                                        <input type="file" class="product_color_image_gallery_edit"
-                                            name="product_color_image_gallery[{{ $w }}][]"
-                                            id="file-color-edit-{{ $w }}-{{ $v }}"
-                                            accept="image/*">
+                                <div class="grid" id="product_color_gallery_edit_{{ $w }}">
+                                    @for ($v = 0; $v < $subcolorImagecategorylength; $v++)
+                                        <div class="form-element"
+                                            id="imagecontainer{{ $w }}{{ $v }}"
+                                            onclick="previewBeforeUploadEdit('file-color-edit-{{ $w }}-{{ $v }}')">
+
+                                            <input type="hidden" value="{{ $subcolorImagecategory[$v] }}"
+                                                class="product_color_image_gallery_existing{{ $w }}"
+                                                name="product_color_image_gallery_existing[{{ $w }}][]" />
 
 
 
-                                        <label for="file-color-edit-{{ $w }}-{{ $v }}"
-                                            id="file-color-edit-{{ $w }}-{{ $v }}-preview">
-                                            <img src="{{ asset('product/gallery/' . $subcolorImagecategory[$v]) }}">
-                                            <div>
-                                                <span>+</span>
-                                            </div>
-                                            <div>
-                                                <span class="btn btn-danger justify-content-center"
-                                                    style="font-size:unset !important ;margin-top: 45px;"
-                                                    onclick="removeElementEdit('imagecontainer{{ $w }}{{ $v }}')">-</span>
-                                            </div>
-                                        </label>
+                                            <input type="file" class="product_color_image_gallery_edit"
+                                                name="product_color_image_gallery[{{ $w }}][]"
+                                                id="file-color-edit-{{ $w }}-{{ $v }}"
+                                                accept="image/*">
 
-                                    </div>
-                                @endfor
+
+
+                                            <label for="file-color-edit-{{ $w }}-{{ $v }}"
+                                                id="file-color-edit-{{ $w }}-{{ $v }}-preview">
+                                                <img
+                                                    src="{{ asset('product/gallery/' . $subcolorImagecategory[$v]) }}">
+                                                <div>
+                                                    <span>+</span>
+                                                </div>
+                                                <div>
+                                                    <span class="btn btn-danger justify-content-center"
+                                                        style="font-size:unset !important ;margin-top: 45px;"
+                                                        onclick="removeElementEdit('imagecontainer{{ $w }}{{ $v }}')">-</span>
+                                                </div>
+                                            </label>
+
+                                        </div>
+                                    @endfor
+
+                                </div>
+
 
                             </div>
-
                         </div>
+
+
                     </div>
-
-
-                </div>
+                @endif
 
 
 

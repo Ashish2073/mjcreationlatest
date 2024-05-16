@@ -977,7 +977,9 @@ class ProductController extends Controller
 
 
 
-            if (isset($request->product_color_image_gallery) || isset($request->product_color_image_gallery_existing)) {
+            if (isset($request->product_color_image_gallery) && isset($request->product_color_image_gallery_existing)) {
+
+
 
                 $product_color_image_gallery_file_name = [];
 
@@ -1026,27 +1028,51 @@ class ProductController extends Controller
 
                 }
 
+                // dd($product_color_image_gallery_file_name_existing, $product_color_image_gallery_file_name);
 
 
+                // Given arrays
 
 
-                foreach ($product_color_image_gallery_file_name_existing as $key => $subArray) {
-                    // Check if $array1 already has an entry with the same key
-                    if (isset($product_color_image_gallery_file_name[$key])) {
-                        // If yes, merge $subArray into the existing entry
-                        $product_color_image_gallery_file_name[$key] = array_merge($product_color_image_gallery_file_name[$key], $subArray);
+                // Initialize combined array
+                $combinedArray = [];
+
+                // Iterate over array1 and merge with corresponding index in array2
+                foreach ($product_color_image_gallery_file_name as $index => $subArray) {
+                    // Check if the index exists in array2
+                    if (isset($product_color_image_gallery_file_name_existing[$index])) {
+                        // Merge elements from both arrays
+                        $combinedArray[$index] = array_merge($subArray, $product_color_image_gallery_file_name_existing[$index]);
                     } else {
-                        // If not, add $subArray as a new entry
-                        $product_color_image_gallery_file_name[$key] = $subArray;
+                        // If index doesn't exist in array2, simply add elements from array1
+                        $combinedArray[$index] = $subArray;
                     }
                 }
 
+                // Append remaining elements from array2
+                foreach ($product_color_image_gallery_file_name_existing as $index => $subArray) {
+                    // Check if index already exists in combinedArray
+                    if (!isset($combinedArray[$index])) {
+                        $combinedArray[$index] = $subArray;
+                    }
+                }
+
+                // Output the combined array
 
 
 
 
 
-                $vendorProduct->product_color_image_gallery = json_encode($product_color_image_gallery_file_name);
+
+
+
+
+
+
+
+                $vendorProduct->product_color_image_gallery = json_encode($combinedArray);
+
+
             }
 
             $vendorProduct->save();
