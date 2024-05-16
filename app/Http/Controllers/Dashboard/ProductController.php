@@ -767,7 +767,7 @@ class ProductController extends Controller
 
         try {
 
-            dd($request->all());
+
 
 
 
@@ -881,51 +881,90 @@ class ProductController extends Controller
 
             }
 
-            if ($request->hasFile('product_image_gallery')) {
-
-                $product_image_file_name = [];
-                foreach ($request->file('product_image_gallery') as $image) {
-                    $originName = $image->getClientOriginalName();
-                    $fileName = pathinfo($originName, PATHINFO_FILENAME);
-                    $extension = $image->getClientOriginalExtension();
-
-                    $fileName = $fileName . '__' . time() . '.' . $extension;
-
-
-                    $image->move(public_path('product/gallery'), $fileName);
-
-                    array_push($product_image_file_name, $fileName);
-
-                }
-
-
-                $vendorProduct->product_image_gallery = json_encode($product_image_file_name);
-
-
-
-
+            if (isset($request->product_banner_image_existing)) {
+                $vendorProduct->product_banner_image = $request->product_banner_image_existing[0];
 
             }
 
-            if ($request->hasFile('product_color_banner_image')) {
+
+
+
+            if ($request->hasFile('product_image_gallery') || isset($request->product_image_gallery_existing)) {
+
+                $product_image_file_name = [];
+
+                if (isset($request->product_image_gallery_existing)) {
+                    $productImageGalleryExisting = $request->product_image_gallery_existing;
+                    $productImageGalleryExistingLength = count($request->product_image_gallery_existing);
+                    for ($k = 0; $k < $productImageGalleryExistingLength; $k++) {
+
+                        array_push($product_image_file_name, $productImageGalleryExisting[$k]);
+                    }
+                }
+
+
+
+                if (($request->hasFile('product_image_gallery'))) {
+                    foreach ($request->file('product_image_gallery') as $image) {
+                        $originName = $image->getClientOriginalName();
+                        $fileName = pathinfo($originName, PATHINFO_FILENAME);
+                        $extension = $image->getClientOriginalExtension();
+
+                        $fileName = $fileName . '__' . time() . '.' . $extension;
+
+
+                        $image->move(public_path('product/gallery'), $fileName);
+
+                        array_push($product_image_file_name, $fileName);
+
+                    }
+                }
+
+                $vendorProduct->product_image_gallery = json_encode($product_image_file_name);
+
+            }
+
+
+
+
+
+
+
+
+            if ($request->hasFile('product_color_banner_image') || isset($request->product_banner_image_existing)) {
 
                 $product_color_banner_image_file_name = [];
-                foreach ($request->file('product_color_banner_image') as $image) {
 
-                    $originName = $image->getClientOriginalName();
-                    $fileName = pathinfo($originName, PATHINFO_FILENAME);
-                    $extension = $image->getClientOriginalExtension();
+                if (isset($request->product_banner_image_existing)) {
+                    $productBannerImageExisting = $request->product_banner_image_existing;
+                    $product_banner_image_existingLength = count($request->product_banner_image_existing);
 
-                    $fileName = $fileName . '__' . time() . '.' . $extension;
+                    for ($j = 0; $j < $product_banner_image_existingLength; $j++) {
+                        array_push($product_color_banner_image_file_name, $productBannerImageExisting[$j]);
 
-
-                    $image->move(public_path('product/gallery'), $fileName);
-
-                    array_push($product_color_banner_image_file_name, $fileName);
+                    }
 
                 }
 
 
+
+                if (($request->hasFile('product_color_banner_image'))) {
+                    foreach ($request->file('product_color_banner_image') as $image) {
+
+                        $originName = $image->getClientOriginalName();
+                        $fileName = pathinfo($originName, PATHINFO_FILENAME);
+                        $extension = $image->getClientOriginalExtension();
+
+                        $fileName = $fileName . '__' . time() . '.' . $extension;
+
+
+                        $image->move(public_path('product/gallery'), $fileName);
+
+                        array_push($product_color_banner_image_file_name, $fileName);
+
+                    }
+
+                }
                 $vendorProduct->product_color_banner_image = json_encode($product_color_banner_image_file_name);
 
 
@@ -935,29 +974,78 @@ class ProductController extends Controller
             }
 
 
-            if (isset($request->product_color_image_gallery)) {
+
+
+
+            if (isset($request->product_color_image_gallery) || isset($request->product_color_image_gallery_existing)) {
+
                 $product_color_image_gallery_file_name = [];
-                foreach ($request->product_color_image_gallery as $k => $images) {
+
+                $product_color_image_gallery_file_name_existing = [];
+
+
+                if (isset($request->product_color_image_gallery_existing)) {
+                    $productcolorimagegalleryexisting = $request->product_color_image_gallery_existing;
+
+                    $productcolorimagegalleryexistingLength = count($request->product_color_image_gallery_existing);
+
+                    for ($l = 0; $l < $productcolorimagegalleryexistingLength; $l++) {
+                        $product_color_image_gallery_file_name_existing[$l] = $productcolorimagegalleryexisting[$l];
+
+                    }
+
+
+                }
+
+                if (isset($request->product_color_image_gallery)) {
+                    $product_color_image_gallery_reIndexing = array_values($request->product_color_image_gallery);
 
 
 
-                    foreach ($images as $l => $img) {
-
-                        $originName = $img->getClientOriginalName();
-                        $fileName = pathinfo($originName, PATHINFO_FILENAME);
-                        $extension = $img->getClientOriginalExtension();
-
-                        $fileName = $fileName . '__' . time() . '.' . $extension;
+                    foreach ($product_color_image_gallery_reIndexing as $k => $images) {
 
 
-                        $img->move(public_path('product/gallery'), $fileName);
 
-                        $product_color_image_gallery_file_name[$k][$l] = $fileName;
+                        foreach ($images as $l => $img) {
 
+                            $originName = $img->getClientOriginalName();
+                            $fileName = pathinfo($originName, PATHINFO_FILENAME);
+                            $extension = $img->getClientOriginalExtension();
+
+                            $fileName = $fileName . '__' . time() . '.' . $extension;
+
+
+                            $img->move(public_path('product/gallery'), $fileName);
+
+                            $product_color_image_gallery_file_name[$k][$l] = $fileName;
+
+
+                        }
 
                     }
 
                 }
+
+
+
+
+
+                foreach ($product_color_image_gallery_file_name_existing as $key => $subArray) {
+                    // Check if $array1 already has an entry with the same key
+                    if (isset($product_color_image_gallery_file_name[$key])) {
+                        // If yes, merge $subArray into the existing entry
+                        $product_color_image_gallery_file_name[$key] = array_merge($product_color_image_gallery_file_name[$key], $subArray);
+                    } else {
+                        // If not, add $subArray as a new entry
+                        $product_color_image_gallery_file_name[$key] = $subArray;
+                    }
+                }
+
+
+
+
+
+
                 $vendorProduct->product_color_image_gallery = json_encode($product_color_image_gallery_file_name);
             }
 
