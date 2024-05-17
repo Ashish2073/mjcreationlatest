@@ -689,138 +689,150 @@
 
     @if (isset($productdata->product_color_image_gallery))
         @php $productdatacolorimagegallery=json_decode($productdata->product_color_image_gallery,true); @endphp
-        @php $productdatacolorimagegallerylength=count($productdatacolorimagegallery); @endphp;
+        @php $productdatacolorimagegallerylength=count($productdatacolorimagegallery); @endphp
     @endif
 
     @if (isset($productdatacolorbannerimage))
-        @for ($w = 0; $w < $productdatacolorbannerimagelength; $w++)
-            <input type="hidden" class="product_color_banner_image_existing"
-                value="{{ $productdatacolorbannerimage[$w] }}" name="product_color_banner_image_existing[]" />
+        <div class="col-md-12 px-5 d-flex justify-content-end">
+            <span class="btn btn-success btn-sm px-3" onclick="addMoreImagefordiffentcolorContaineredit()">+</span>
+        </div>
 
 
 
-            <div class="col-md-12 px-5 d-flex justify-content-end">
-                <span class="btn btn-success btn-sm px-3"
-                    onclick="addMoreImagefordiffentcolorContaineredit()">+</span>
-            </div>
+        <div class="col-md-12" id="addMoreImagefordiffentcolorContaineredit">
 
 
 
-            <div class="col-md-12 card py-4" id="addMoreImagefordiffentcolorContaineredit">
 
-                <div class="col-md-12 pl-2">
-                    <label for="inputAddress" class="form-label">Please select banner image of products</label>
-                    <div class="form">
-
-                        <div class="grid">
-                            <div class="form-element" onclick="previewBeforeUploadEdit('file-color-edit-banner')">
+            @for ($w = 0; $w < $productdatacolorbannerimagelength; $w++)
+                <input type="hidden" class="product_color_banner_image_existing"
+                    value="{{ $productdatacolorbannerimage[$w] }}" name="product_color_banner_image_existing[]" />
 
 
-                                <input type="file" name="product_color_banner_image[]" id="file-color-edit-banner"
-                                    accept="image/*">
 
-                                <label for="file-color-edit-banner" id="file-color-edit-banner-preview">
-                                    <img src="{{ asset('product/gallery/' . $productdatacolorbannerimage[$w]) }}"
-                                        alt="">
-                                    <div>
-                                        <span>+</span>
-                                    </div>
-                                    {{-- <div>
+                <div class="col-md-12 card py-4 mt-2"
+                    id="addMoreImagefordiffentcolorContaineredit{{ $w }}">
+                    <div class="col-md-12">
+                        <label for="inputAddress" class="form-label">Please select banner image of products</label>
+                        <div class="form">
+
+                            <div class="grid">
+                                <div class="form-element" onclick="previewBeforeUploadEdit('file-color-edit-banner')">
+
+
+                                    <input type="file" name="product_color_banner_image[]"
+                                        id="file-color-edit-banner" accept="image/*">
+
+                                    <label for="file-color-edit-banner" id="file-color-edit-banner-preview">
+                                        <img src="{{ asset('product/gallery/' . $productdatacolorbannerimage[$w]) }}"
+                                            alt="">
+                                        <div>
+                                            <span>+</span>
+                                        </div>
+                                        {{-- <div>
                                         <span class="btn btn-danger justify-content-center"
                                             style="font-size:unset !important ;margin-top: 45px;"
                                             onclick="removeElementEdit('imagecontainer{{ $w }}{{ $v }}')">-</span>
                                     </div> --}}
-                                </label>
-                            </div>
-
-
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-3 py-3">
-                            <label for="product_color" class="form-label">Product color</label>
-                            <input type="text" name="product_color[]" class="form-control" id="product_color"
-                                autocompvare="off">
-                        </div>
-                        <div class="col-md-3 py-3">
-                            <label for="product_color_stock" class="form-label">Product color Stock</label>
-                            <input type="number" name="product_color_stock[]" class="form-control"
-                                id="product_color_stock" autocompvare="off">
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="col-md-12 px-5 d-flex justify-content-end">
-                    <span class="btn btn-success btn-sm px-3"
-                        onclick="addMoreColorImageEdit({{ $w }})">+</span>
-                </div>
-
-                @if (isset($productdatacolorimagegallery[$w]))
-                    <div class="row">
-                        <div class="col-md-12 pl-2">
-                            <label for="inputAddress" class="form-label">Please select Image</label>
-                            <div class="form">
-
-
-                                @php $subcolorImagecategory=$productdatacolorimagegallery[$w]; @endphp
-
-                                @php $subcolorImagecategorylength=count($subcolorImagecategory); @endphp
-
-
-
-                                <div class="grid" id="product_color_gallery_edit_{{ $w }}">
-                                    @for ($v = 0; $v < $subcolorImagecategorylength; $v++)
-                                        <div class="form-element"
-                                            id="imagecontainer{{ $w }}{{ $v }}"
-                                            onclick="previewBeforeUploadEdit('file-color-edit-{{ $w }}-{{ $v }}')">
-
-                                            <input type="hidden" value="{{ $subcolorImagecategory[$v] }}"
-                                                class="product_color_image_gallery_existing{{ $w }}"
-                                                name="product_color_image_gallery_existing[{{ $w }}][]" />
-
-
-
-                                            <input type="file" class="product_color_image_gallery_edit"
-                                                name="product_color_image_gallery[{{ $w }}][]"
-                                                id="file-color-edit-{{ $w }}-{{ $v }}"
-                                                accept="image/*">
-
-
-
-                                            <label for="file-color-edit-{{ $w }}-{{ $v }}"
-                                                id="file-color-edit-{{ $w }}-{{ $v }}-preview">
-                                                <img
-                                                    src="{{ asset('product/gallery/' . $subcolorImagecategory[$v]) }}">
-                                                <div>
-                                                    <span>+</span>
-                                                </div>
-                                                <div>
-                                                    <span class="btn btn-danger justify-content-center"
-                                                        style="font-size:unset !important ;margin-top: 45px;"
-                                                        onclick="removeElementEdit('imagecontainer{{ $w }}{{ $v }}')">-</span>
-                                                </div>
-                                            </label>
-
-                                        </div>
-                                    @endfor
-
+                                    </label>
                                 </div>
 
 
                             </div>
                         </div>
-
-
+                        <div class="row">
+                            <div class="col-md-3 py-3">
+                                <label for="product_color" class="form-label">Product color</label>
+                                <input type="text" name="product_color[]" class="form-control" id="product_color"
+                                    autocompvare="off">
+                            </div>
+                            <div class="col-md-3 py-3">
+                                <label for="product_color_stock" class="form-label">Product color Stock</label>
+                                <input type="number" name="product_color_stock[]" class="form-control"
+                                    id="product_color_stock" autocompvare="off">
+                            </div>
+                        </div>
                     </div>
-                @endif
+
+
+                    <div class="col-md-12 px-5 d-flex justify-content-end">
+                        <span class="btn btn-success btn-sm px-3"
+                            onclick="addMoreColorImageEdit({{ $w }})">+</span>
+                    </div>
+
+                    @if (isset($productdatacolorimagegallery[$w]))
+                        <div class="row">
+                            <div class="col-md-12 pl-2">
+                                <label for="inputAddress" class="form-label">Please select Image</label>
+                                <div class="form">
+
+
+                                    @php $subcolorImagecategory=$productdatacolorimagegallery[$w]; @endphp
+
+                                    @php $subcolorImagecategorylength=count($subcolorImagecategory); @endphp
+
+
+
+                                    <div class="grid product_color_image_gallery_edit"
+                                        id="product_color_gallery_edit_{{ $w }}">
+                                        @for ($v = 0; $v < $subcolorImagecategorylength; $v++)
+                                            <div class="form-element"
+                                                id="imagecontainer{{ $w }}{{ $v }}"
+                                                onclick="previewBeforeUploadEdit('file-color-edit-{{ $w }}-{{ $v }}')">
+
+                                                <input type="hidden" value="{{ $subcolorImagecategory[$v] }}"
+                                                    class="product_color_image_gallery_existing{{ $w }}"
+                                                    name="product_color_image_gallery_existing[{{ $w }}][]" />
+
+
+
+                                                <input type="file"
+                                                    name="product_color_image_gallery[{{ $w }}][]"
+                                                    id="file-color-edit-{{ $w }}-{{ $v }}"
+                                                    accept="image/*">
+
+
+
+                                                <label for="file-color-edit-{{ $w }}-{{ $v }}"
+                                                    id="file-color-edit-{{ $w }}-{{ $v }}-preview">
+                                                    <img
+                                                        src="{{ asset('product/gallery/' . $subcolorImagecategory[$v]) }}">
+                                                    <div>
+                                                        <span>+</span>
+                                                    </div>
+                                                    <div>
+                                                        <span class="btn btn-danger justify-content-center"
+                                                            style="font-size:unset !important ;margin-top: 45px;"
+                                                            onclick="removeElementEdit('imagecontainer{{ $w }}{{ $v }}')">-</span>
+                                                    </div>
+                                                </label>
+
+                                            </div>
+                                        @endfor
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                    @endif
+
+                    @if ($w > 0)
+                        <div class="col-md-12 mt-3 px-5 d-flex justify-content-end">
+                            <span class="btn btn-danger btn-sm px-3"
+                                onclick="removeColorImageGalleryEdit('addMoreImagefordiffentcolorContaineredit{{ $w }}')">-</span>
+                        </div>
+                    @endif
 
 
 
 
-
-            </div>
-        @endfor
+                </div>
+            @endfor
+        </div>
     @else
         <div class="col-md-12 px-5 d-flex justify-content-end">
             <span class="btn btn-success btn-sm px-3" onclick="addMoreImagefordiffentcolorContaineredit()">+</span>
@@ -877,12 +889,11 @@
 
 
 
-                        <div class="grid" id="product_color_gallery_edit_0">
+                        <div class="grid product_color_image_gallery_edit" id="product_color_gallery_edit_0">
 
                             <div class="form-element" onclick="previewBeforeUploadEdit('file-color-edit-0-0')">
-                                <input type="file" class="product_color_image_gallery_edit"
-                                    name="product_color_image_gallery[0][]" id="file-color-edit-0-0"
-                                    accept="image/*">
+                                <input type="file" name="product_color_image_gallery[0][]"
+                                    id="file-color-edit-0-0" accept="image/*">
                                 <label for="file-color-edit-0-0" id="file-color-edit-0-0-preview">
                                     <img src="{{ asset('img/imagepreviewupload.jpg') }}">
                                     <div>
@@ -1077,7 +1088,52 @@
         return typeof variable !== 'undefined' && variable !== null;
     }
 
+    function reIndexingcolorImagegalleryEdit() {
+        const divs = document.querySelectorAll('.product_color_image_gallery_edit');
 
+        // const allPairs = [];
+        const pairs = [];
+
+        divs.forEach((div, divIndex) => {
+
+            const inputs = div.querySelectorAll('input[type="file"]');
+            pairs[divIndex] = [];
+
+
+            for (let i = 0; i < inputs.length; i++) {
+                console.log(inputs[i]);
+                // pairs[divIndex][i] = inputs[i];
+                pairs[divIndex].push(inputs[i]);
+
+
+
+
+            }
+
+
+        });
+
+
+        for (let w = 0; w < addMoreImagefordiffentcolorContainerediteditId; w++) {
+            for (let k = 0; k < pairs[w].length; k++) {
+                pairs[w][k].setAttribute('name', `product_color_image_gallery[${w}][]`);
+            }
+        }
+
+
+
+
+    }
+
+
+    function removeColorImageGalleryEdit(id) {
+        addMoreImagefordiffentcolorContainerediteditId--;
+        $(`#${id}`).remove();
+
+        reIndexingcolorImagegalleryEdit();
+
+
+    }
 
 
 
@@ -1335,7 +1391,7 @@
         multiplcolorimageId++;
 
         var imagecolorHTMLEdit = `<div class="form-element" id="imagecontainer${containerColorIdEdit}${multiplcolorimageId}" onclick="previewBeforeUploadEdit('file-edit-${containerColorIdEdit}-${multiplcolorimageId}')">
-                                    <input type="file" class="product_color_image_gallery_edit" name="product_color_image_gallery[${containerColorIdEdit}][]" id="file-edit-${containerColorIdEdit}-${multiplcolorimageId}"
+                                    <input type="file"  name="product_color_image_gallery[${containerColorIdEdit}][]" id="file-edit-${containerColorIdEdit}-${multiplcolorimageId}"
                                         accept="image/*">
                                     <label for="file-edit-${containerColorIdEdit}-${multiplcolorimageId}" id="file-edit-${containerColorIdEdit}-${multiplcolorimageId}-preview">
                                         <img src="{{ asset('img/imagepreviewupload.jpg') }}">
@@ -1361,6 +1417,13 @@
 
 
         $(`#product_color_gallery_edit_${containerColorIdEdit}`).append(imagecolorHTMLEdit);
+
+        reIndexingcolorImagegalleryEdit();
+
+
+
+
+
     }
 
 
@@ -1419,9 +1482,9 @@
                            <label for="inputAddress" class="form-label">Please select Image</label>
                 <div class="form">
 
-        <div class="grid" id="product_color_gallery_edit_${addMoreImagefordiffentcolorContainerediteditId}">
+        <div class="grid product_color_image_gallery_edit" id="product_color_gallery_edit_${addMoreImagefordiffentcolorContainerediteditId}">
             <div class="form-element" onclick="previewBeforeUploadEdit('file-color-edit-${addMoreImagefordiffentcolorContainerediteditId}-${addMoreImagefordiffentcolorContainerediteditId}')">
-                <input type="file" class="product_color_image_gallery_edit" name="product_color_image_gallery[${addMoreImagefordiffentcolorContainerediteditId}][]" id="file-color-edit-${addMoreImagefordiffentcolorContainerediteditId}-${addMoreImagefordiffentcolorContainerediteditId}"
+                <input type="file"  name="product_color_image_gallery[${addMoreImagefordiffentcolorContainerediteditId}][]" id="file-color-edit-${addMoreImagefordiffentcolorContainerediteditId}-${addMoreImagefordiffentcolorContainerediteditId}"
                     accept="image/*">
                 <label for="file-color-edit-${addMoreImagefordiffentcolorContainerediteditId}-${addMoreImagefordiffentcolorContainerediteditId}" id="file-color-edit-${addMoreImagefordiffentcolorContainerediteditId}-${addMoreImagefordiffentcolorContainerediteditId}-preview">
                     <img src="{{ asset('img/imagepreviewupload.jpg') }}">
@@ -1439,7 +1502,7 @@
 
 </div>
 <div class="col-md-12 px-5 d-flex justify-content-end">
-                    <span class="btn btn-danger btn-sm px-3" onclick="removeElementEdit('addMoreImagefordiffentcolorContaineredit${addMoreImagefordiffentcolorContainerediteditId}')">-</span>
+                    <span class="btn btn-danger btn-sm px-3" onclick="removeColorImageGalleryEdit('addMoreImagefordiffentcolorContaineredit${addMoreImagefordiffentcolorContainerediteditId}')">-</span>
                 </div>
 
 
@@ -1448,7 +1511,7 @@
 </div>`;
 
         $("#addMoreImagefordiffentcolorContaineredit").append(addMoreImagefordiffentcolorContainereditHTML);
-
+        reIndexingcolorImagegalleryEdit();
 
     }
 
@@ -2012,7 +2075,7 @@
 
         $('input[name="product_color_banner_image[]"]').each(function(index, element) {
 
-            if (isset(element.files)) {
+            if ((element.files.length > 0)) {
                 var files = element.files;
 
 
@@ -2052,8 +2115,8 @@
 
 
 
-        let product_color_gallery_edit_image_new = [];
-        let product_color_new_index = 0;
+
+
         for (let i = 0; i <= addMoreImagefordiffentcolorContainerediteditId; i++) {
             console.log(addMoreImagefordiffentcolorContainerediteditId, i);
 
@@ -2064,13 +2127,16 @@
 
                 $(`input[name="product_color_image_gallery[${i}][]"]`).each(function(index, element) {
 
-                    if (isset(element.files)) {
+                    if (element.files.length > 0) {
                         var files = element.files;
 
+                        console.log(element.name);
 
-                        for (var i = 0; i < files.length; i++) {
-                            formData.append(`product_color_image_gallery[${product_color_new_index}][]`,
-                                files[i]);
+
+                        for (let j = 0; j < files.length; j++) {
+                            formData.append(
+                                element.name,
+                                files[j]);
                         }
 
 
@@ -2078,7 +2144,7 @@
                     }
                 });
 
-                product_color_new_index++;
+
 
 
 

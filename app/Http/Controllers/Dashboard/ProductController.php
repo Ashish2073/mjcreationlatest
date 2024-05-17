@@ -931,23 +931,24 @@ class ProductController extends Controller
 
 
 
-            if ($request->hasFile('product_color_banner_image') || isset($request->product_banner_image_existing)) {
+            if ($request->hasFile('product_color_banner_image') || isset($request->product_color_banner_image_existing)) {
 
                 $product_color_banner_image_file_name = [];
 
                 if (isset($request->product_banner_image_existing)) {
-                    $productBannerImageExisting = $request->product_banner_image_existing;
-                    $product_banner_image_existingLength = count($request->product_banner_image_existing);
+                    // $productBannerImageExisting = $request->product_banner_image_existing;
+                    // $product_banner_image_existingLength = count($request->product_banner_image_existing);
 
-                    for ($j = 0; $j < $product_banner_image_existingLength; $j++) {
-                        array_push($product_color_banner_image_file_name, $productBannerImageExisting[$j]);
+                    // for ($j = 0; $j <= $product_banner_image_existingLength; $j++) {
+                    //     array_push($product_color_banner_image_file_name, $productBannerImageExisting[$j]);
 
-                    }
+                    // }
+                    $product_color_banner_image_file_name = $request->product_color_banner_image_existing;
 
                 }
 
 
-
+                // dd($request->hasFile('product_color_banner_image'), $product_color_banner_image_file_name);
                 if (($request->hasFile('product_color_banner_image'))) {
                     foreach ($request->file('product_color_banner_image') as $image) {
 
@@ -965,6 +966,7 @@ class ProductController extends Controller
                     }
 
                 }
+
                 $vendorProduct->product_color_banner_image = json_encode($product_color_banner_image_file_name);
 
 
@@ -972,6 +974,9 @@ class ProductController extends Controller
 
 
             }
+
+
+
 
 
 
@@ -1000,11 +1005,12 @@ class ProductController extends Controller
                 }
 
                 if (isset($request->product_color_image_gallery)) {
-                    $product_color_image_gallery_reIndexing = array_values($request->product_color_image_gallery);
+
+                    $product_color_image_gallery_new_element = $request->product_color_image_gallery;
 
 
 
-                    foreach ($product_color_image_gallery_reIndexing as $k => $images) {
+                    foreach ($product_color_image_gallery_new_element as $k => $images) {
 
 
 
@@ -1028,16 +1034,9 @@ class ProductController extends Controller
 
                 }
 
-                // dd($product_color_image_gallery_file_name_existing, $product_color_image_gallery_file_name);
 
-
-                // Given arrays
-
-
-                // Initialize combined array
                 $combinedArray = [];
 
-                // Iterate over array1 and merge with corresponding index in array2
                 foreach ($product_color_image_gallery_file_name as $index => $subArray) {
                     // Check if the index exists in array2
                     if (isset($product_color_image_gallery_file_name_existing[$index])) {
@@ -1058,22 +1057,95 @@ class ProductController extends Controller
                 }
 
                 // Output the combined array
+                ksort($combinedArray);
+
+                // Re-index the array starting from 0
+                $combinedArray = array_values($combinedArray);
 
 
 
-
-
-
-
-
-
-
-
+                // dd($product_color_image_gallery_file_name_existing, $product_color_image_gallery_file_name, ($combinedArray));
 
                 $vendorProduct->product_color_image_gallery = json_encode($combinedArray);
 
 
             }
+
+
+
+            if (isset($request->product_color_image_gallery_existing) && !isset($request->product_color_image_gallery)) {
+                // $product_color_image_gallery_file_name = [];
+
+                // $product_color_image_gallery_file_name_existing = [];
+
+
+                // if (isset($request->product_color_image_gallery_existing)) {
+                //     $productcolorimagegalleryexisting = $request->product_color_image_gallery_existing;
+
+                //     $productcolorimagegalleryexistingLength = count($request->product_color_image_gallery_existing);
+
+                //     for ($l = 0; $l < $productcolorimagegalleryexistingLength; $l++) {
+                //         $product_color_image_gallery_file_name_existing[$l] = $productcolorimagegalleryexisting[$l];
+
+                //     }
+
+
+                // }
+
+
+                $vendorProduct->product_color_image_gallery = json_encode($request->product_color_image_gallery_existing);
+
+
+
+            }
+
+
+
+
+            if (isset($request->product_color_image_gallery) && !isset($request->product_color_image_gallery_existing)) {
+                $product_color_image_gallery_new_element = array_values($request->product_color_image_gallery);
+
+                $product_color_image_gallery_file_name = [];
+
+                foreach ($product_color_image_gallery_new_element as $k => $images) {
+
+
+
+                    foreach ($images as $l => $img) {
+
+                        $originName = $img->getClientOriginalName();
+                        $fileName = pathinfo($originName, PATHINFO_FILENAME);
+                        $extension = $img->getClientOriginalExtension();
+
+                        $fileName = $fileName . '__' . time() . '.' . $extension;
+
+
+                        $img->move(public_path('product/gallery'), $fileName);
+
+                        $product_color_image_gallery_file_name[$k][$l] = $fileName;
+
+
+                    }
+
+                }
+
+                $vendorProduct->product_color_image_gallery = json_encode($product_color_image_gallery_file_name);
+
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             $vendorProduct->save();
 
