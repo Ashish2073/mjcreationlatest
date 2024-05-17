@@ -358,7 +358,7 @@
                     },
                     {
                         data: 'brandname',
-                        name: 'productbrands.name',
+                        name: 'product_brands.name',
                         searchable: true
 
                     },

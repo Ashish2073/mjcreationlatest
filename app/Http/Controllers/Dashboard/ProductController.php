@@ -427,8 +427,8 @@ class ProductController extends Controller
 
             $vendorProducts = VendorProduct::query()
                 ->join('product_categories', 'vendor_products.product_category_id', '=', 'product_categories.id')
-                ->join('productbrands', 'vendor_products.brand_id', '=', 'productbrands.id')
-                ->select('vendor_products.*', 'product_categories.name as product_categories_name', 'productbrands.name as brandname')
+                ->join('product_brands', 'vendor_products.brand_id', '=', 'product_brands.id')
+                ->select('vendor_products.*', 'product_categories.name as product_categories_name', 'product_brands.name as brandname')
                 ->orderBy('vendor_products.created_at', 'desc');
 
 
@@ -935,14 +935,10 @@ class ProductController extends Controller
 
                 $product_color_banner_image_file_name = [];
 
-                if (isset($request->product_banner_image_existing)) {
-                    // $productBannerImageExisting = $request->product_banner_image_existing;
-                    // $product_banner_image_existingLength = count($request->product_banner_image_existing);
 
-                    // for ($j = 0; $j <= $product_banner_image_existingLength; $j++) {
-                    //     array_push($product_color_banner_image_file_name, $productBannerImageExisting[$j]);
 
-                    // }
+                if (isset($request->product_color_banner_image_existing)) {
+
                     $product_color_banner_image_file_name = $request->product_color_banner_image_existing;
 
                 }
@@ -961,7 +957,15 @@ class ProductController extends Controller
 
                         $image->move(public_path('product/gallery'), $fileName);
 
-                        array_push($product_color_banner_image_file_name, $fileName);
+
+
+                        if (isset($product_color_banner_image_file_name)) {
+                            array_push($product_color_banner_image_file_name, $fileName);
+                        } else {
+                            $product_color_banner_image_file_name[] = $fileName;
+                        }
+
+
 
                     }
 

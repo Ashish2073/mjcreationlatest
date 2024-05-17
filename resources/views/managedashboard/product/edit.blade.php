@@ -705,11 +705,6 @@
 
 
             @for ($w = 0; $w < $productdatacolorbannerimagelength; $w++)
-                <input type="hidden" class="product_color_banner_image_existing"
-                    value="{{ $productdatacolorbannerimage[$w] }}" name="product_color_banner_image_existing[]" />
-
-
-
                 <div class="col-md-12 card py-4 mt-2"
                     id="addMoreImagefordiffentcolorContaineredit{{ $w }}">
                     <div class="col-md-12">
@@ -718,6 +713,11 @@
 
                             <div class="grid">
                                 <div class="form-element" onclick="previewBeforeUploadEdit('file-color-edit-banner')">
+
+                                    <input type="hidden" class="product_color_banner_image_existing"
+                                        value="{{ $productdatacolorbannerimage[$w] }}"
+                                        name="product_color_banner_image_existing[]" />
+
 
 
                                     <input type="file" name="product_color_banner_image[]"
@@ -934,12 +934,12 @@
 </section>
 
 <script>
-    var multipelimageId = {{ $g }};
-    var productspecificationedit = {{ $l }};
-    var productpricedetailIdindexedit = {{ $k }};
+    var multipelimageId = {{ isset($g) ? $g : 1 }};
+    var productspecificationedit = {{ isset($l) ? $l : 0 }};
+    var productpricedetailIdindexedit = {{ isset($k) ? $k : 0 }};
 
-    var colorStockContainerIndex = {{ $c }};
-    var addMoreImagefordiffentcolorContainerediteditId = {{ $w }};
+    var colorStockContainerIndex = {{ isset($c) ? $c : 0 }};
+    var addMoreImagefordiffentcolorContainerediteditId = {{ isset($w) ? $w : 0 }};
 
     console.log(addMoreImagefordiffentcolorContainerediteditId);
 
@@ -2163,6 +2163,8 @@
 
 
             var value = $(this).val();
+
+            console.log(value);
 
 
 
