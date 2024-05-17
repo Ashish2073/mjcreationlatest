@@ -1201,6 +1201,33 @@ class ProductController extends Controller
     }
 
 
+    public function deleteproduct(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+
+
+
+            $productPriceDeatil = ProductPriceDetail::where('product_id', $request->ProductId)->delete();
+            $product = VendorProduct::findOrFail($request->ProductId);
+
+            $product->delete();
+
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json([
+                'sucess' => false,
+                'errormessage' => $e->getMessage(),
+            ], 500);
+
+        }
+
+
+    }
+
+
 
 
 

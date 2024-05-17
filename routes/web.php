@@ -74,6 +74,7 @@ Route::post('vendors/updateproduct', [ProductController::class, 'updateproduct']
 
 Route::post('vendors/editproduct', [ProductController::class, 'editproduct'])->name('vendor.editproduct');
 
+Route::post('vendors/deleteproduct', [ProductController::class, 'deleteproduct'])->name('vendor.deleteproduct');
 
 Route::post('vendors/product-textarea-image-upload', [ProductController::class, 'textareaimageupload'])->name('product-textarea-image-upload');
 

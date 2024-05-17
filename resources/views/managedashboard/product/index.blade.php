@@ -294,11 +294,86 @@
         }
 
 
+        function deleteProduct(id) {
+            let ProductId = id;
+
+
+            $.ajax({
+                url: "{{ route('vendor.deleteproduct') }}",
+                type: 'POST',
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    ProductId: ProductId,
+
+                },
+
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                },
+
+                beforeSend: function() {
+                    $("#loader").html("<div></div>");
+
+                    $("#main_content").attr("class", "demo");
+                },
+
+                success: (data) => {
+
+
+
+
+                    $('#loader').html('');
+                    $('#main_content').removeAttr('class', 'demo');
+
+
+                    dataTable();
+
+                    toastr.success(
+                        "Product deleted Sucessfully"
+                    )
+
+
+
+
+
+
+
+
+                },
+                error: function(xhr, status, error) {
+
+                    if (xhr.status == 422) {
+
+
+
+
+                        $('#loader').html('');
+                        $('#main_content').removeAttr('class', 'demo');
+
+                    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+                }
+            });
+
+        }
+
 
 
         function dataTable() {
 
-            console.log('hello');
+
 
             var csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
             var table = $('.data-table').DataTable({
@@ -415,6 +490,8 @@
         function isset(variable) {
             return typeof variable !== 'undefined' && variable !== null;
         }
+
+
 
 
 
