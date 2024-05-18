@@ -4,6 +4,7 @@
     }
 </style>
 
+
 <div class="col-md-6">
     <label for="" class="form-label">Brand Name</label>
     <div class="input-group">
@@ -11,8 +12,16 @@
             <select name="product_brand_id" id="{{ $select_id ?? 'product_brand_main_id' }}" class="form-select"
                 data-live-search="true" aria-label="Default select example">
                 <option selected disabled>Open this select menu</option>
+
+
+
+
                 @foreach ($product_brands as $data)
-                    <option @if ($productbranddataid ?? 0 === $data->id) selected @endif value="{{ $data->id }}">
+                    <option @if (isset($productbranddataid)) @if ($productbranddataid == $data->id) selected @endif
+                        @endif
+
+
+                        value="{{ $data->id }}">
                         {{ ucwords($data->name) }}</option>
                 @endforeach
             </select>

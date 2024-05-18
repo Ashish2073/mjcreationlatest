@@ -552,7 +552,7 @@ class ProductController extends Controller
 
 
 
-        $product_brands = Productbrand::select('name', 'id')->get();
+        $product_brands = Productbrand::all();
 
         $product_specification_heading_edit = Productspecficationheading::select('name', 'id')->get();
 
@@ -771,6 +771,8 @@ class ProductController extends Controller
 
 
 
+
+
             $validator = Validator::make($request->all(), [
                 'product_category' => 'required',
                 'product_title' => 'required',
@@ -798,9 +800,7 @@ class ProductController extends Controller
                 'product_measurment_price_detail.*.currency' => 'Product currency type required',
                 'product_measurment_price_detail.*.stock' => 'Product stock required',
                 'product_specification.*.name' => 'Product specfication required',
-
                 'product_specification.*.detail' => 'Product Specification detail required',
-
                 'product_specification.*.heading' => 'Specification heading field is required',
             ]);
 
@@ -828,7 +828,7 @@ class ProductController extends Controller
 
             $vendorProduct->product_category_id = $request->product_category[count($request->product_category) - 1];
             $vendorProduct->product_title = $request->product_title;
-            $vendorProduct->brand_id = ($request->product_brand_id);
+            $vendorProduct->brand_id = $request->product_brand_id;
             $vendorProduct->product_total_stock_quantity = $request->product_quantity;
             $vendorProduct->discription = $request->product_discription;
             $vendorProduct->product_warrenty = $request->product_warrenty;
@@ -939,6 +939,7 @@ class ProductController extends Controller
 
                 if (isset($request->product_color_banner_image_existing)) {
 
+
                     $product_color_banner_image_file_name = $request->product_color_banner_image_existing;
 
                 }
@@ -986,7 +987,7 @@ class ProductController extends Controller
 
 
 
-            if (isset($request->product_color_image_gallery) && isset($request->product_color_image_gallery_existing)) {
+            if (isset($request->product_color_image_gallery_edit) && isset($request->product_color_image_gallery_existing)) {
 
 
 
@@ -1008,9 +1009,9 @@ class ProductController extends Controller
 
                 }
 
-                if (isset($request->product_color_image_gallery)) {
+                if (isset($request->product_color_image_gallery_edit)) {
 
-                    $product_color_image_gallery_new_element = $request->product_color_image_gallery;
+                    $product_color_image_gallery_new_element = $request->product_color_image_gallery_edit;
 
 
 
@@ -1077,8 +1078,10 @@ class ProductController extends Controller
 
 
 
-            if (isset($request->product_color_image_gallery_existing) && !isset($request->product_color_image_gallery)) {
+            if (isset($request->product_color_image_gallery_existing) && !isset($request->product_color_image_gallery_edit)) {
                 // $product_color_image_gallery_file_name = [];
+
+
 
                 // $product_color_image_gallery_file_name_existing = [];
 
@@ -1097,6 +1100,7 @@ class ProductController extends Controller
                 // }
 
 
+
                 $vendorProduct->product_color_image_gallery = json_encode($request->product_color_image_gallery_existing);
 
 
@@ -1106,8 +1110,8 @@ class ProductController extends Controller
 
 
 
-            if (isset($request->product_color_image_gallery) && !isset($request->product_color_image_gallery_existing)) {
-                $product_color_image_gallery_new_element = array_values($request->product_color_image_gallery);
+            if (isset($request->product_color_image_gallery_edit) && !isset($request->product_color_image_gallery_existing)) {
+                $product_color_image_gallery_new_element = array_values($request->product_color_image_gallery_edit);
 
                 $product_color_image_gallery_file_name = [];
 

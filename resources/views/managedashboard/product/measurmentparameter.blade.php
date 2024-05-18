@@ -15,7 +15,8 @@
                 aria-label="Default select example">
                 <option selected disabled>Open this select menu</option>
                 @foreach ($selectdata as $data)
-                    <option @if ($selectedid ?? 0 === $data->id) selected @endif value="{{ $data->id }}">
+                    <option @if (isset($selectedid)) @if ($selectedid == $data->id) selected @endif
+                        @endif value="{{ $data->id }}">
                         {{ ucwords($data->name) }}</option>
                 @endforeach
             </select>

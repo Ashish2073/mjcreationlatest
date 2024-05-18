@@ -611,6 +611,7 @@
         function addMoreImage() {
             multipelimageId++;
 
+
             var imageHTML = `<div class="form-element" id="imagecontainer${multipelimageId}" onclick="previewBeforeUpload('file-${multipelimageId}')">
                                 <input type="file" name="product_image_gallery[]" id="file-${multipelimageId}"
                                     accept="image/*">

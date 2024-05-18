@@ -189,6 +189,7 @@
                         'modal_label' => 'exampleModalLabelMeasurmentParameterName',
                         'select_id' => 'product_measurment_parameter_main_id',
                         'selectdata' => $productmeasurmentname,
+                        'productbranddataid' => '',
                         'submitbtnid' => 'submitMeasurementParameterForm',
                         'input_name' => 'measurment_parameter_name',
                         'input__id' => 'product_measurment_name_id',

@@ -554,7 +554,7 @@
 
                         <option selected disabled>Please Select heading</option>
                         @foreach ($product_specification_heading_edit as $data)
-                            <option value="{{ $data->name }}">{{ ucwords($data->name) }}</option>
+                            <option value="{{ $data->id }}">{{ ucwords($data->name) }}</option>
                         @endforeach
 
 
@@ -607,7 +607,7 @@
 
 
                     <div class="col-md-12 px-5 d-flex justify-content-end">
-                        <span class="btn btn-success btn-sm px-3" onclick="addMoreImage()">+</span>
+                        <span class="btn btn-success btn-sm px-3" onclick="addMoreImageEdit()">+</span>
                     </div>
                     <input type="hidden" value="1" id="imageintial" />
 
@@ -720,8 +720,9 @@
 
 
 
-                                    <input type="file" name="product_color_banner_image[]"
-                                        id="file-color-edit-banner" accept="image/*">
+                                    <input type="file" class="productcolorbannerimageedit"
+                                        name="product_color_banner_image[]" id="file-color-edit-banner"
+                                        accept="image/*">
 
                                     <label for="file-color-edit-banner" id="file-color-edit-banner-preview">
                                         <img src="{{ asset('product/gallery/' . $productdatacolorbannerimage[$w]) }}"
@@ -787,7 +788,7 @@
 
 
                                                 <input type="file"
-                                                    name="product_color_image_gallery[{{ $w }}][]"
+                                                    name="product_color_image_gallery_edit[{{ $w }}][]"
                                                     id="file-color-edit-{{ $w }}-{{ $v }}"
                                                     accept="image/*">
 
@@ -848,8 +849,8 @@
 
                     <div class="grid">
                         <div class="form-element" onclick="previewBeforeUploadEdit('file-color-edit-banner')">
-                            <input type="file" name="product_color_banner_image[]" id="file-color-edit-banner"
-                                accept="image/*">
+                            <input type="file" class="productcolorbannerimageedit"
+                                name="product_color_banner_image[]" id="file-color-edit-banner" accept="image/*">
                             <label for="file-color-edit-banner" id="file-color-edit-banner-preview">
                                 <img src="{{ asset('img/imagepreviewupload.jpg') }}" alt="">
                                 <div>
@@ -892,7 +893,7 @@
                         <div class="grid product_color_image_gallery_edit" id="product_color_gallery_edit_0">
 
                             <div class="form-element" onclick="previewBeforeUploadEdit('file-color-edit-0-0')">
-                                <input type="file" name="product_color_image_gallery[0][]"
+                                <input type="file" name="product_color_image_gallery_edit[0][]"
                                     id="file-color-edit-0-0" accept="image/*">
                                 <label for="file-color-edit-0-0" id="file-color-edit-0-0-preview">
                                     <img src="{{ asset('img/imagepreviewupload.jpg') }}">
@@ -964,6 +965,26 @@
 
         }
 
+
+    }
+
+    var productspecificationTextareaEdit = [];
+
+    for (let j = 0; j < productspecificationedit; j++) {
+
+        // $(`#product_specification_heading_edit${j}`).select2();
+
+        ClassicEditor.create(document.querySelector(`#product_specification_details_edit${j}`), {
+                ckfinder: {
+                    uploadUrl: `{{ route('product-textarea-image-upload') . '?_token=' . csrf_token() }}`,
+                },
+            })
+            .then((newEditor) => {
+                productspecificationTextareaEdit.push(newEditor);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
 
     }
 
@@ -1116,7 +1137,7 @@
 
         for (let w = 0; w < addMoreImagefordiffentcolorContainerediteditId; w++) {
             for (let k = 0; k < pairs[w].length; k++) {
-                pairs[w][k].setAttribute('name', `product_color_image_gallery[${w}][]`);
+                pairs[w][k].setAttribute('name', `product_color_image_gallery_edit[${w}][]`);
             }
         }
 
@@ -1196,7 +1217,11 @@
 
         $(`#${id}`).remove();
 
-        console.log(productspecificationedit);
+        console.log(id);
+
+        console.log(productspecificationTextareaEdit);
+
+
 
         let inputFields = document.querySelectorAll('.productspecificationchangename');
 
@@ -1215,9 +1240,17 @@
             //product_specification[{{ $l }}][detail]  Change the name attribute value with incremental index productspecificationchangename productspecificationchangetextarea
             inputFields[i].setAttribute('name', `product_specification[${i}][name]`);
             spanFields[i].setAttribute('id', `product_specification.${i}.nameedit`)
-            textAreaFields[i].setAttribute('id', `product_specification_details_edit${i}}`);
+            textAreaFields[i].setAttribute('id', `product_specification_details_edit${i}`);
 
             textAreaFields[i].setAttribute('name', `product_specification[${i}][detail]`);
+
+
+
+
+
+
+
+
 
             spantextAreaFields[i].setAttribute('id', `product_specification.${i}.detailedit`);
 
@@ -1238,6 +1271,12 @@
 
             //   $product_specification_heading_edit${i}.select2();
         }
+
+
+
+
+
+
 
 
 
@@ -1302,25 +1341,7 @@
     //         console.error(error);
     //     });
 
-    var productspecificationTextareaEdit = [];
 
-    for (let j = 0; j < {{ $l }}; j++) {
-
-        // $(`#product_specification_heading_edit${j}`).select2();
-
-        ClassicEditor.create(document.querySelector(`#product_specification_details_edit${j}`), {
-                ckfinder: {
-                    uploadUrl: `{{ route('product-textarea-image-upload') . '?_token=' . csrf_token() }}`,
-                },
-            })
-            .then((newEditor) => {
-                productspecificationTextareaEdit.push(newEditor);
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-
-    }
 
     function previewBeforeUploadEdit(id) {
         console.log(id);
@@ -1340,7 +1361,7 @@
 
 
 
-    function addMoreImage() {
+    function addMoreImageEdit() {
         multipelimageId++;
 
         var imageHTML = `<div class="form-element" id="imagecontainer${multipelimageId}" onclick="previewBeforeUploadEdit('file-edit-${multipelimageId}')">
@@ -1391,7 +1412,7 @@
         multiplcolorimageId++;
 
         var imagecolorHTMLEdit = `<div class="form-element" id="imagecontainer${containerColorIdEdit}${multiplcolorimageId}" onclick="previewBeforeUploadEdit('file-edit-${containerColorIdEdit}-${multiplcolorimageId}')">
-                                    <input type="file"  name="product_color_image_gallery[${containerColorIdEdit}][]" id="file-edit-${containerColorIdEdit}-${multiplcolorimageId}"
+                                    <input type="file"  name="product_color_image_gallery_edit[${containerColorIdEdit}][]" id="file-edit-${containerColorIdEdit}-${multiplcolorimageId}"
                                         accept="image/*">
                                     <label for="file-edit-${containerColorIdEdit}-${multiplcolorimageId}" id="file-edit-${containerColorIdEdit}-${multiplcolorimageId}-preview">
                                         <img src="{{ asset('img/imagepreviewupload.jpg') }}">
@@ -1445,7 +1466,7 @@
                                                        <div class="form">
                                                        <div class="grid">
                                                         <div class="form-element" onclick=" previewBeforeUploadEdit('file-color-edit-banner${addMoreImagefordiffentcolorContainerediteditId}')">
-                                                              <input type="file" name="product_color_banner_image[]" id="file-color-edit-banner${addMoreImagefordiffentcolorContainerediteditId}"   accept="image/*">
+                                                              <input type="file" class="productcolorbannerimageedit" name="product_color_banner_image[]" id="file-color-edit-banner${addMoreImagefordiffentcolorContainerediteditId}"   accept="image/*">
                                                             <label for="file-color-edit-banner${addMoreImagefordiffentcolorContainerediteditId}" id="file-color-edit-banner${addMoreImagefordiffentcolorContainerediteditId}-preview">
                                                              <img src="{{ asset('img/imagepreviewupload.jpg') }}" alt="">
                                                               <div>
@@ -1484,7 +1505,7 @@
 
         <div class="grid product_color_image_gallery_edit" id="product_color_gallery_edit_${addMoreImagefordiffentcolorContainerediteditId}">
             <div class="form-element" onclick="previewBeforeUploadEdit('file-color-edit-${addMoreImagefordiffentcolorContainerediteditId}-${addMoreImagefordiffentcolorContainerediteditId}')">
-                <input type="file"  name="product_color_image_gallery[${addMoreImagefordiffentcolorContainerediteditId}][]" id="file-color-edit-${addMoreImagefordiffentcolorContainerediteditId}-${addMoreImagefordiffentcolorContainerediteditId}"
+                <input type="file"  name="product_color_image_gallery_edit[${addMoreImagefordiffentcolorContainerediteditId}][]" id="file-color-edit-${addMoreImagefordiffentcolorContainerediteditId}-${addMoreImagefordiffentcolorContainerediteditId}"
                     accept="image/*">
                 <label for="file-color-edit-${addMoreImagefordiffentcolorContainerediteditId}-${addMoreImagefordiffentcolorContainerediteditId}" id="file-color-edit-${addMoreImagefordiffentcolorContainerediteditId}-${addMoreImagefordiffentcolorContainerediteditId}-preview">
                     <img src="{{ asset('img/imagepreviewupload.jpg') }}">
@@ -2000,6 +2021,15 @@
 
         var formData = new FormData($("#vendorformedit")[0]);
 
+        function hasFormDataKey(formData, key) {
+            for (var pair of formData.entries()) {
+                if (pair[0] === key) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
 
 
         formData.append("product_discription", product_desc_edit.getData());
@@ -2034,13 +2064,22 @@
         // formData.append(
         //     "product_specification[0][detail]",
         //     product_specification_details_edit.getData()
+
         // );
+
+        // console.log(productspecificationedit, productspecificationTextareaEdit);
         var productspecificationTextareaEditLength = productspecificationTextareaEdit.length;
+
+        console.log(productspecificationTextareaEdit, productspecificationTextareaEditLength);
+
         for (var i = 0; i < productspecificationTextareaEditLength; i++) {
-            formData.append(
-                `product_specification[${i}][detail]`,
-                productspecificationTextareaEdit[i].getData()
-            );
+            if (hasFormDataKey(formData, `product_specification[${i}][heading]`) && hasFormDataKey(formData,
+                    `product_specification[${i}][name]`)) {
+                formData.append(
+                    `product_specification[${i}][detail]`,
+                    productspecificationTextareaEdit[i].getData()
+                );
+            }
         }
 
 
@@ -2069,11 +2108,12 @@
             reader.readAsDataURL(file);
         }
 
-        // var product_color_image_banner = $('input[name="product_color_banner_image[]"]')[0]
+        // var product_color_image_banner = $('input[name="product_color_banner_image[]"]')[0] productcolorbannerimageedit
         //     .files;
 
 
-        $('input[name="product_color_banner_image[]"]').each(function(index, element) {
+        // $('input[name="product_color_banner_image[]"]').each(function(index, element) {
+        $('.productcolorbannerimageedit').each(function(index, element) {
 
             if ((element.files.length > 0)) {
                 var files = element.files;
@@ -2120,12 +2160,12 @@
         for (let i = 0; i <= addMoreImagefordiffentcolorContainerediteditId; i++) {
             console.log(addMoreImagefordiffentcolorContainerediteditId, i);
 
-            if (isset($(`input[name="product_color_image_gallery[${i}][]"]`))) {
+            if (isset($(`input[name="product_color_image_gallery_edit[${i}][]"]`))) {
 
 
 
 
-                $(`input[name="product_color_image_gallery[${i}][]"]`).each(function(index, element) {
+                $(`input[name="product_color_image_gallery_edit[${i}][]"]`).each(function(index, element) {
 
                     if (element.files.length > 0) {
                         var files = element.files;
