@@ -28,8 +28,10 @@
 
     <link rel='stylesheet'
         href='https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.0.0-beta.3/assets/owl.carousel.min.css'>
+
     <link rel='stylesheet'
         href='https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.0.0-beta.3/assets/owl.theme.default.min.css'>
+
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
 
 
@@ -38,6 +40,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/datatables/boostrap.min.css') }}">
 
     <link rel="stylesheet" type="text/css" href="{{ asset('css/datatables/boostrap5.css') }}">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/3.0.2/css/buttons.dataTables.css">
 
     <link rel="stylesheet" type="text/css" href="{{ asset('css/toaster.min.css') }}">
 
@@ -71,13 +74,30 @@
     <script src="{{ asset('js/datatables/boostrap5.js') }}"></script>
     <script src="{{ asset('js/select2.min.js') }}"></script>
 
+    <script src="https://cdn.datatables.net/buttons/3.0.2/js/dataTables.buttons.js"></script>
+
+    <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.dataTables.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+
+    <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.html5.min.js"></script>
+
+    <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.print.min.js"></script>
+
+
+
+
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 
 
     {{-- <script type="module" src="{{ url('resources/js/app.js') }} "></script> --}}
 
 
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
 
 
 

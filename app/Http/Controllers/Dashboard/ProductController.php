@@ -428,7 +428,7 @@ class ProductController extends Controller
             $vendorProducts = VendorProduct::query()
                 ->join('product_categories', 'vendor_products.product_category_id', '=', 'product_categories.id')
                 ->join('product_brands', 'vendor_products.brand_id', '=', 'product_brands.id')
-                ->select('vendor_products.*', 'product_categories.name as product_categories_name', 'product_brands.name as brandname')
+                ->select('vendor_products.*', \DB::raw("DATE_FORMAT(vendor_products.created_at ,'%d/%m/%Y') AS created_date"), 'product_categories.name as product_categories_name', 'product_brands.name as brandname')
                 ->orderBy('vendor_products.created_at', 'desc');
 
 

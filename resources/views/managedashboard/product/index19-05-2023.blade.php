@@ -370,47 +370,77 @@
         }
 
 
-
         function generatePDF(data) {
             var doc = new jsPDF();
-
             var yPosition = 10;
 
             data.forEach((item, index) => {
-                // Add image if available
-                if (item.product_image) {
-                    var img = new Image();
-                    img.src = item.product_image;
+                // Extract image URL from the product_image field
+                console.log(item.product_image);
+                var imageUrl = extractImageUrl(item.product_image);
+                console.log(imageUrl);
 
-                    // Ensure the image is loaded before adding it to the PDF
-                    img.onload = function() {
-                        doc.addImage(this, 'JPEG', 10, yPosition, 50, 50);
-                        addDataToPDF(doc, item, yPosition);
-                        yPosition += 60; // Adjust vertical position
-                        if (yPosition > 270) {
-                            doc.addPage();
-                            yPosition = 10;
-                        }
-                    };
-                } else {
-                    addDataToPDF(doc, item, yPosition);
-                    yPosition += 20; // Adjust vertical position
-                    if (yPosition > 270) {
+
+                // Add image if available
+                if (imageUrl) {
+                    console.log('imageeeee', imageUrl);
+                    addImageToPDF(doc, imageUrl, 10, yPosition);
+                    yPosition += 60; // Adjust vertical position
+                    if (yPosition > doc.internal.pageSize.height - 20) {
                         doc.addPage();
                         yPosition = 10;
                     }
+                }
+                // Add other data
+                addDataToPDF(doc, item, yPosition);
+                yPosition += 20; // Adjust vertical position
+                if (yPosition > doc.internal.pageSize.height - 20) {
+                    doc.addPage();
+                    yPosition = 10;
                 }
             });
 
             doc.save('table.pdf');
         }
 
+        function extractImageUrl(html) {
+            var htmlString = html;
+
+
+            // Create a temporary div element
+            var tempDiv = $("<div>");
+
+            // Set the HTML content of the temporary div
+            tempDiv.html(htmlString);
+
+            // Extract the src attribute value
+            var srcValue = tempDiv.find("img").attr("src");
+            return srcValue;
+        }
+
+        function addImageToPDF(doc, imageUrl, xPosition, yPosition) {
+            var img = new Image();
+            img.crossOrigin = "Anonymous"; // Allow loading cross-origin images
+            img.src = imageUrl;
+
+            // Ensure the image is loaded before adding it to the PDF
+            img.onload = function() {
+                doc.addImage(this, 'JPEG', xPosition, yPosition, 50, 50);
+            };
+            img.onerror = function() {
+                console.error("Error loading image:", imageUrl);
+            };
+        }
+
+
+
         function addDataToPDF(doc, item, yPosition) {
-            doc.text(item.product_title, 70, yPosition + 10);
-            doc.text(item.product_total_stock_quantity, 120, yPosition + 10);
-            doc.text(item.product_categories_name, 170, yPosition + 10);
-            doc.text(item.brandname, 220, yPosition + 10);
-            doc.text(item.created_date, 270, yPosition + 10);
+            console.log(item);
+            doc.text(item.product_title.toString(), 70, yPosition + 10);
+            doc.text(item.product_total_stock_quantity.toString(), 120, yPosition + 10);
+            doc.text(item.product_categories_name.toString(), 170, yPosition + 10);
+            doc.text(item.brandname.toString(), 220, yPosition + 10);
+            doc.text(item.created_date.toString(), 270, yPosition + 10);
         }
 
 
@@ -446,10 +476,10 @@
                     },
                     {
                         extend: 'pdf',
-                        exportOptions: {
-                            columns: [0, 1, 2, 4, 5, 6] // Exclude the action and product image columns
-                        },
-
+                        action: function(e, dt, button, config) {
+                            var data = dt.rows().data().toArray();
+                            generatePDF(data);
+                        }
                     },
                     {
                         extend: 'print',
