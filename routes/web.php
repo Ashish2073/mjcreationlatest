@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\Auth\RegistrationController;
 use App\Http\Controllers\User\Auth\LoginController;
 use App\Http\Controllers\Dashboard\ProductController;
+use App\Http\Controllers\Dashboard\ProductDiscountController;
 
 
 
@@ -64,7 +65,7 @@ Route::get('users/home', [LoginController::class, 'homeview'])->name('users-home
 //vendors///////
 
 
-Route::get('vendors/addproduct', [ProductController::class, 'vendorproductview'])->name('vendors-addproduct');
+// Route::get('vendors/addproduct', [ProductController::class, 'vendorproductview'])->name('vendors-addproduct');
 
 Route::post('vendors/subproduct-categories', [ProductController::class, 'handleChange'])->name('vendors-subproduct-categories');
 
@@ -99,3 +100,5 @@ Route::post('product/addmeasurmentname', [ProductController::class, 'productmeas
 Route::post('product/addmeasurmentunitname', [ProductController::class, 'productmeasurmentunitsave'])->name('product.addmeasurmentunitname');
 
 Route::post('product/addspecificationheading', [ProductController::class, 'productaddspecificationheading'])->name('product.addspecificationheading');
+
+Route::get('product/discount', [ProductDiscountController::class, 'productdiscountview'])->name('product.discount');

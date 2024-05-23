@@ -119,6 +119,36 @@
         }
 
         function hideAddForm() {
+
+            for (let i = 0; i <= productpricedetailId; i++) {
+
+                $(`[id="product_measurment_price_detail.${i}.measurment_quantity"]`).html(" ");
+                $(`[id="product_measurment_price_detail.${i}.stock"]`).html(" ");
+                $(`[id="product_measurment_price_detail.${i}.price"]`).html(" ");
+                $(`[id="product_measurment_price_detail.${i}.currency"]`).html(" ");
+
+            }
+
+            for (let k = 0; k <= productspecification; k++) {
+
+                console.log($(`[id="product_specification.${k}.heading"]`).html());
+                $(`[id="product_specification.${k}.heading"]`).html(" ");
+                $(`[id="product_specification.${k}.detail"]`).html(" ");
+                $(`[id="product_specification.${k}.name"]`).html(" ");
+
+
+            }
+
+
+            $("#product_category").html(" ");
+            $("#product_title").html(" ");
+            $("#product_brand_id").html(" ");
+            $("#product_quantity").html(" ");
+            $("#product_discription").html(" ");
+            $("#product_measurment_parameter").html(" ");
+            $("#product_measurment_unit").html(" ")
+
+
             $("#productaddform").attr('hidden', 'true');
             $("#productmaintable").removeAttr('hidden');
 

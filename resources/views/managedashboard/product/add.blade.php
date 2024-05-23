@@ -62,8 +62,8 @@
 <section id="main_content">
 
 
-    <div class="content-header-left text-md-left position-absolute right-5 mt-4">
-        <div class="form-group">
+    <div class="">
+        <div class="form-group d-flex justify-content-end mt-3">
             <button onclick="hideAddForm()" style="width: 55px;height:50px"
                 class="btn-icon btn btn-danger btn-round btn-sm">
                 <i class="ti-close"></i>

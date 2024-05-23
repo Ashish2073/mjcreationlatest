@@ -879,12 +879,15 @@ class ProductController extends Controller
 
                 $vendorProduct->product_banner_image = $fileName;
 
+            } else {
+                if (isset($request->product_banner_image_existing)) {
+                    $vendorProduct->product_banner_image = $request->product_banner_image_existing[0];
+
+                }
+
             }
 
-            if (isset($request->product_banner_image_existing)) {
-                $vendorProduct->product_banner_image = $request->product_banner_image_existing[0];
 
-            }
 
 
 

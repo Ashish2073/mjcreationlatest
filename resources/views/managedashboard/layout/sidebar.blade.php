@@ -18,13 +18,13 @@
                 <span class="menu-title">Vendors</span>
             </a>
         </li>
-        <li class="nav-item">
+        {{-- <li class="nav-item">
             <a class="nav-link {{ Route::is('vendors-addproduct') ? 'active' : '' }}"
                 @if (!Route::is('vendors-addproduct')) wire:navigate  href="{{ route('vendors-addproduct') }}" @else href="javascript:void(0)" @endif>
                 <i class="ti-star menu-icon"></i>
                 <span class="menu-title">Products</span>
             </a>
-        </li>
+        </li> --}}
         <li class="nav-item">
 
             <a class="nav-link {{ Route::is('bulk.import') ? 'active' : '' }}"
@@ -45,11 +45,11 @@
         {{-- vendors/productlist --}}
         <li class="nav-item">
 
-            {{-- <a class="nav-link {{ Route::is('vendors.productlist') ? 'active' : '' }}"
-                @if (!Route::is('vendors.productlist')) wire:navigate  href="{{ route('vendors.productlist') }}" @else href="javascript:void(0)" @endif>
+            <a class="nav-link {{ Route::is('product.discount') ? 'active' : '' }}"
+                @if (!Route::is('product.discount')) wire:navigate  href="{{ route('product.discount') }}" @else href="javascript:void(0)" @endif>
                 <i class="ti-star menu-icon"></i>
-                <span class="menu-title">Products List</span>
-            </a> --}}
+                <span class="menu-title">Products Discount</span>
+            </a>
         </li>
 
         <li class="nav-item">

@@ -145,8 +145,8 @@
                 loop: true,
                 responsiveRefreshRate: 200,
                 navText: [
-                    '<i class="fa fa-arrow-left" aria-hidden="true"></i>',
-                    '<i class="fa fa-arrow-right" aria-hidden="true"></i>'
+                    '<i class="ti-arrow-left" aria-hidden="true"></i>',
+                    '<i class="ti-arrow-right" aria-hidden="true"></i>'
                 ]
             })
             .on("changed.owl.carousel", syncPosition);
@@ -163,8 +163,8 @@
                 dots: true,
                 nav: true,
                 navText: [
-                    '<i class="fa fa-arrow-left" aria-hidden="true"></i>',
-                    '<i class="fa fa-arrow-right" aria-hidden="true"></i>'
+                    '<i class="ti-arrow-left" aria-hidden="true"></i>',
+                    '<i class="ti-arrow-right" aria-hidden="true"></i>'
                 ],
                 smartSpeed: 200,
                 slideSpeed: 500,

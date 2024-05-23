@@ -17,7 +17,7 @@
 
     <link rel="stylesheet" href="{{ asset('css/fontgoogleapis.css') }}" type="text/css" media="screen" />
     <link rel="stylesheet" href="{{ asset('fontawesome/font-awesome.w3.css') }}" type="text/css" media="screen" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> --}}
 
     <link rel="stylesheet" type="text/css" href="{{ asset('css/vendor.bundle.base.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/maps/style.css.map') }}">
@@ -26,13 +26,11 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('fontawesome/font-awesome.w3.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('vendorcss/ti-icons/css/themify-icons.css') }}">
 
-    <link rel='stylesheet'
-        href='https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.0.0-beta.3/assets/owl.carousel.min.css'>
+    <link rel='stylesheet' type="text/css" href="{{ asset('css/owl.carousel.min.css') }}">
 
-    <link rel='stylesheet'
-        href='https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.0.0-beta.3/assets/owl.theme.default.min.css'>
+    <link rel='stylesheet' href="{{ asset('css/owl.them.default.css') }}">
 
-    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+
 
 
 
@@ -40,9 +38,11 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/datatables/boostrap.min.css') }}">
 
     <link rel="stylesheet" type="text/css" href="{{ asset('css/datatables/boostrap5.css') }}">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/3.0.2/css/buttons.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/datatables/button.css') }}">
 
     <link rel="stylesheet" type="text/css" href="{{ asset('css/toaster.min.css') }}">
+
+
 
 
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
@@ -64,7 +64,7 @@
     <script src="{{ asset('js/additional.method.js') }}"></script>
     <script src="{{ asset('js/jquery.form.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
-    <script src="{{ asset('tailwindcss/tailwind.js') }}"></script>
+    {{-- <script src="{{ asset('tailwindcss/tailwind.js') }}"></script> --}}
     <script src="{{ asset('ckeditor5/ckeditor.js') }}"></script>
     {{-- <script src="{{ asset('js/addproduct.js') }}"></script> --}}
 
@@ -74,30 +74,30 @@
     <script src="{{ asset('js/datatables/boostrap5.js') }}"></script>
     <script src="{{ asset('js/select2.min.js') }}"></script>
 
-    <script src="https://cdn.datatables.net/buttons/3.0.2/js/dataTables.buttons.js"></script>
+    <script src="{{ asset('js/datatables/buttons.js') }}"></script>
 
-    <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.dataTables.js"></script>
+    <script src="{{ asset('js/datatables/buttons.datatable.js') }}"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="{{ asset('js/datatables/zip.js') }}"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script src="{{ asset('js/datatables/pdfmake.js') }}"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+    <script src="{{ asset('js/datatables/pdfmake_vfs.font.js') }}"></script>
 
-    <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.html5.min.js"></script>
+    <script src="{{ asset('js/datatables/html5.js') }}"></script>
 
-    <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.print.min.js"></script>
-
-
+    <script src="{{ asset('js/datatables/print.min.js') }}"></script>
 
 
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+
+    <script defer src="{{ asset('js/owl.carousel.min.js') }}"></script>
 
 
     {{-- <script type="module" src="{{ url('resources/js/app.js') }} "></script> --}}
 
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script> --}}
 
 
 
