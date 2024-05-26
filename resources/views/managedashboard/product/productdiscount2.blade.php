@@ -492,14 +492,6 @@
             margin-left: 3px !important;
             width: 100% !important;
         }
-
-
-    }
-
-    img.card-img-top {
-        width: 8vw;
-        object-fit: contain;
-        */
     }
 </style>
 
@@ -654,27 +646,13 @@
                             </div>
                             <div class="form-div">
 
-                                <section class="bg-light pt-5 pb-5 shadow-sm">
-                                    <div class="container">
-                                        <div class="row pt-5">
-                                            <div class="col-12">
-                                                <h3 class="text-uppercase border-bottom mb-4">Choosen Product</h3>
-                                            </div>
-                                        </div>
-                                        <div class="row" id="choosenproductcontainer">
-
-                                            <h3>Please Select Products.....</h3>
-                                            <span id="product_error" style="color: red;"></span>
 
 
-                                        </div>
-                                    </div>
-                                </section>
-
-
-
-
-                                {{-- <select name="product[]" id="product" class="my-select selectpicker" multiple
+                                <div class="form-group mb-3">
+                                    <label for="coupon-code">Products</label>
+                                    <div class="col-md-4" id="Product_detail">
+                                        <label for="product" class="form-label">Products</label>
+                                        <select name="product[]" id="product" class="my-select selectpicker" multiple
                                             data-live-search="true" aria-label="Default select example">
 
 
@@ -684,27 +662,12 @@
 
 
 
-                                        </select> --}}
-                                <table class="data-table table table-striped" style="width:100%">
-                                    <thead>
-                                        <tr>
-
-                                            <th>Sr No.</th>
-                                            <th>Product Title </th>
-
-                                            <th>Product Image </th>
+                                        </select>
+                                        <span id="product_error" style="color: red;"></span>
+                                    </div>
 
 
-
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
-
-
-
-
+                                </div>
 
 
 
@@ -870,8 +833,6 @@
         })
 
 
-        var choosedProductId = [];
-
 
 
         var productDiscountDetailTextarea;
@@ -891,134 +852,6 @@
 
 
         // Select Upload-Area
-
-
-        function removeChossenProductElemet(id, productid) {
-            console.log(id);
-            console.log(productid);
-            let index = choosedProductId.indexOf(productid);
-
-            if (index !== -1) {
-                choosedProductId.splice(index, 1);
-            }
-            $(`#${id}`).remove();
-
-        }
-
-
-
-
-
-
-
-
-        dataTable();
-
-        function dataTable() {
-
-
-
-            var csrfToken = $('meta[name="csrf-token"]').attr("content");
-            var table = $('.data-table').DataTable({
-
-
-
-                stateSave: true,
-                "bDestroy": true,
-                processing: true,
-                serverSide: true,
-                fixedHeader: true,
-
-                ajax: {
-                    url: "{{ route('product.discount') }}",
-                    type: "get",
-                    data: {
-                        _token: csrfToken,
-
-                    }
-                },
-                success: (data) => {
-
-                    console.log(data);
-
-
-                },
-                columns: [{
-                        data: 'DT_RowIndex', // Serial number column
-                        name: 'serial_number',
-                        orderable: false,
-                        searchable: false,
-
-                    },
-
-
-                    {
-                        data: 'product_title',
-                        name: 'product_title',
-                        searchable: true
-                    },
-
-                    {
-
-                        data: 'product_image',
-                        name: 'product_image',
-                        orderable: false,
-                        searchable: false,
-
-                    },
-
-
-                ],
-                language: {
-                    // Customization for the "Entries per page" text
-                    lengthMenu: "Show _MENU_ Entries per Page"
-                },
-                rowCallback: function(row, data) {
-                    // Apply click event to the row
-                    $(row).on('click', function() {
-                        // Show product name and its ID on console choosedProductId
-                        console.log('Product Name:', data.product_title);
-                        console.log('Product ID:', data.id);
-                        choosedProductId.push(data.id);
-
-                        choosenProduct = `<div class="col-lg-2 mb-3 d-flex align-items-stretch" id="productnewelement${data.id}">
-                                                <div class="card position-relative">
-
-                                                    <img src="${data.imgsrc}"
-                                                        class="card-img-top" alt="Card Image">
-                                                
-                      
-                                                 
-                                                       
-                                                    <div class="card-body d-flex flex-column">
-                                                        <h5 class="card-title">${data.product_title}</h5>
-                                                        <button type="button" onclick="removeChossenProductElemet('productnewelement${data.id}',${data.id})" class="delete btn btn-danger "><i
-                                                                class="ti-trash"></i></button>
-                                                    </div>
-                                                </div>
-                                            </div>`;
-
-
-
-
-
-
-                        $('#choosenproductcontainer').append(choosenProduct);
-
-
-
-
-
-
-                    });
-                }
-
-
-            });
-
-
-
-        };
 
 
 
@@ -1299,8 +1132,8 @@
 
 
 
-            let uniqueArraySelectedProduct = [...new Set(choosedProductId)];
-            const selectedProducts = uniqueArraySelectedProduct;
+
+            const selectedProducts = $('#product').val();
 
 
 
@@ -1327,27 +1160,6 @@
                     $("#loader").html("<div></div>");
 
                     $("#main_content").attr("class", "demo");
-
-                    $('#start_date_error').html(" ");
-                    $('#end_date_error').html(" ");
-
-                    $("#discount_title_error").html(" ");
-                    $("#discount_banner_image_error").html(" ");
-
-                    $("#product_discount_detail_error").html(" ");
-
-                    $("#product_error").html(" ");
-
-                    $("#discount_type_error").html(" ");
-
-                    $("#bulk_discount.amount_error").html(" ");
-
-                    $("#bulk_discount.amount_type_error").html(" ");
-
-                    $("#combo_discount.amount_error").html(" ");
-
-                    $("#combo_discount.amount_type_error").html(" ");
-
 
                 },
                 success: (data) => {

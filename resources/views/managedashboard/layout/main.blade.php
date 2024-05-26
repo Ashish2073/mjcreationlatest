@@ -93,6 +93,8 @@
 
     <script defer src="{{ asset('js/owl.carousel.min.js') }}"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/js/bootstrap-select.min.js"></script>
+
 
     {{-- <script type="module" src="{{ url('resources/js/app.js') }} "></script> --}}
 

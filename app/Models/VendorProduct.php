@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\ProductPriceDetail;
+use App\Models\ProductDiscount;
+use App\Models\Discount;
 
 class VendorProduct extends Model
 {
@@ -76,6 +78,12 @@ class VendorProduct extends Model
     return $this->hasMany(ProductPriceDetail::class, 'product_id');
   }
 
+
+  public function discounts()
+  {
+    return $this->belongsToMany(Discount::class, 'product_discounts')
+      ->withTimestamps();
+  }
 
 
 }
