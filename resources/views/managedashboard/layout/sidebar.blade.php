@@ -43,12 +43,21 @@
             </a>
         </li>
         {{-- vendors/productlist --}}
-        <li class="nav-item">
+        {{-- <li class="nav-item">
 
             <a class="nav-link {{ Route::is('product.discount') ? 'active' : '' }}"
                 @if (!Route::is('product.discount')) wire:navigate  href="{{ route('product.discount') }}" @else href="javascript:void(0)" @endif>
                 <i class="ti-star menu-icon"></i>
                 <span class="menu-title">Products Discount</span>
+            </a>
+        </li> --}}
+
+        <li class="nav-item">
+
+            <a class="nav-link {{ Route::is('product.discountlist') ? 'active' : '' }}"
+                @if (!Route::is('product.discountlist')) wire:navigate  href="{{ route('product.discountlist') }}" @else href="javascript:void(0)" @endif>
+                <i class="ti-star menu-icon"></i>
+                <span class="menu-title">Products Discount List</span>
             </a>
         </li>
 

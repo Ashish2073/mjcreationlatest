@@ -101,6 +101,10 @@ Route::post('product/addmeasurmentunitname', [ProductController::class, 'product
 
 Route::post('product/addspecificationheading', [ProductController::class, 'productaddspecificationheading'])->name('product.addspecificationheading');
 
-Route::get('product/discount', [ProductDiscountController::class, 'productdiscountview'])->name('product.discount');
+Route::post('productlist', [ProductDiscountController::class, 'productdiscountview'])->name('product.list');
 
 Route::post('product/addproductdiscount', [ProductDiscountController::class, 'saveproductdiscount'])->name('product.savediscount');
+
+Route::get('product/discountlist', [ProductDiscountController::class, 'productdiscountlistview'])->name('product.discountlist');
+
+Route::post('product/discount/edit', [ProductDiscountController::class, 'discounteditview'])->name('product.discount.edit');

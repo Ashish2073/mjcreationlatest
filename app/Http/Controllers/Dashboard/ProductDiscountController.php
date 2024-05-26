@@ -72,8 +72,8 @@ class ProductDiscountController extends Controller
 
         }
 
-        $vendorProduct = VendorProduct::where('vendor_id', 1)->select('id', 'product_title')->get();
-        return view('managedashboard.product.productdiscount', ['vendorProduct' => $vendorProduct]);
+        // $vendorProduct = VendorProduct::where('vendor_id', 1)->select('id', 'product_title')->get();
+        // return view('managedashboard.product.productdiscount', ['vendorProduct' => $vendorProduct]);
 
     }
 
@@ -178,4 +178,114 @@ class ProductDiscountController extends Controller
 
 
     }
+
+    public function productdiscountlistview(Request $request)
+    {
+
+        if ($request->ajax()) {
+
+
+            $discounts = Discount::query()
+
+                ->orderBy('discounts.created_at', 'desc');
+
+
+
+            return Datatables::of($discounts)
+                ->addIndexColumn()
+                ->addColumn('banner_image', function ($row) {
+                    $url = asset("product/banner/{$row->banner_image}");
+
+                    $discountimg = "<img src={$url} width='30' id='openModalImageShow' height='50' onclick='showProductImage({$row->id})' />";
+
+                    return $discountimg;
+                })
+
+
+
+                ->addColumn('action', function ($row) {
+                    $btn = '<button type="button" onclick="editDiscount(' . $row->id . ')" class="edit btn btn-primary mr-2"><i class="ti-pencil-alt"></i></button>';
+                    $btn .= '<button type="button" onclick="deleteDiscount(' . $row->id . ')" class="delete btn btn-danger "><i class="ti-trash"></i></button>';
+                    return $btn;
+                })
+
+
+                ->rawColumns(['action', 'banner_image'])
+                ->make(true);
+
+
+        }
+
+        return view('managedashboard.product.discount.index');
+
+
+
+    }
+
+
+    public function discounteditview(Request $request)
+    {
+
+
+
+        $discountData = Discount::join('product_discounts', 'product_discounts.discount_id', '=', 'discounts.id')
+            ->join('vendor_products', 'vendor_products.id', '=', 'product_discounts.product_id')
+            ->where('discounts.id', $request->discountid)
+            ->select(
+                'discounts.start_date as start_date',
+                'discounts.end_date as end_date',
+                'discounts.banner_image as banner_image',
+                'discounts.discount_title as discount_title',
+                'discounts.details as details',
+                'discounts.discount_type as discount_type',
+                'discounts.discount_data as discount_data',
+                DB::raw('GROUP_CONCAT(vendor_products.id) as product_ids'),
+                DB::raw('GROUP_CONCAT(vendor_products.product_title) as product_titles'),
+                DB::raw('GROUP_CONCAT(vendor_products.product_banner_image) as product_banner_image')
+            )
+            ->groupBy(
+                'discounts.start_date',
+                'discounts.end_date',
+                'discounts.banner_image',
+                'discounts.discount_title',
+                'discounts.details',
+                'discounts.discount_type',
+                'discounts.discount_data'
+            )
+
+            ->get()
+            ->map(function ($item) {
+
+                return [
+                    'start_date' => $item->start_date,
+                    'end_date' => $item->end_date,
+                    'banner_image' => $item->banner_image,
+                    'discount_title' => $item->discount_title,
+                    'details' => $item->details,
+                    'discount_type' => $item->discount_type,
+                    'discount_data' => json_decode($item->discount_data, true),
+                    'products' => collect(explode(',', $item->product_ids))->map(function ($id, $index) use ($item) {
+                        return [
+                            'product_id' => $id,
+                            'product_title' => explode(',', $item->product_titles)[$index],
+                            'product_banner_image' => explode(',', $item->product_banner_image)[$index],
+                        ];
+                    })->all(),
+                ];
+            })
+            ->toArray();
+
+        $responseHtml = view::make('managedashboard.product.discount.edit', ['discountData' => $discountData])->render();
+
+        return response()->json([
+            'sucess' => true,
+            'responsehtml' => $responseHtml
+        ], 200);
+
+
+    }
+
+
+
+
 }
