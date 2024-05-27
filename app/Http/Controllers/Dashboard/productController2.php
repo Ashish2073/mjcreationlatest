@@ -765,14 +765,7 @@ class ProductController extends Controller
 
         DB::beginTransaction();
 
-
-
-
-
         try {
-
-
-
 
 
 
@@ -908,11 +901,7 @@ class ProductController extends Controller
                     $productImageGalleryExistingLength = count($request->product_image_gallery_existing);
                     for ($k = 0; $k < $productImageGalleryExistingLength; $k++) {
 
-                        if (!isset($request->product_image_gallery[$k])) {
-                            array_push($product_image_file_name, $productImageGalleryExisting[$k]);
-                        }
-
-
+                        array_push($product_image_file_name, $productImageGalleryExisting[$k]);
                     }
                 }
 
@@ -953,38 +942,15 @@ class ProductController extends Controller
 
                 if (isset($request->product_color_banner_image_existing)) {
 
-                    $product_color_banner_image_existing_length = count($request->product_color_banner_image_existing);
 
-                    for ($w = 0; $w < $product_color_banner_image_existing_length; $w++) {
-
-
-                        if (isset($request->product_color_banner_image_existing[$w])) {
-
-                            $product_color_banner_image_file_name[$w] = $request->product_color_banner_image_existing[$w];
-                        }
-
-                    }
-
-                    ksort($product_color_banner_image_file_name);
-
-                    $product_color_banner_image_file_name = array_values($product_color_banner_image_file_name);
-
-
-
-
+                    $product_color_banner_image_file_name = $request->product_color_banner_image_existing;
 
                 }
 
 
-
-
-
                 // dd($request->hasFile('product_color_banner_image'), $product_color_banner_image_file_name);
                 if (($request->hasFile('product_color_banner_image'))) {
-
-
-
-                    foreach ($request->file('product_color_banner_image') as $m => $image) {
+                    foreach ($request->file('product_color_banner_image') as $image) {
 
                         $originName = $image->getClientOriginalName();
                         $fileName = pathinfo($originName, PATHINFO_FILENAME);
@@ -998,17 +964,9 @@ class ProductController extends Controller
 
 
                         if (isset($product_color_banner_image_file_name)) {
-
-
-
                             array_push($product_color_banner_image_file_name, $fileName);
-
-
-
-
-
                         } else {
-                            $product_color_banner_image_file_name[$m] = $fileName;
+                            $product_color_banner_image_file_name[] = $fileName;
                         }
 
 
@@ -1016,11 +974,6 @@ class ProductController extends Controller
                     }
 
                 }
-
-
-
-
-
 
                 $vendorProduct->product_color_banner_image = json_encode($product_color_banner_image_file_name);
 
@@ -1037,9 +990,7 @@ class ProductController extends Controller
 
 
 
-
             if (isset($request->product_color_image_gallery_edit) && isset($request->product_color_image_gallery_existing)) {
-
 
 
 
@@ -1048,40 +999,18 @@ class ProductController extends Controller
                 $product_color_image_gallery_file_name_existing = [];
 
 
-
-
-
                 if (isset($request->product_color_image_gallery_existing)) {
                     $productcolorimagegalleryexisting = $request->product_color_image_gallery_existing;
 
                     $productcolorimagegalleryexistingLength = count($request->product_color_image_gallery_existing);
 
                     for ($l = 0; $l < $productcolorimagegalleryexistingLength; $l++) {
-
-
-                        if (isset($productcolorimagegalleryexisting[$l])) {
-                            $subproductcolorimagegalleryexisting = count($productcolorimagegalleryexisting[$l]);
-                            for ($n = 0; $n < $subproductcolorimagegalleryexisting; $n++) {
-                                if (isset($productcolorimagegalleryexisting[$l][$n])) {
-
-                                    $product_color_image_gallery_file_name_existing[$l][$n] = $productcolorimagegalleryexisting[$l][$n];
-
-                                }
-                            }
-
-                            ksort($product_color_image_gallery_file_name_existing[$l]);
-
-                            $product_color_image_gallery_file_name_existing[$l] = array_values($product_color_image_gallery_file_name_existing[$l]);
-
-
-                        }
+                        $product_color_image_gallery_file_name_existing[$l] = $productcolorimagegalleryexisting[$l];
 
                     }
 
 
                 }
-
-
 
                 if (isset($request->product_color_image_gallery_edit)) {
 
@@ -1230,8 +1159,6 @@ class ProductController extends Controller
 
 
             $vendorProduct->save();
-
-
 
             if ($vendorProduct) {
 

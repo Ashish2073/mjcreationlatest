@@ -598,6 +598,13 @@
 
         }
 
+        function hideEditForm() {
+
+            $("#discounteditform").attr('hidden', 'true');
+            $("#discountmaintable").removeAttr('hidden');
+
+        }
+
 
 
 
@@ -1362,6 +1369,82 @@
 
 
         });
+
+
+        function deleteDiscount(id) {
+            let discountId = id;
+
+
+            $.ajax({
+                url: "{{ route('product.deletediscount') }}",
+                type: 'POST',
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    discount_id: discountId,
+
+                },
+
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                },
+
+                beforeSend: function() {
+                    $("#loader").html("<div></div>");
+
+                    $("#main_content").attr("class", "demo");
+                },
+
+                success: (data) => {
+
+
+
+
+                    $('#loader').html('');
+                    $('#main_content').removeAttr('class', 'demo');
+
+
+                    dataTable();
+
+                    toastr.success(
+                        "Product deleted Sucessfully"
+                    )
+
+
+
+
+
+
+
+
+                },
+                error: function(xhr, status, error) {
+
+                    if (xhr.status == 422) {
+
+
+
+
+                        $('#loader').html('');
+                        $('#main_content').removeAttr('class', 'demo');
+
+                    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+                }
+            });
+
+        }
     </script>
 
 

@@ -38,7 +38,7 @@
 
             <a class="nav-link {{ Route::is('vendors.productlist') ? 'active' : '' }}"
                 @if (!Route::is('vendors.productlist')) wire:navigate  href="{{ route('vendors.productlist') }}" @else href="javascript:void(0)" @endif>
-                <i class="ti-star menu-icon"></i>
+                <i class="ti-package menu-icon"></i>
                 <span class="menu-title">Product List</span>
             </a>
         </li>
@@ -56,8 +56,8 @@
 
             <a class="nav-link {{ Route::is('product.discountlist') ? 'active' : '' }}"
                 @if (!Route::is('product.discountlist')) wire:navigate  href="{{ route('product.discountlist') }}" @else href="javascript:void(0)" @endif>
-                <i class="ti-star menu-icon"></i>
-                <span class="menu-title">Products Discount List</span>
+                <i class="ti-gift menu-icon"></i>
+                <span class="menu-title"> Discount </span>
             </a>
         </li>
 

@@ -71,7 +71,7 @@
         </div>
     </div> --}}
 
-    <div class="content-header-left text-md-left position-absolute right-5 mt-4">
+    <div class="form-group d-flex justify-content-end mt-3">
         <div class="form-group">
             <button onclick="hideEditForm()" style="width: 55px;height:50px"
                 class="btn-icon btn btn-danger btn-round btn-sm">
@@ -554,7 +554,7 @@
 
                         <option selected disabled>Please Select heading</option>
                         @foreach ($product_specification_heading_edit as $data)
-                            <option value="{{ $data->name }}">{{ ucwords($data->name) }}</option>
+                            <option value="{{ $data->id }}">{{ ucwords($data->name) }}</option>
                         @endforeach
 
 
@@ -634,7 +634,8 @@
 
                                             <input type="file" name="product_image_gallery[]"
                                                 id="file-edit-{{ $g }}" accept="image/*">
-                                            <label for="file-edit-1" id="file-edit-{{ $g }}-preview">
+                                            <label for="file-edit-{{ $g }}"
+                                                id="file-edit-{{ $g }}-preview">
                                                 <img src="{{ asset('product/gallery/' . $productdataimagegallery[$g]) }}"
                                                     class="image-fluid" />
                                                 <div>
@@ -712,7 +713,8 @@
                         <div class="form">
 
                             <div class="grid">
-                                <div class="form-element" onclick="previewBeforeUploadEdit('file-color-edit-banner')">
+                                <div class="form-element"
+                                    onclick="previewBeforeUploadEdit('file-color-edit-banner{{ $w }}')">
 
                                     <input type="hidden" class="product_color_banner_image_existing"
                                         value="{{ $productdatacolorbannerimage[$w] }}"
@@ -721,10 +723,11 @@
 
 
                                     <input type="file" class="productcolorbannerimageedit"
-                                        name="product_color_banner_image[]" id="file-color-edit-banner"
-                                        accept="image/*">
+                                        name="product_color_banner_image[]"
+                                        id="file-color-edit-banner{{ $w }}" accept="image/*">
 
-                                    <label for="file-color-edit-banner" id="file-color-edit-banner-preview">
+                                    <label for="file-color-edit-banner{{ $w }}"
+                                        id="file-color-edit-banner{{ $w }}-preview">
                                         <img src="{{ asset('product/gallery/' . $productdatacolorbannerimage[$w]) }}"
                                             alt="">
                                         <div>
@@ -783,7 +786,7 @@
 
                                                 <input type="hidden" value="{{ $subcolorImagecategory[$v] }}"
                                                     class="product_color_image_gallery_existing{{ $w }}"
-                                                    name="product_color_image_gallery_existing[{{ $w }}][]" />
+                                                    name="product_color_image_gallery_existing[{{ $w }}][{{ $v }}]" />
 
 
 
@@ -794,7 +797,8 @@
 
 
 
-                                                <label for="file-color-edit-{{ $w }}-{{ $v }}"
+                                                <label
+                                                    for="file-color-edit-{{ $w }}-{{ $v }}"
                                                     id="file-color-edit-{{ $w }}-{{ $v }}-preview">
                                                     <img
                                                         src="{{ asset('product/gallery/' . $subcolorImagecategory[$v]) }}">
@@ -965,6 +969,26 @@
 
         }
 
+
+    }
+
+    var productspecificationTextareaEdit = [];
+
+    for (let j = 0; j < productspecificationedit; j++) {
+
+        // $(`#product_specification_heading_edit${j}`).select2();
+
+        ClassicEditor.create(document.querySelector(`#product_specification_details_edit${j}`), {
+                ckfinder: {
+                    uploadUrl: `{{ route('product-textarea-image-upload') . '?_token=' . csrf_token() }}`,
+                },
+            })
+            .then((newEditor) => {
+                productspecificationTextareaEdit.push(newEditor);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
 
     }
 
@@ -1197,7 +1221,11 @@
 
         $(`#${id}`).remove();
 
-        console.log(productspecificationedit);
+        console.log(id);
+
+        console.log(productspecificationTextareaEdit);
+
+
 
         let inputFields = document.querySelectorAll('.productspecificationchangename');
 
@@ -1216,9 +1244,17 @@
             //product_specification[{{ $l }}][detail]  Change the name attribute value with incremental index productspecificationchangename productspecificationchangetextarea
             inputFields[i].setAttribute('name', `product_specification[${i}][name]`);
             spanFields[i].setAttribute('id', `product_specification.${i}.nameedit`)
-            textAreaFields[i].setAttribute('id', `product_specification_details_edit${i}}`);
+            textAreaFields[i].setAttribute('id', `product_specification_details_edit${i}`);
 
             textAreaFields[i].setAttribute('name', `product_specification[${i}][detail]`);
+
+
+
+
+
+
+
+
 
             spantextAreaFields[i].setAttribute('id', `product_specification.${i}.detailedit`);
 
@@ -1239,6 +1275,12 @@
 
             //   $product_specification_heading_edit${i}.select2();
         }
+
+
+
+
+
+
 
 
 
@@ -1303,25 +1345,7 @@
     //         console.error(error);
     //     });
 
-    var productspecificationTextareaEdit = [];
 
-    for (let j = 0; j < {{ $l }}; j++) {
-
-        // $(`#product_specification_heading_edit${j}`).select2();
-
-        ClassicEditor.create(document.querySelector(`#product_specification_details_edit${j}`), {
-                ckfinder: {
-                    uploadUrl: `{{ route('product-textarea-image-upload') . '?_token=' . csrf_token() }}`,
-                },
-            })
-            .then((newEditor) => {
-                productspecificationTextareaEdit.push(newEditor);
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-
-    }
 
     function previewBeforeUploadEdit(id) {
         console.log(id);
@@ -2001,6 +2025,15 @@
 
         var formData = new FormData($("#vendorformedit")[0]);
 
+        function hasFormDataKey(formData, key) {
+            for (var pair of formData.entries()) {
+                if (pair[0] === key) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
 
 
         formData.append("product_discription", product_desc_edit.getData());
@@ -2035,13 +2068,22 @@
         // formData.append(
         //     "product_specification[0][detail]",
         //     product_specification_details_edit.getData()
+
         // );
+
+        // console.log(productspecificationedit, productspecificationTextareaEdit);
         var productspecificationTextareaEditLength = productspecificationTextareaEdit.length;
+
+        console.log(productspecificationTextareaEdit, productspecificationTextareaEditLength);
+
         for (var i = 0; i < productspecificationTextareaEditLength; i++) {
-            formData.append(
-                `product_specification[${i}][detail]`,
-                productspecificationTextareaEdit[i].getData()
-            );
+            if (hasFormDataKey(formData, `product_specification[${i}][heading]`) && hasFormDataKey(formData,
+                    `product_specification[${i}][name]`)) {
+                formData.append(
+                    `product_specification[${i}][detail]`,
+                    productspecificationTextareaEdit[i].getData()
+                );
+            }
         }
 
 

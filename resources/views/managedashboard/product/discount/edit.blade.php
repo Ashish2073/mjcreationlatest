@@ -517,7 +517,7 @@
 <section class="form-sec mt-5">
 
     <div class="form-group pr-3 mt-5">
-        <button onclick="hideAddForm()" style="width: 55px;height:50px;position:absolute;right:33px"
+        <button onclick="hideEditForm()" style="width: 55px;height:50px;position:absolute;right:33px"
             class="btn-icon btn btn-danger btn-round btn-sm">
             <i class="ti-close"></i>
         </button>
@@ -533,6 +533,8 @@
 
         @foreach ($discountData as $data)
             <div class="container">
+
+                <input type="hidden" id="discount_id" value="{{ $data['discount_id'] }}" />
 
 
 
@@ -561,21 +563,22 @@
                             <div class="form-div">
 
                                 <div class="form-group">
-                                    <label for="start_date">Start Date <span>*</span></label>
-                                    <input type="datetime-local" id="start_date" value="{{ $data['start_date'] }}"
-                                        name="start_date" class="mb-4" />
+                                    <label for="start_date_edit">Start Date <span>*</span></label>
+                                    <input type="datetime-local" id="start_date_edit" value="{{ $data['start_date'] }}"
+                                        name="start_date_edit" class="mb-4" />
                                     <span id="start_date_error_edit" style="color: #ff0000"></span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="end_date">End Date <span>*</span></label>
-                                    <input type="datetime-local" id="end_date" value="{{ $data['end_date'] }}"
-                                        name="end_date" class="mb-4" />
+                                    <label for="end_date_edit">End Date <span>*</span></label>
+                                    <input type="datetime-local" id="end_date_edit" value="{{ $data['end_date'] }}"
+                                        name="end_date_edit" class="mb-4" />
                                     <span id="end_date_error_edit" style="color: #ff0000"></span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="discount_title">Discount Title <span>*</span></label>
-                                    <input type="text" class="form-control" name="discount_title" id="discount_title"
-                                        value="{{ $data['discount_title'] }}" placeholder="Please Enter Discount Title"
+                                    <label for="discount_title_edit">Discount Title <span>*</span></label>
+                                    <input type="text" class="form-control" name="discount_title_edit"
+                                        id="discount_title_edit" value="{{ $data['discount_title'] }}"
+                                        placeholder="Please Enter Discount Title"
                                         aria-describedby="inputGroup-sizing-sm">
                                     <span id="discount_title_error_edit" style="color: #ff0000"></span>
                                 </div>
@@ -648,7 +651,7 @@
                                             </div>
                                         </div>
 
-                                        <span id="discount_banner_image_edit_error_edit" style="color: #ff0000"></span>
+                                        <span id="discount_banner_image_error_edit" style="color: #ff0000"></span>
 
 
                                         <!-- End File Details -->
@@ -695,7 +698,9 @@
 
 
 
+                                            @php  $productId=[]; @endphp
                                             @foreach ($data['products'] as $product)
+                                                @php $productId[]=$product['product_id'] ;@endphp
                                                 <div class="col-lg-2 mb-3 d-flex align-items-stretch"
                                                     id="productnewelementedit{{ $product['product_id'] }}">
                                                     <div class="card position-relative">
@@ -768,7 +773,7 @@
                                     <label for="coupon-code">Discount Type</label>
                                     <div class="col-md-4" id="discount_type">
                                         <label for="product_category" class="form-label">Discount Type</label>
-                                        <select name="discount_type" id="discount_type_select_id"
+                                        <select name="discount_type" id="discount_type_select_edit_id"
                                             onchange="selectformEdit(this)" class="form-select discount_type_select"
                                             aria-label="Default select example">
 
@@ -783,111 +788,213 @@
                                         <span id="discount_type_error_edit" style="color: red;"></span>
                                     </div>
                                 </div>
-
-                                <div class="col-md-12 card" id="bulkcardcontaineredit"
-                                    @if ($data['discount_type'] != '1') hidden @endif>
-
+                                @if ($data['discount_type'] == '1')
+                                    <div class="col-md-12 card" id="bulkcardcontaineredit">
 
 
 
 
-                                    <div class="row p-3">
-                                        <div class="col-md-4 py-3">
-                                            <label for="inputAddress" class="form-label">Product
-                                                Quantity</label>
-                                            <input type="number" name="bulk_discount[quantity]" class="form-control"
-                                                value="{{ $data['discount_data']['quantity'] }}"
-                                                id="bulk_discount_quantity" autocomplete="off">
-                                            <span id="bulk_discount.quantity_error_edit" style="color: red;"></span>
+
+                                        <div class="row p-3">
+                                            <div class="col-md-4 py-3">
+                                                <label for="inputAddress" class="form-label">Product
+                                                    Quantity</label>
+                                                <input type="number" name="bulk_discount[quantity]"
+                                                    class="form-control"
+                                                    value="{{ $data['discount_data']['quantity'] }}"
+                                                    id="bulk_discount_quantity_edit" autocomplete="off">
+                                                <span id="bulk_discount.quantity_error_edit"
+                                                    style="color: red;"></span>
+                                            </div>
+                                            <div class="col-md-4 py-3">
+                                                <label for="inputAddress" class="form-label">Discount Amount</label>
+                                                <input type="number" name="bulk_discount[amount]"
+                                                    class="form-control"
+                                                    value="{{ $data['discount_data']['amount'] }}"
+                                                    id="bulk_discount_amount_edit" autocomplete="off">
+                                                <span id="bulk_discount.amount_error_edit" style="color: red;"></span>
+                                            </div>
+
+
+
+
+                                            <div class="col-md-4 py-3">
+                                                <label for="inputcurrency" class="form-label">Type</label>
+                                                <select id="bulk_discount_amount_type_edit"
+                                                    name="bulk_discount[amount_type]" class="form-select">
+                                                    <option selected disabled> Please Select Type</option>
+                                                    <option @if ($data['discount_data']['amount_type'] == '0') selected @endif
+                                                        value="0">FlAT</option>
+                                                    <option @if ($data['discount_data']['amount_type'] == '1') selected @endif
+                                                        value="1">PERCENTAGE</option>
+
+                                                </select>
+                                                <span id="bulk_discount.amount_type_error_edit"
+                                                    style="color: red;"></span>
+                                            </div>
+
+
+
+
+
+
+
+
+
+
+
                                         </div>
-                                        <div class="col-md-4 py-3">
-                                            <label for="inputAddress" class="form-label">Discount Amount</label>
-                                            <input type="number" name="bulk_discount[amount]" class="form-control"
-                                                value="{{ $data['discount_data']['amount'] }}"
-                                                id="bulk_discount_amount" autocomplete="off">
-                                            <span id="bulk_discount.amount_error_edit" style="color: red;"></span>
-                                        </div>
-
-
-
-
-                                        <div class="col-md-4 py-3">
-                                            <label for="inputcurrency" class="form-label">Type</label>
-                                            <select id="bulk_discount_amount_type_edit"
-                                                name="bulk_discount[amount_type]" class="form-select">
-                                                <option selected disabled> Please Select Type</option>
-                                                <option @if ($data['discount_data']['amount_type'] == '0') selected @endif
-                                                    value="0">FlAT</option>
-                                                <option @if ($data['discount_data']['amount_type'] == '1') selected @endif
-                                                    value="1">PERCENTAGE</option>
-
-                                            </select>
-                                            <span id="bulk_discount.amount_type_error_edit"
-                                                style="color: red;"></span>
-                                        </div>
-
-
-
-
-
-
-
-
-
-
 
                                     </div>
-
-                                </div>
-
-
-                                <div class="col-md-12 card" id="combocardcontaineredit"
-                                    @if ($data['discount_type'] != '2') hidden @endif>
+                                @else
+                                    <div class="col-md-12 card" id="bulkcardcontaineredit" hidden>
 
 
-                                    <div class="row p-3">
 
-                                        <div class="col-md-6 py-3">
-                                            <label for="inputAddress" id="product_measurment_quantity"
-                                                class="form-label">Discount Amount</label>
-                                            <input type="number" value="{{ $data['discount_data']['amount'] }}"
-                                                name="combo_discount[amount]" class="form-control"
-                                                id="combo_discount_amount" autocomplete="off">
-                                            <span id="combo_discount.amount_error_edit" style="color: red;"></span>
+
+
+                                        <div class="row p-3">
+                                            <div class="col-md-4 py-3">
+                                                <label for="inputAddress" class="form-label">Product
+                                                    Quantity</label>
+                                                <input type="number" name="bulk_discount[quantity]"
+                                                    class="form-control" value=""
+                                                    id="bulk_discount_quantity_edit" autocomplete="off">
+                                                <span id="bulk_discount.quantity_error_edit"
+                                                    style="color: red;"></span>
+                                            </div>
+                                            <div class="col-md-4 py-3">
+                                                <label for="inputAddress" class="form-label">Discount Amount</label>
+                                                <input type="number" name="bulk_discount[amount]"
+                                                    class="form-control" value=""
+                                                    id="bulk_discount_amount_edit" autocomplete="off">
+                                                <span id="bulk_discount.amount_error_edit" style="color: red;"></span>
+                                            </div>
+
+
+
+
+                                            <div class="col-md-4 py-3">
+                                                <label for="inputcurrency" class="form-label">Type</label>
+                                                <select id="bulk_discount_amount_type_edit"
+                                                    name="bulk_discount[amount_type]" class="form-select">
+                                                    <option selected disabled> Please Select Type</option>
+                                                    <option value="0">FlAT</option>
+                                                    <option value="1">PERCENTAGE</option>
+
+                                                </select>
+                                                <span id="bulk_discount.amount_type_error_edit"
+                                                    style="color: red;"></span>
+                                            </div>
+
+
+
+
+
+
+
+
+
+
+
                                         </div>
-
-
-
-
-                                        <div class="col-md-6 py-3">
-                                            <label for="inputcurrency" class="form-label">Type</label>
-                                            <select id="combo_discount_amount_type" name="combo_discount[amount_type]"
-                                                class="form-select">
-                                                <option selected disabled> Please Select Type</option>
-                                                <option @if ($data['discount_data']['amount_type'] == '0') selected @endif
-                                                    value="0">FlAT</option>
-                                                <option @if ($data['discount_data']['amount_type'] == '1') selected @endif
-                                                    value="1">PERCENTAGE</option>
-
-                                            </select>
-                                            <span id="combo_discount.amount_type_error_edit"
-                                                style="color: red;"></span>
-                                        </div>
-
-
-
-
-
-
-
-
-
-
 
                                     </div>
+                                @endif
 
-                                </div>
+                                @if ($data['discount_type'] == '2')
+                                    <div class="col-md-12 card" id="combocardcontaineredit">
 
+
+                                        <div class="row p-3">
+
+                                            <div class="col-md-6 py-3">
+                                                <label for="inputAddress" id="product_measurment_quantity"
+                                                    class="form-label">Discount Amount</label>
+                                                <input type="number" value="{{ $data['discount_data']['amount'] }}"
+                                                    name="combo_discount[amount]" class="form-control"
+                                                    id="combo_discount_amount_edit" autocomplete="off">
+                                                <span id="combo_discount.amount_error_edit"
+                                                    style="color: red;"></span>
+                                            </div>
+
+
+
+
+                                            <div class="col-md-6 py-3">
+                                                <label for="inputcurrency" class="form-label">Type</label>
+                                                <select id="combo_discount_amount_type_edit"
+                                                    name="combo_discount[amount_type]" class="form-select">
+                                                    <option selected disabled> Please Select Type</option>
+                                                    <option @if ($data['discount_data']['amount_type'] == '0') selected @endif
+                                                        value="0">FlAT</option>
+                                                    <option @if ($data['discount_data']['amount_type'] == '1') selected @endif
+                                                        value="1">PERCENTAGE</option>
+
+                                                </select>
+                                                <span id="combo_discount.amount_type_error_edit"
+                                                    style="color: red;"></span>
+                                            </div>
+
+
+
+
+
+
+
+
+
+
+
+                                        </div>
+
+                                    </div>
+                                @else
+                                    <div class="col-md-12 card" id="combocardcontaineredit" hidden>
+
+
+                                        <div class="row p-3">
+
+                                            <div class="col-md-6 py-3">
+                                                <label for="inputAddress" id="product_measurment_quantity"
+                                                    class="form-label">Discount Amount</label>
+                                                <input type="number" value="" name="combo_discount[amount]"
+                                                    class="form-control" id="combo_discount_amount_edit"
+                                                    autocomplete="off">
+                                                <span id="combo_discount.amount_error_edit"
+                                                    style="color: red;"></span>
+                                            </div>
+
+
+
+
+                                            <div class="col-md-6 py-3">
+                                                <label for="inputcurrency" class="form-label">Type</label>
+                                                <select id="combo_discount_amount_type_edit"
+                                                    name="combo_discount[amount_type]" class="form-select">
+                                                    <option selected disabled> Please Select Type</option>
+                                                    <option value="0">FlAT</option>
+                                                    <option value="1">PERCENTAGE</option>
+
+                                                </select>
+                                                <span id="combo_discount.amount_type_error_edit"
+                                                    style="color: red;"></span>
+                                            </div>
+
+
+
+
+
+
+
+
+
+
+
+                                        </div>
+
+                                    </div>
+                                @endif
 
 
 
@@ -911,7 +1018,7 @@
                         </div>
                     </div> --}}
                         <div class="buttons">
-                            <button class="save-btn" id="productdiscountbutton">save</button>
+                            <button class="save-btn" id="productdiscountbuttonedit">Update</button>
 
                         </div>
 
@@ -937,7 +1044,11 @@
     })
 
 
-    var choosedProductIdEdit = [];
+    var choosedProductIdEdit = {!! json_encode($productId ?? []) !!};
+
+    choosedProductIdEdit = choosedProductIdEdit.map(Number);
+
+
 
 
 
@@ -969,6 +1080,8 @@
             choosedProductIdEdit.splice(index, 1);
         }
         $(`#${id}`).remove();
+
+        console.log(choosedProductIdEdit);
 
     }
 
@@ -1052,7 +1165,7 @@
                                         <div class="card position-relative">
 
                                             <img src="${data.imgsrc}"
-                                                class="card-img-top" alt="Card Image" style="width:7vw;object-fit:contain">
+                                                class="card-img-top" alt="Card Image" style="width:8vw;object-fit:contain">
                                         
               
                                          
@@ -1100,7 +1213,7 @@
         } else {
             $("#bulkcardcontaineredit").attr('hidden', 'true');
             $("#combocardcontaineredit").removeAttr('hidden');
-            $('#combo_discount_amount_type').select2();
+            $('#combo_discount_amount_type_edit').select2();
 
         }
 
@@ -1331,37 +1444,41 @@
 
     }
 
-    $("#productdiscountbutton").on("click", function(e) {
+
+
+    $("#productdiscountbuttonedit").on("click", function(e) {
         e.preventDefault();
 
         var formData = new FormData($("#product_discount")[0]);
         let discountImage = $('input[name="discount_banner_image_edit"]')[0].files[0];
 
-        formData.append("start_date", $("#start_date").val());
+        formData.append("start_date", $("#start_date_edit").val());
 
-        formData.append("end_date", $("#end_date").val());
+        formData.append("end_date", $("#end_date_edit").val());
 
-        formData.append("discount_title", $('#discount_title').val());
+        formData.append("discount_title", $("#discount_title_edit").val());
 
-        formData.append("discount_banner_image_edit", discountImage);
+        formData.append("discount_id", $("#discount_id").val());
+
+        formData.append("discount_banner_image", discountImage);
 
         formData.append("product_discount_detail", productDiscountDetailTextareaEdit.getData());
-        formData.append("discount_type", $("#discount_type_select_id").val());
+        formData.append("discount_type", $("#discount_type_select_edit_id").val());
 
-        if ($("#discount_type_select_id").val() == 1) {
+        if ($("#discount_type_select_edit_id").val() == 1) {
 
-            formData.append("bulk_discount[quantity]", $("#bulk_discount_quantity").val());
+            formData.append("bulk_discount[quantity]", $("#bulk_discount_quantity_edit").val());
 
-            formData.append("bulk_discount[amount]", $("#bulk_discount_amount").val());
+            formData.append("bulk_discount[amount]", $("#bulk_discount_amount_edit").val());
 
             formData.append("bulk_discount[amount_type]", $("#bulk_discount_amount_type_edit").val());
         }
 
 
-        if ($("#discount_type_select_id").val() == 2) {
-            formData.append("combo_discount[amount_type]", $("#combo_discount_amount_type").val());
+        if ($("#discount_type_select_edit_id").val() == 2) {
+            formData.append("combo_discount[amount_type]", $("#combo_discount_amount_type_edit").val());
 
-            formData.append("combo_discount[amount]", $("#combo_discount_amount").val());
+            formData.append("combo_discount[amount]", $("#combo_discount_amount_edit").val());
         }
 
 
@@ -1379,7 +1496,7 @@
 
 
         $.ajax({
-            url: "{{ route('product.savediscount') }}",
+            url: "{{ route('product.updatediscount') }}",
             type: "POST",
             data: formData,
             async: false,
@@ -1419,14 +1536,14 @@
             },
             success: (data) => {
                 toastr.success(
-                    "Product Discount Add Sucessfully"
+                    "Product Discount Updated Sucessfully"
                 );
 
 
                 $("#loader").html("");
                 $("#main_content").removeAttr("class", "demo");
-                hideAddForm();
-                // hideEditForm();
+                // hideAddForm();
+                hideEditForm();
                 dataTable();
 
             },

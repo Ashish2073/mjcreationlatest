@@ -71,7 +71,7 @@
         </div>
     </div> --}}
 
-    <div class="content-header-left text-md-left position-absolute right-5 mt-4">
+    <div class="form-group d-flex justify-content-end mt-3">
         <div class="form-group">
             <button onclick="hideEditForm()" style="width: 55px;height:50px"
                 class="btn-icon btn btn-danger btn-round btn-sm">
@@ -579,7 +579,7 @@
                         <div class="form">
 
                             <div class="grid">
-                                <div class="form-element" onclick=" previewBeforeUploadEdit('file-banner-edit')">
+                                <div class="form-element" onclick=" previewBeforeUploadEdit(this,'file-banner-edit')">
                                     <input type="file" name="product_banner_image" id="file-banner-edit"
                                         accept="image/*">
                                     <label for="file-banner-edit" id="file-banner-edit-preview">
@@ -625,7 +625,7 @@
                                     @php $imagegalllerylength=count($productdataimagegallery); @endphp
                                     @for ($g = 0; $g < $imagegalllerylength; $g++)
                                         <div class="form-element" id="imagecontainer{{ $g }}"
-                                            onclick="previewBeforeUploadEdit('file-edit-{{ $g }}')">
+                                            onclick="previewBeforeUploadEdit(this,'file-edit-{{ $g }}')">
 
                                             <input type="hidden" value="{{ $productdataimagegallery[$g] }}"
                                                 name="product_image_gallery_existing[]" />
@@ -634,7 +634,8 @@
 
                                             <input type="file" name="product_image_gallery[]"
                                                 id="file-edit-{{ $g }}" accept="image/*">
-                                            <label for="file-edit-1" id="file-edit-{{ $g }}-preview">
+                                            <label for="file-edit-{{ $g }}"
+                                                id="file-edit-{{ $g }}-preview">
                                                 <img src="{{ asset('product/gallery/' . $productdataimagegallery[$g]) }}"
                                                     class="image-fluid" />
                                                 <div>
@@ -649,7 +650,7 @@
                                         </div>
                                     @endfor
                                 @else
-                                    <div class="form-element" onclick="previewBeforeUploadEdit('file-edit-1')">
+                                    <div class="form-element" onclick="previewBeforeUploadEdit(this,'file-edit-1')">
                                         <input type="file" name="product_image_gallery[]" id="file-edit-1"
                                             accept="image/*">
                                         <label for="file-edit-1" id="file-edit-1-preview">
@@ -712,19 +713,23 @@
                         <div class="form">
 
                             <div class="grid">
-                                <div class="form-element" onclick="previewBeforeUploadEdit('file-color-edit-banner')">
+                                <div class="form-element" data-item="0"
+                                    data-id="colorbannerimage{{ $w }}"
+                                    onclick="previewBeforeUploadEdit(this,'file-color-edit-banner{{ $w }}')">
 
                                     <input type="hidden" class="product_color_banner_image_existing"
                                         value="{{ $productdatacolorbannerimage[$w] }}"
+                                        id="colorbannerimage{{ $w }}"
                                         name="product_color_banner_image_existing[]" />
 
 
 
                                     <input type="file" class="productcolorbannerimageedit"
-                                        name="product_color_banner_image[]" id="file-color-edit-banner"
-                                        accept="image/*">
+                                        name="product_color_banner_image[]"
+                                        id="file-color-edit-banner{{ $w }}" accept="image/*">
 
-                                    <label for="file-color-edit-banner" id="file-color-edit-banner-preview">
+                                    <label for="file-color-edit-banner{{ $w }}"
+                                        id="file-color-edit-banner{{ $w }}-preview">
                                         <img src="{{ asset('product/gallery/' . $productdatacolorbannerimage[$w]) }}"
                                             alt="">
                                         <div>
@@ -779,11 +784,15 @@
                                         @for ($v = 0; $v < $subcolorImagecategorylength; $v++)
                                             <div class="form-element"
                                                 id="imagecontainer{{ $w }}{{ $v }}"
-                                                onclick="previewBeforeUploadEdit('file-color-edit-{{ $w }}-{{ $v }}')">
+                                                data-item="0"
+                                                data-id="colorimagegallery{{ $w }}{{ $v }}"
+                                                onclick="previewBeforeUploadEdit(this,'file-color-edit-{{ $w }}-{{ $v }}')">
 
-                                                <input type="hidden" value="{{ $subcolorImagecategory[$v] }}"
+                                                <input type="hidden"
+                                                    id="colorimagegallery{{ $w }}{{ $v }}"
+                                                    value="{{ $subcolorImagecategory[$v] }}"
                                                     class="product_color_image_gallery_existing{{ $w }}"
-                                                    name="product_color_image_gallery_existing[{{ $w }}][]" />
+                                                    name="product_color_image_gallery_existing[{{ $w }}][{{ $v }}]" />
 
 
 
@@ -794,7 +803,8 @@
 
 
 
-                                                <label for="file-color-edit-{{ $w }}-{{ $v }}"
+                                                <label
+                                                    for="file-color-edit-{{ $w }}-{{ $v }}"
                                                     id="file-color-edit-{{ $w }}-{{ $v }}-preview">
                                                     <img
                                                         src="{{ asset('product/gallery/' . $subcolorImagecategory[$v]) }}">
@@ -848,7 +858,7 @@
                 <div class="form">
 
                     <div class="grid">
-                        <div class="form-element" onclick="previewBeforeUploadEdit('file-color-edit-banner')">
+                        <div class="form-element" onclick="previewBeforeUploadEdit(this,'file-color-edit-banner')">
                             <input type="file" class="productcolorbannerimageedit"
                                 name="product_color_banner_image[]" id="file-color-edit-banner" accept="image/*">
                             <label for="file-color-edit-banner" id="file-color-edit-banner-preview">
@@ -892,7 +902,7 @@
 
                         <div class="grid product_color_image_gallery_edit" id="product_color_gallery_edit_0">
 
-                            <div class="form-element" onclick="previewBeforeUploadEdit('file-color-edit-0-0')">
+                            <div class="form-element" onclick="previewBeforeUploadEdit(this,'file-color-edit-0-0')">
                                 <input type="file" name="product_color_image_gallery_edit[0][]"
                                     id="file-color-edit-0-0" accept="image/*">
                                 <label for="file-color-edit-0-0" id="file-color-edit-0-0-preview">
@@ -1343,7 +1353,18 @@
 
 
 
-    function previewBeforeUploadEdit(id) {
+    function previewBeforeUploadEdit(element, id) {
+        const dataItemValue = element.dataset.item;
+        const dataIdValue = element.dataset.id;
+
+
+
+
+
+        $(`#${dataIdValue}`).val("");
+
+
+
         console.log(id);
         document.querySelector("#" + id).addEventListener("change", function(e) {
             if (e.target.files.length == 0) {
@@ -1364,7 +1385,7 @@
     function addMoreImageEdit() {
         multipelimageId++;
 
-        var imageHTML = `<div class="form-element" id="imagecontainer${multipelimageId}" onclick="previewBeforeUploadEdit('file-edit-${multipelimageId}')">
+        var imageHTML = `<div class="form-element" id="imagecontainer${multipelimageId}" onclick="previewBeforeUploadEdit(this,'file-edit-${multipelimageId}')">
                             <input type="file" name="product_image_gallery[]" id="file-edit-${multipelimageId}"
                                 accept="image/*">
                             <label for="file-edit-${multipelimageId}" id="file-edit-${multipelimageId}-preview">
@@ -1411,7 +1432,7 @@
 
         multiplcolorimageId++;
 
-        var imagecolorHTMLEdit = `<div class="form-element" id="imagecontainer${containerColorIdEdit}${multiplcolorimageId}" onclick="previewBeforeUploadEdit('file-edit-${containerColorIdEdit}-${multiplcolorimageId}')">
+        var imagecolorHTMLEdit = `<div class="form-element" id="imagecontainer${containerColorIdEdit}${multiplcolorimageId}" onclick="previewBeforeUploadEdit(this,'file-edit-${containerColorIdEdit}-${multiplcolorimageId}')">
                                     <input type="file"  name="product_color_image_gallery_edit[${containerColorIdEdit}][]" id="file-edit-${containerColorIdEdit}-${multiplcolorimageId}"
                                         accept="image/*">
                                     <label for="file-edit-${containerColorIdEdit}-${multiplcolorimageId}" id="file-edit-${containerColorIdEdit}-${multiplcolorimageId}-preview">
@@ -1465,7 +1486,7 @@
                                                       <label for="inputAddress" class="form-label">Please select banner image of products</label>
                                                        <div class="form">
                                                        <div class="grid">
-                                                        <div class="form-element" onclick=" previewBeforeUploadEdit('file-color-edit-banner${addMoreImagefordiffentcolorContainerediteditId}')">
+                                                        <div class="form-element" onclick=" previewBeforeUploadEdit(this,'file-color-edit-banner${addMoreImagefordiffentcolorContainerediteditId}')">
                                                               <input type="file" class="productcolorbannerimageedit" name="product_color_banner_image[]" id="file-color-edit-banner${addMoreImagefordiffentcolorContainerediteditId}"   accept="image/*">
                                                             <label for="file-color-edit-banner${addMoreImagefordiffentcolorContainerediteditId}" id="file-color-edit-banner${addMoreImagefordiffentcolorContainerediteditId}-preview">
                                                              <img src="{{ asset('img/imagepreviewupload.jpg') }}" alt="">
@@ -1504,7 +1525,7 @@
                 <div class="form">
 
         <div class="grid product_color_image_gallery_edit" id="product_color_gallery_edit_${addMoreImagefordiffentcolorContainerediteditId}">
-            <div class="form-element" onclick="previewBeforeUploadEdit('file-color-edit-${addMoreImagefordiffentcolorContainerediteditId}-${addMoreImagefordiffentcolorContainerediteditId}')">
+            <div class="form-element" onclick="previewBeforeUploadEdit(this,'file-color-edit-${addMoreImagefordiffentcolorContainerediteditId}-${addMoreImagefordiffentcolorContainerediteditId}')">
                 <input type="file"  name="product_color_image_gallery_edit[${addMoreImagefordiffentcolorContainerediteditId}][]" id="file-color-edit-${addMoreImagefordiffentcolorContainerediteditId}-${addMoreImagefordiffentcolorContainerediteditId}"
                     accept="image/*">
                 <label for="file-color-edit-${addMoreImagefordiffentcolorContainerediteditId}-${addMoreImagefordiffentcolorContainerediteditId}" id="file-color-edit-${addMoreImagefordiffentcolorContainerediteditId}-${addMoreImagefordiffentcolorContainerediteditId}-preview">

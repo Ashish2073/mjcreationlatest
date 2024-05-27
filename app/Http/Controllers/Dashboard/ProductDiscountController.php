@@ -228,10 +228,13 @@ class ProductDiscountController extends Controller
 
 
 
+
+
         $discountData = Discount::join('product_discounts', 'product_discounts.discount_id', '=', 'discounts.id')
             ->join('vendor_products', 'vendor_products.id', '=', 'product_discounts.product_id')
             ->where('discounts.id', $request->discountid)
             ->select(
+                'discounts.id as discount_id',
                 'discounts.start_date as start_date',
                 'discounts.end_date as end_date',
                 'discounts.banner_image as banner_image',
@@ -244,6 +247,7 @@ class ProductDiscountController extends Controller
                 DB::raw('GROUP_CONCAT(vendor_products.product_banner_image) as product_banner_image')
             )
             ->groupBy(
+                'discounts.id',
                 'discounts.start_date',
                 'discounts.end_date',
                 'discounts.banner_image',
@@ -257,6 +261,7 @@ class ProductDiscountController extends Controller
             ->map(function ($item) {
 
                 return [
+                    'discount_id' => $item->discount_id,
                     'start_date' => $item->start_date,
                     'end_date' => $item->end_date,
                     'banner_image' => $item->banner_image,
@@ -285,6 +290,151 @@ class ProductDiscountController extends Controller
 
     }
 
+
+
+    public function productdiscountupdate(Request $request)
+    {
+
+        DB::beginTransaction();
+
+
+        try {
+
+
+
+            $validator = Validator::make($request->all(), [
+                'start_date' => 'required',
+                'end_date' => 'required',
+                'discount_title' => 'required',
+                Rule::unique('discounts')->ignore($request->discount_id),
+
+                'product_discount_detail' => 'required',
+                'product' => 'required',
+                "discount_type" => 'required',
+                'bulk_discount.quantity' => 'required_if:discount_type,1|integer|min:1',
+                'bulk_discount.amount' => 'required_if:discount_type,1|numeric|min:0',
+                'combo_discount.amount' => 'required_if:discount_type,2|numeric|min:0',
+                'bulk_discount.amount_type' => 'required_if:discount_type,1|in:0,1',
+                'combo_discount.amount_type' => 'required_if:discount_type,2|in:0,1',
+
+            ], [
+
+                'start_date.required' => 'Discount Start Date is required',
+                'end_date.required' => 'Discount End Date is required',
+                'discount_title.required' => 'Discount title field required',
+                'discount_title.unique' => 'Discount title should be unique',
+                'bulk_discount.quantity.required_if' => 'Bulk product quantity is required for bulk discount.',
+                'bulk_discount_amount.required_if' => 'Bulk discount amount is required for bulk discount.',
+                'combo_discount.amount.required_if' => 'Combo discount amount is required for combo discount.',
+                'bulk_discount.amount_type.required_if' => 'Bulk amount type is required for bulk discount.',
+                'combo_discount.amount_type.required_if' => 'Combo amount type is required for combo discount.',
+                'product_discount_details.required' => 'Product discount details are required.',
+
+            ]);
+
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'sucess' => false,
+                    'errormessage' => $validator->errors(),
+
+
+                ], 422);
+
+
+            }
+
+
+
+
+
+            $newdiscount = Discount::find($request->discount_id);
+            $newdiscount->discount_title = $request->discount_title;
+            $newdiscount->start_date = $request->start_date;
+            $newdiscount->end_date = $request->end_date;
+            $newdiscount->discount_type = $request->discount_type;
+            $newdiscount->discount_data = json_encode($request->bulk_discount ?? $request->combo_discount);
+
+            $newdiscount->details = $request->product_discount_detail;
+
+            if ($request->hasFile('discount_banner_image')) {
+                $originName = $request->file('discount_banner_image')->getClientOriginalName();
+                $fileName = pathinfo($originName, PATHINFO_FILENAME);
+                $extension = $request->file('discount_banner_image')->getClientOriginalExtension();
+                $fileName = $fileName . '__' . time() . '.' . $extension;
+                $request->file('discount_banner_image')->move(public_path('product/banner'), $fileName);
+
+                $newdiscount->banner_image = $fileName;
+
+            }
+
+
+
+            $newdiscount->save();
+
+
+
+            if ($newdiscount) {
+                ProductDiscount::where('discount_id', $request->discount_id)->delete();
+                $productDiscounts = [];
+                foreach ($request->product as $productId) {
+                    $productDiscounts[] = [
+                        'product_id' => $productId,
+                        'discount_id' => $newdiscount->id,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ];
+                }
+
+
+                ProductDiscount::insert($productDiscounts);
+            }
+            DB::commit();
+            return response()->json(['message' => 'Discount updated and applied to products successfully'], 201);
+
+
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['message' => 'Failed to update discount and apply to products', 'error' => $e->getMessage()], 500);
+        }
+
+
+
+
+
+
+
+    }
+
+
+    public function deletediscount(Request $request)
+    {
+
+        DB::beginTransaction();
+        try {
+
+
+
+            $productDiscountDeatil = ProductDiscount::where('discount_id', $request->discount_id)->delete();
+            $productDiscount = Discount::findOrFail($request->discount_id);
+
+            $productDiscount->delete();
+
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json([
+                'sucess' => false,
+                'errormessage' => $e->getMessage(),
+            ], 500);
+
+        }
+
+
+
+    }
 
 
 

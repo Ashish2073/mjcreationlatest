@@ -108,3 +108,7 @@ Route::post('product/addproductdiscount', [ProductDiscountController::class, 'sa
 Route::get('product/discountlist', [ProductDiscountController::class, 'productdiscountlistview'])->name('product.discountlist');
 
 Route::post('product/discount/edit', [ProductDiscountController::class, 'discounteditview'])->name('product.discount.edit');
+
+Route::post('product/updatediscount', [ProductDiscountController::class, 'productdiscountupdate'])->name('product.updatediscount');
+
+Route::post('product/deletediscount', [ProductDiscountController::class, 'deletediscount'])->name('product.deletediscount');
