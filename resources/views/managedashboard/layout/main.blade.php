@@ -37,7 +37,9 @@
 
     <link rel="stylesheet" type="text/css" href="{{ asset('css/datatables/boostrap.min.css') }}">
 
+
     <link rel="stylesheet" type="text/css" href="{{ asset('css/datatables/boostrap5.css') }}">
+
     <link rel="stylesheet" type="text/css" href="{{ asset('css/datatables/button.css') }}">
 
     <link rel="stylesheet" type="text/css" href="{{ asset('css/toaster.min.css') }}">
@@ -45,7 +47,7 @@
 
 
 
-    <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+    {{-- <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script> --}}
     <script src="{{ asset('js/jquery.js') }}"></script>
 
     <script src="{{ asset('js/toaster.min.js') }}"></script>
@@ -93,7 +95,9 @@
 
     <script defer src="{{ asset('js/owl.carousel.min.js') }}"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/js/bootstrap-select.min.js"></script>
+
+
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/js/bootstrap-select.min.js"></script> --}}
 
 
     {{-- <script type="module" src="{{ url('resources/js/app.js') }} "></script> --}}
@@ -102,7 +106,7 @@
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script> --}}
 
 
-
+    {{-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script> --}}
 
 
 

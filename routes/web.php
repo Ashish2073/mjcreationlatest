@@ -5,6 +5,7 @@ use App\Http\Controllers\User\Auth\RegistrationController;
 use App\Http\Controllers\User\Auth\LoginController;
 use App\Http\Controllers\Dashboard\ProductController;
 use App\Http\Controllers\Dashboard\ProductDiscountController;
+use App\Http\Controllers\Vendor\Auth\RegistrationController as VendorRegistrationController;
 
 
 
@@ -67,48 +68,62 @@ Route::get('users/home', [LoginController::class, 'homeview'])->name('users-home
 
 // Route::get('vendors/addproduct', [ProductController::class, 'vendorproductview'])->name('vendors-addproduct');
 
-Route::post('vendors/subproduct-categories', [ProductController::class, 'handleChange'])->name('vendors-subproduct-categories');
+Route::prefix('vendors')->group(function () {
+    Route::get('/', function () {
+        return view('vendors.registration');
 
-Route::post('vendors/saveproduct', [ProductController::class, 'saveproduct'])->name('vendor-saveproduct');
+    });
 
-Route::post('vendors/updateproduct', [ProductController::class, 'updateproduct'])->name('vendors.updateproduct');
+    Route::get('/otpvarifiaction', [VendorRegistrationController::class, 'otpvarification'])->name('vendors.otpvarification');
 
-Route::post('vendors/editproduct', [ProductController::class, 'editproduct'])->name('vendor.editproduct');
+    Route::post('/otpmatch', [VendorRegistrationController::class, 'otpmatch'])->name('vendors.otpmatch');
 
-Route::post('vendors/deleteproduct', [ProductController::class, 'deleteproduct'])->name('vendor.deleteproduct');
 
-Route::post('vendors/product-textarea-image-upload', [ProductController::class, 'textareaimageupload'])->name('product-textarea-image-upload');
+    Route::post('registration', [VendorRegistrationController::class, 'registration'])->name('vendors.registration');
+    Route::post('subproduct-categories', [ProductController::class, 'handleChange'])->name('vendors-subproduct-categories');
 
-Route::post('vendors/productlistshow', [ProductController::class, 'productlistshow'])->name('vendors.productlistshow');
-Route::get('vendors/productlist', [ProductController::class, 'productlistview'])->name('vendors.productlist');
-// Route::get('vendors/productlist',Producttable::class)->name('vendors.productlist');
+    Route::post('saveproduct', [ProductController::class, 'saveproduct'])->name('vendor-saveproduct');
 
-Route::post('vendors/addbrandname', [ProductController::class, 'addbrandname'])->name('vendors.addbrandname');
-///importdata////////////
+    Route::post('updateproduct', [ProductController::class, 'updateproduct'])->name('vendors.updateproduct');
 
-Route::get('import/bulkproduct', [ProductController::class, 'bulkimport'])->name('bulk.import');
-Route::post('import/product', [ProductController::class, 'importproductdata'])->name('import.product.data');
+    Route::post('editproduct', [ProductController::class, 'editproduct'])->name('vendor.editproduct');
 
-Route::post('import/productspecification', [ProductController::class, 'importproductspecificationdata'])->name('import.product.specification.data');
+    Route::post('deleteproduct', [ProductController::class, 'deleteproduct'])->name('vendor.deleteproduct');
 
-Route::post('import/productprimarycost', [ProductController::class, 'importproductprimarycostdata'])->name('import.product.primary.cost.data');
+    Route::post('product-textarea-image-upload', [ProductController::class, 'textareaimageupload'])->name('product-textarea-image-upload');
 
-Route::post('product/image', [ProductController::class, 'productimage'])->name('product.image');
+    Route::post('productlistshow', [ProductController::class, 'productlistshow'])->name('vendors.productlistshow');
+    Route::get('productlist', [ProductController::class, 'productlistview'])->name('vendors.productlist');
+    // Route::get('vendors/productlist',Producttable::class)->name('vendors.productlist');
 
-Route::post('product/addmeasurmentname', [ProductController::class, 'productmeasurmentsave'])->name('product.addmeasurmentname');
+    Route::post('addbrandname', [ProductController::class, 'addbrandname'])->name('vendors.addbrandname');
+    ///importdata////////////
 
-Route::post('product/addmeasurmentunitname', [ProductController::class, 'productmeasurmentunitsave'])->name('product.addmeasurmentunitname');
+    Route::get('import/bulkproduct', [ProductController::class, 'bulkimport'])->name('bulk.import');
+    Route::post('import/product', [ProductController::class, 'importproductdata'])->name('import.product.data');
 
-Route::post('product/addspecificationheading', [ProductController::class, 'productaddspecificationheading'])->name('product.addspecificationheading');
+    Route::post('import/productspecification', [ProductController::class, 'importproductspecificationdata'])->name('import.product.specification.data');
 
-Route::post('productlist', [ProductDiscountController::class, 'productdiscountview'])->name('product.list');
+    Route::post('import/productprimarycost', [ProductController::class, 'importproductprimarycostdata'])->name('import.product.primary.cost.data');
 
-Route::post('product/addproductdiscount', [ProductDiscountController::class, 'saveproductdiscount'])->name('product.savediscount');
+    Route::post('product/image', [ProductController::class, 'productimage'])->name('product.image');
 
-Route::get('product/discountlist', [ProductDiscountController::class, 'productdiscountlistview'])->name('product.discountlist');
+    Route::post('product/addmeasurmentname', [ProductController::class, 'productmeasurmentsave'])->name('product.addmeasurmentname');
 
-Route::post('product/discount/edit', [ProductDiscountController::class, 'discounteditview'])->name('product.discount.edit');
+    Route::post('product/addmeasurmentunitname', [ProductController::class, 'productmeasurmentunitsave'])->name('product.addmeasurmentunitname');
 
-Route::post('product/updatediscount', [ProductDiscountController::class, 'productdiscountupdate'])->name('product.updatediscount');
+    Route::post('product/addspecificationheading', [ProductController::class, 'productaddspecificationheading'])->name('product.addspecificationheading');
 
-Route::post('product/deletediscount', [ProductDiscountController::class, 'deletediscount'])->name('product.deletediscount');
+    Route::post('productlist', [ProductDiscountController::class, 'productdiscountview'])->name('product.list');
+
+    Route::post('product/addproductdiscount', [ProductDiscountController::class, 'saveproductdiscount'])->name('product.savediscount');
+
+    Route::get('product/discountlist', [ProductDiscountController::class, 'productdiscountlistview'])->name('product.discountlist');
+
+    Route::post('product/discount/edit', [ProductDiscountController::class, 'discounteditview'])->name('product.discount.edit');
+
+    Route::post('product/updatediscount', [ProductDiscountController::class, 'productdiscountupdate'])->name('product.updatediscount');
+
+    Route::post('product/deletediscount', [ProductDiscountController::class, 'deletediscount'])->name('product.deletediscount');
+
+});

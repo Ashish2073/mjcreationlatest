@@ -8,6 +8,7 @@ use App\Events\Sendemailvarificationotp;
 
 use Illuminate\Support\Carbon;
 use App\Models\User;
+use App\Models\Vendor;
 
 class Otpsendtomailvarification
 {
@@ -22,16 +23,29 @@ class Otpsendtomailvarification
     /**
      * Handle the event.
      */
-    public function handle(Sendemailvarificationotp  $event): void
+    public function handle(Sendemailvarificationotp $event): void
     {
-        $user=$event->userdata; 
-        $userotp=$event->userotp;
+        $user = $event->userdata;
+        $userotp = $event->userotp;
 
 
 
-       User::where('id',$user->id)->update([
-        'otp'=> $userotp,
-        'otp_created_at'=>Carbon::now(),
-       ]);
+        // User::where('id', $user->id)->update([
+        //     'otp' => $userotp,
+        //     'otp_created_at' => Carbon::now(),
+        // ]);
+        if ($user instanceof User) {
+            // Update the User table
+            User::where('id', $user->id)->update([
+                'otp' => $userotp,
+                'otp_created_at' => Carbon::now(),
+            ]);
+        } elseif ($user instanceof Vendor) {
+            // Update the Vendor table
+            Vendor::where('id', $user->id)->update([
+                'otp' => $userotp,
+                'otp_created_at' => Carbon::now(),
+            ]);
+        }
     }
 }
