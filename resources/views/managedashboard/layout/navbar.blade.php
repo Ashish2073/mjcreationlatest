@@ -134,10 +134,13 @@
                     <img src="images/faces/face28.jpg" alt="profile" />
                 </a>
                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-                    <a class="dropdown-item">
+                    <a class="dropdown-item nav-link {{ Route::is('vendors.editprofile') ? 'active' : '' }}"
+                        @if (!Route::is('vendors.editprofile')) wire:navigate  href="{{ route('vendors.editprofile') }}" @else href="javascript:void(0)" @endif>
                         <i class="ti-settings text-primary"></i>
                         Settings
                     </a>
+
+
 
 
 

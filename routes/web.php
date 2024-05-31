@@ -157,4 +157,6 @@ Route::prefix('vendors')->middleware('vendor.auth')->group(function () {
 
     Route::post('statusupdate', [DashboardVendorController::class, 'statusupdate'])->name('vendors.statusupdate');
 
+    Route::get('vendors/editprofile', [DashboardVendorController::class, 'editprofile'])->name('vendors.editprofile');
+
 });

@@ -90,5 +90,13 @@ class VendorController extends Controller
     }
 
 
+    public function editprofile()
+    {
+
+        return view('managedashboard.vendor.editprofile');
+
+    }
+
+
 
 }
