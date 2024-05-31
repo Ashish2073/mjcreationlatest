@@ -45,4 +45,13 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+    public function render($request, Throwable $e)
+    {
+        if ($e instanceof MethodNotAllowedHttpException) {
+            return response()->view('errors.405', [], 405);
+        }
+
+        return parent::render($request, $e);
+    }
 }

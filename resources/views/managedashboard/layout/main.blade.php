@@ -108,7 +108,27 @@
 
     {{-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script> --}}
 
+    <style>
+        .error {
+            color: #ff0000;
+            display: block !important;
+        }
 
+        .fade-out {
+            animation: fadeOut 2s forwards;
+        }
+
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+                display: none;
+            }
+        }
+    </style>
 
     <title>@yield('title')</title>
 </head>
@@ -141,6 +161,11 @@
     @yield('page-script')
 
     <script src="{{ asset('js/template.js') }}"></script>
+    <script>
+        setTimeout(function() {
+            $('#error-message').addClass('fade-out');
+        }, 2000);
+    </script>
 
 </body>
 

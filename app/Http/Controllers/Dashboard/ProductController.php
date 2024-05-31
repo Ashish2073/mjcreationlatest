@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\ProductPriceDetail;
 use Illuminate\Support\Facades\View;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -145,7 +146,7 @@ class ProductController extends Controller
 
 
             $vendorProduct = new VendorProduct();
-            $vendorProduct->vendor_id = 1;
+            $vendorProduct->vendor_id = Auth::guard('vendor')->user()->id;
 
             $vendorProduct->product_category_id = $request->product_category[count($request->product_category) - 1];
             $vendorProduct->product_title = $request->product_title;

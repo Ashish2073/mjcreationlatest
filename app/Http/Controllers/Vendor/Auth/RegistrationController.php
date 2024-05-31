@@ -28,9 +28,6 @@ class RegistrationController extends Controller
 
         if ($validator->fails()) {
 
-
-
-
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
@@ -117,14 +114,30 @@ class RegistrationController extends Controller
                     ]);
                 }
 
-                Auth::guard('vendor')->login($vendor);
 
-                return response()->json(['success' => true, 'msg' => 'Mail has been verified'], 200);
+                Auth::guard('vendor')->login($userOtp);
+
+                return;
             } else {
                 return response()->json(['success' => false, 'msg' => 'Your OTP has been Expired'], 422);
             }
 
         }
+
+
+    }
+
+
+    public function vendorlogout(Request $request)
+    {
+
+        Auth::guard('vendor')->logout();
+
+        // Invalidate the session and regenerate the CSRF token
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('vendors');
 
 
     }

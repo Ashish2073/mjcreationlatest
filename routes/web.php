@@ -6,6 +6,8 @@ use App\Http\Controllers\User\Auth\LoginController;
 use App\Http\Controllers\Dashboard\ProductController;
 use App\Http\Controllers\Dashboard\ProductDiscountController;
 use App\Http\Controllers\Vendor\Auth\RegistrationController as VendorRegistrationController;
+use App\Http\Controllers\Vendor\Auth\LoginController as VendorLoginController;
+use App\Http\Controllers\Dashboard\VendorController as DashboardVendorController;
 
 
 
@@ -68,18 +70,41 @@ Route::get('users/home', [LoginController::class, 'homeview'])->name('users-home
 
 // Route::get('vendors/addproduct', [ProductController::class, 'vendorproductview'])->name('vendors-addproduct');
 
-Route::prefix('vendors')->group(function () {
+Route::prefix('vendors')->middleware('vendor.guest')->group(function () {
     Route::get('/', function () {
+        return view('vendors.login');
+    })->name('vendors');
+
+
+    Route::get('/registration', function () {
         return view('vendors.registration');
 
-    });
+    })->name('vendors.registration');
+
+    Route::post('registration', [VendorRegistrationController::class, 'registration'])->name('vendors.registration');
+
+
+    Route::post('/login', [VendorLoginController::class, 'vendorlogin'])->name('vendors.login')->middleware('throttle:5,10');
 
     Route::get('/otpvarifiaction', [VendorRegistrationController::class, 'otpvarification'])->name('vendors.otpvarification');
 
     Route::post('/otpmatch', [VendorRegistrationController::class, 'otpmatch'])->name('vendors.otpmatch');
 
 
-    Route::post('registration', [VendorRegistrationController::class, 'registration'])->name('vendors.registration');
+
+});
+
+
+
+
+
+
+Route::prefix('vendors')->middleware('vendor.auth')->group(function () {
+
+
+    Route::post('/logout', [VendorRegistrationController::class, 'vendorlogout'])->name('vendors.logout');
+
+
     Route::post('subproduct-categories', [ProductController::class, 'handleChange'])->name('vendors-subproduct-categories');
 
     Route::post('saveproduct', [ProductController::class, 'saveproduct'])->name('vendor-saveproduct');
@@ -125,5 +150,11 @@ Route::prefix('vendors')->group(function () {
     Route::post('product/updatediscount', [ProductDiscountController::class, 'productdiscountupdate'])->name('product.updatediscount');
 
     Route::post('product/deletediscount', [ProductDiscountController::class, 'deletediscount'])->name('product.deletediscount');
+
+    Route::get('vendorlist', [DashboardVendorController::class, 'vendorlist'])->name('vendors.list');
+
+    Route::post('vendorsdetail', [DashboardVendorController::class, 'vendordetails'])->name('vendor.detail');
+
+    Route::post('statusupdate', [DashboardVendorController::class, 'statusupdate'])->name('vendors.statusupdate');
 
 });

@@ -252,13 +252,16 @@
     <script>
         $(document).ready(function() {
 
+            console.log($('#user_id').val(), $("#user_contact").val());
+
             setTimeout(function() {
                 $('#success-message').fadeOut('slow');
             }, 1500);
 
-            otpvarification();
+
             otpFieldScript();
             otpLifeTime();
+            otpvarification();
 
 
             toastr.options = {
@@ -357,12 +360,17 @@
 
             function otpvarification() {
 
-                console.log($("#timer").val());
+
                 $('#otp_verify').on('click', function(e) {
 
                     e.preventDefault();
 
+
+
                     if ($("#timer").val() != 0) {
+
+                        console.log('asasas', $("#timer").val());
+
                         let otp1 = $('#otp1').val();
                         let otp2 = $('#otp2').val();
                         let otp3 = $('#otp3').val();
@@ -383,8 +391,8 @@
                                 otp4: otp4,
                                 otp5: otp5,
                                 otp6: otp6,
-                                user_id: user_id,
-                                user_contact: user_contact
+                                id: id,
+                                email: email
                             },
                             beforeSend: function() {
 
@@ -436,7 +444,7 @@
 
                             }
 
-                        })
+                        });
 
                     } else {
                         otpResend();
@@ -500,128 +508,68 @@
 
 
 
-            $('#otpsubmitbutton').on('click', function(e) {
-                e.preventDefault();
+            // $('#otpsubmitbutton').on('click', function(e) {
+            //     e.preventDefault();
 
-                let userContact = $('#user_contact').val();
-                let password = $('#userpassword').val();
+            //     let userContact = $('#user_contact').val();
+            //     let password = $('#userpassword').val();
 
-                $.ajax({
-                    url: "{{ route('users-registration') }}",
-                    type: "POST",
-                    data: {
-                        _token: "{{ csrf_token() }}",
-                        user_contact: userContact,
-                        password: password,
-                    },
-                    beforeSend: function() {
+            //     $.ajax({
+            //         url: "{{ route('users-registration') }}",
+            //         type: "POST",
+            //         data: {
+            //             _token: "{{ csrf_token() }}",
+            //             user_contact: userContact,
+            //             password: password,
+            //         },
+            //         beforeSend: function() {
 
-                        $('#loader').html('<div></div>');
+            //             $('#loader').html('<div></div>');
 
-                        $('#main_content').attr('class', 'demo');
+            //             $('#main_content').attr('class', 'demo');
 
-                    },
-                    success: (data) => {
+            //         },
+            //         success: (data) => {
 
-                        $('#loader').html('');
-                        $('#main_content').removeAttr('class', 'demo');
+            //             $('#loader').html('');
+            //             $('#main_content').removeAttr('class', 'demo');
 
-                        $('#main_content').html(data.responsehtml);
-                        otpFieldScript();
-                        otpLifeTime();
-                        otpvarification();
-
-
-
-
-
-                    },
-                    error: (error) => {
-
-                        if (error.responseJSON.errormessage.phone_no) {
-                            toastr.error(error.responseJSON.errormessage.phone_no[0]);
-                            $('#loader').html('');
-                            $('#main_content').removeAttr('class', 'demo');
-
-                        }
-
-
-                        if (error.responseJSON.errormessage.email) {
-
-
-                            toastr.error(error.responseJSON.errormessage.email[0]);
-                            $('#loader').html('');
-                            $('#main_content').removeAttr('class', 'demo');
-                        }
-
-                    }
-
-                })
-
-            })
-
-
-            $('#loginbutton').on('click', function(e) {
-                e.preventDefault();
-                let userContact = $('#user_contact').val();
-                let password = $('#userpassword').val();
-                $.ajax({
-                    url: "{{ route('users-auth-login') }}",
-                    type: "POST",
-                    data: {
-                        _token: "{{ csrf_token() }}",
-                        user_contact: userContact,
-                        password: password,
-                    },
-                    beforeSend: function() {
-
-                        $('#loader').html('<div></div>');
-
-                        $('#main_content').attr('class', 'demo');
-
-                    },
-                    success: (data) => {
-                        $('#loader').html('');
-                        $('#main_content').removeAttr('class', 'demo');
-
-
-                        window.location.href = "{{ url('users/home') }}";
+            //             $('#main_content').html(data.responsehtml);
+            //             otpFieldScript();
+            //             otpLifeTime();
+            //             otpvarification();
 
 
 
 
-                    },
-                    error: (xhr, status, error) => {
+
+            //         },
+            //         error: (error) => {
+
+            //             if (error.responseJSON.errormessage.phone_no) {
+            //                 toastr.error(error.responseJSON.errormessage.phone_no[0]);
+            //                 $('#loader').html('');
+            //                 $('#main_content').removeAttr('class', 'demo');
+
+            //             }
 
 
-                        if (xhr.status == 422) {
+            //             if (error.responseJSON.errormessage.email) {
 
 
-                            toastr.error(
-                                "Your account is not verified ,otp is send to your registered contact details"
-                            );
-                            $('#loader').html('');
-                            $('#main_content').removeAttr('class', 'demo');
-                            $('#main_content').html(xhr.responseJSON.responsehtml);
-                            otpFieldScript();
-                            otpLifeTime();
-                            otpvarification();
+            //                 toastr.error(error.responseJSON.errormessage.email[0]);
+            //                 $('#loader').html('');
+            //                 $('#main_content').removeAttr('class', 'demo');
+            //             }
 
-                        }
-                        if (xhr.status == 401) {
+            //         }
 
-                            $('#loader').html('');
-                            $('#main_content').removeAttr('class', 'demo');
-                            toastr.error("Your are not authorized person");
-                        }
+            //     })
+
+            // })
 
 
-                    }
 
-                })
-
-
-            })
 
 
 

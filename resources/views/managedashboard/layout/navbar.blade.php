@@ -22,6 +22,18 @@
                 </div>
             </li>
         </ul>
+
+
+        @if ($errors->has('alreadyloginmessage'))
+            <div class="alert alert-danger" id="error-message">
+                {{ $errors->first('alreadyloginmessage') }}
+            </div>
+        @endif
+
+
+
+
+
         <ul class="navbar-nav navbar-nav-right">
             <li class="nav-item dropdown me-1">
                 <a class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center"
@@ -126,7 +138,23 @@
                         <i class="ti-settings text-primary"></i>
                         Settings
                     </a>
-                    <a class="dropdown-item">
+
+
+
+
+
+
+
+
+
+
+                    <form id="logout-form" action="{{ route('vendors.logout') }}" method="POST"
+                        style="display: none;">
+                        @csrf
+                    </form>
+
+                    <a class="dropdown-item" href="#"
+                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         <i class="ti-power-off text-primary"></i>
                         Logout
                     </a>

@@ -81,7 +81,7 @@
         </li>
         <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-                {{-- <i class="ti-user menu-icon"></i> --}}
+                {{-- <i class="ti-user menu-icon"></i> vendorlist --}}
                 <i class="menu-icon"><img src="{{ asset('fontawesome/vendor.png') }}" width="30px" height="20px"
                         style="filter:opacity(0.5)" alt="vendorimage" /></i>
                 <span class="menu-title">Vendors</span>
@@ -89,8 +89,22 @@
             </a>
             <div class="collapse" id="auth">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"><i
-                                class="ti-user menu-icon"> Vendors Profile</i></a></li>
+                    <li class="nav-item">
+
+
+                        <a class="nav-link {{ Route::is('vendors.list') ? 'active' : '' }}"
+                            @if (!Route::is('vendors.list')) wire:navigate  href="{{ route('vendors.list') }}" @else href="javascript:void(0)" @endif>
+                            <i class="ti-user menu-icon"></i>
+                            <span class="menu-title"> Vendors </span>
+                        </a>
+
+
+
+
+                        {{-- 
+                        <a class="nav-link" href="pages/samples/login.html"><i class="ti-user menu-icon"> Vendors
+                                Profile</i></a> --}}
+                    </li>
                     <li class="nav-item"> <a class="nav-link" href="pages/samples/login-2.html"><i
                                 class="ti-package menu-icon">Product List </i></a></li>
                     <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"><i

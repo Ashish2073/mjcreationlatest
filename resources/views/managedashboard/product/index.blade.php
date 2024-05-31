@@ -10,6 +10,21 @@
             color: #ff0000;
             display: block !important;
         }
+
+        .fade-out {
+            animation: fadeOut 2s forwards;
+        }
+
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+                display: none;
+            }
+        }
     </style>
 
 
@@ -30,7 +45,7 @@
 
     <div id="productmaintable" class="container mt-5 table-responsive">
 
-        <!-- Button trigger modal -->
+
 
         <div class="content-header-right text-md-right col-md-3 col-12">
             <div class="form-group">
@@ -111,6 +126,10 @@
 
     <script>
         dataTable();
+
+
+        // 2 seconds
+
 
 
         function showAddForm() {
