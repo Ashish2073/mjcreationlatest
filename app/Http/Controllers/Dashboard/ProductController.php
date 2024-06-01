@@ -832,7 +832,7 @@ class ProductController extends Controller
 
 
             $vendorProduct = VendorProduct::find($request->product_id);
-            $vendorProduct->vendor_id = 1;
+            $vendorProduct->vendor_id = Auth::guard('vendor')->user()->id;
 
             $vendorProduct->product_category_id = $request->product_category[count($request->product_category) - 1];
             $vendorProduct->product_title = $request->product_title;

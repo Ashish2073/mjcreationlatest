@@ -17,7 +17,7 @@ class VendorAuthanticate
     public function handle(Request $request, Closure $next, $guard = 'vendor'): Response
     {
         if (!Auth::guard($guard)->check()) {
-            return redirect()->back()->withErrors([
+            return redirect()->route('vendors')->withErrors([
                 'loginmessage' => 'Please login first for assess this page.'
             ]);
         }

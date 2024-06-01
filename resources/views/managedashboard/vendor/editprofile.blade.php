@@ -27,12 +27,7 @@
             text-align: center;
         }
 
-        .profile-image-card img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 50%;
-            margin-bottom: 10px;
-        }
+
 
         .profile-image-card input {
             display: block;
@@ -86,9 +81,29 @@
             background-color: #45a049;
         }
 
+        /* General Styles */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --clr-white: rgb(255, 255, 255);
+            --clr-black: rgb(0, 0, 0);
+            --clr-light: rgb(245, 248, 255);
+            --clr-light-gray: rgb(196, 195, 196);
+            --clr-blue: rgb(63, 134, 255);
+            --clr-light-blue: rgb(171, 202, 255);
+        }
+
+
+
+        /* End General Styles */
+
+        /* Upload Area */
         .upload-area {
             width: 100%;
-            max-width: 17rem;
+            max-width: 25rem;
             background-color: var(--clr-white);
             box-shadow: 0 10px 60px rgb(218, 229, 255);
             border: 2px solid var(--clr-light-blue);
@@ -115,15 +130,24 @@
             }
         }
 
+        /* Header */
+        .upload-area__header {}
+
+        .upload-area__title {
+            font-size: 1.8rem;
+            font-weight: 500;
+            margin-bottom: 0.3125rem;
+        }
+
         .upload-area__paragraph {
             font-size: 0.9375rem;
-            color: gray;
+            color: var(--clr-light-gray);
             margin-top: 0;
         }
 
         .upload-area__tooltip {
             position: relative;
-            color: lightskyblue;
+            color: var(--clr-light-blue);
             cursor: pointer;
             transition: color 300ms ease-in-out;
         }
@@ -138,9 +162,9 @@
             left: 50%;
             transform: translate(-50%, -125%);
             min-width: max-content;
-            background-color: white;
-            color: blue;
-            border: 1px solid lightblue;
+            background-color: var(--clr-white);
+            color: var(--clr-blue);
+            border: 1px solid var(--clr-light-blue);
             padding: 0.625rem 1.25rem;
             font-weight: 500;
             opacity: 0;
@@ -157,13 +181,13 @@
         /* Drop Zoon */
         .upload-area__drop-zoon {
             position: relative;
-            height: 4.25rem;
+            height: 11.25rem;
             /* 180px */
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            border: 2px dashed lightblue;
+            border: 2px dashed var(--clr-light-blue);
             border-radius: 15px;
             margin-top: 2.1875rem;
             cursor: pointer;
@@ -171,19 +195,19 @@
         }
 
         .upload-area__drop-zoon:hover {
-            border-color: blue;
+            border-color: var(--clr-blue);
         }
 
         .drop-zoon__icon {
             display: flex;
             font-size: 3.75rem;
-            color: blue;
+            color: var(--clr-blue);
             transition: opacity 300ms ease-in-out;
         }
 
         .drop-zoon__paragraph {
             font-size: 0.9375rem;
-            color: rgb(15, 15, 15);
+            color: var(--clr-light-gray);
             margin: 0;
             margin-top: 0.625rem;
             transition: opacity 300ms ease-in-out;
@@ -200,7 +224,7 @@
             left: 50%;
             transform: translate(-50%, -50%);
             display: none;
-            color: lightblue;
+            color: var(--clr-light-blue);
             z-index: 10;
         }
 
@@ -213,7 +237,7 @@
             object-fit: contain;
             padding: 0.3125rem;
             border-radius: 10px;
-            display: none;
+            display: block;
             z-index: 1000;
             transition: opacity 300ms ease-in-out;
         }
@@ -222,19 +246,22 @@
             opacity: 0.8;
         }
 
-        .drop_zoon_file-input-edit {
+        .drop-zoon__file-input {
             display: none;
         }
 
         /* (drop-zoon--over) Modifier Class */
         .drop-zoon--over {
-            border-color: blue;
+            border-color: var(--clr-blue);
         }
 
         .drop-zoon--over .drop-zoon__icon,
         .drop-zoon--over .drop-zoon__paragraph {
             opacity: 0.7;
         }
+
+        /* (drop-zoon--over) Modifier Class */
+        .drop-zoon--Uploaded {}
 
         .drop-zoon--Uploaded .drop-zoon__icon,
         .drop-zoon--Uploaded .drop-zoon__paragraph {
@@ -262,7 +289,7 @@
         .file-details__title {
             font-size: 1.125rem;
             font-weight: 500;
-            color: gray;
+            color: var(--clr-light-gray);
         }
 
         /* Uploaded File */
@@ -289,7 +316,7 @@
 
         .uploaded-file__icon {
             font-size: 3.4375rem;
-            color: blue;
+            color: var(--clr-blue);
         }
 
         .uploaded-file__icon-text {
@@ -299,7 +326,7 @@
             transform: translateX(-50%);
             font-size: 0.9375rem;
             font-weight: 500;
-            color: white;
+            color: var(--clr-white);
         }
 
         .uploaded-file__info {
@@ -312,7 +339,7 @@
 
         .uploaded-file__info::before,
         .uploaded-file__info::after {
-            content: "";
+            content: '';
             position: absolute;
             bottom: -0.9375rem;
             width: 0;
@@ -327,7 +354,7 @@
 
         .uploaded-file__info::after {
             width: 100%;
-            background-color: blue;
+            background-color: var(--clr-blue);
         }
 
         /* Progress Animation */
@@ -344,7 +371,7 @@
 
             to {
                 width: 100%;
-                background-color: blue;
+                background-color: var(--clr-blue);
             }
         }
 
@@ -361,37 +388,49 @@
 
         .uploaded-file__counter {
             font-size: 1rem;
-            color: gray;
+            color: var(--clr-light-gray);
         }
     </style>
 
     <div class="container">
         <div class="profile-image-card">
+
+            <div class="form-group pr-3">
+                <a wire:navigate href="{{ url()->previous() }}" class="btn btn-danger btn-round btn-sm"
+                    style="width: 55px;height:50px;position:absolute;right:33px">
+                    <i class="ti-close"></i>
+                </a>
+            </div>
+
+
+            {{-- <div class="form-group pr-3 ">
+                <a href="" style="width: 55px;height:50px;position:absolute;right:33px"
+                    class="btn-icon btn btn-danger btn-round btn-sm">
+                    <i class="ti-close"></i>
+                </a>
+            </div> --}}
+
+
+
             {{-- <h2>Profile Picture</h2>
             <img id="profileImage" src="default-profile.png" alt="Profile Image">
             <input type="file" id="imageUpload" accept="image/*"> --}}
-
+            {{-- 
             <div class="form-group">
                 <label for="coupon-code">Image</label>
                 <div id="uploadArea" class="upload-area">
-                    <!-- Header -->
+                  
                     <div class="upload-area__header">
                         <p class="upload-area__paragraph">
                             File should be an image
                             <strong class="upload-area__tooltip">
                                 Like
                                 <span class="upload-area__tooltip-data"></span>
-                                <!-- Data Will be Comes From Js -->
+                              
                             </strong>
                         </p>
                     </div>
-                    <!-- End Header -->
-
-                    <!-- Drop Zoon -->
-
-
-
-
+                   
 
                     <div id="dropZoonEdit" class="upload-area__drop-zoon drop-zoon">
                         <span class="drop-zoon__icon">
@@ -401,21 +440,21 @@
                         <span id="loadingTextEdit" class="drop-zoon__loading-text">Please
                             Wait</span>
                         <img src="" alt="Preview Image" id="previewImageedit" class="drop-zoon__preview-image"
-                            draggable="false" style="display: none" />
+                            draggable="false"
+                            style="display: none; padding: 5.3125rem !important;
+                            top: -71px; !important" />
 
                         <input type="file" id="discount_banner_image_edit" name="discount_banner_image_edit"
                             class="drop_zoon_file-input-edit" style="display:none"
                             accept="image/jpeg,image/png,image/svg+xml,image/gif" />
                     </div>
-                    <!-- End Drop Zoon -->
-
-                    <!-- File Details -->
+                  
                     <div id="fileDetailsEdit" class="upload-area__file-details file-details">
                         <div id="uploadedFileEdit" class="uploaded-file">
                             <div class="uploaded-file__icon-container">
                                 <i class="bx bxs-file-blank uploaded-file__icon"></i>
                                 <span class="uploaded-file__icon-text"></span>
-                                <!-- Data Will be Comes From Js -->
+                               
                             </div>
 
                             <div id="uploadedFileEditInfoedit" class="uploaded-file__info">
@@ -428,15 +467,61 @@
                     <span id="discount_banner_image_error_edit" style="color: #ff0000"></span>
 
 
-                    <!-- End File Details -->
+                  
 
                 </div>
 
-                {{-- <div class="plus-icn">
-                    <i class="fa fa-plus-square"></i>
-                </div> --}}
+              
 
+            </div> --}}
+
+            <div id="uploadArea" class="upload-area">
+                <!-- Header -->
+                <div class="upload-area__header">
+                    <h1 class="upload-area__title">Upload your file</h1>
+                    <p class="upload-area__paragraph">
+                        File should be an image
+                        <strong class="upload-area__tooltip">
+                            Like
+                            <span class="upload-area__tooltip-data"></span> <!-- Data Will be Comes From Js -->
+                        </strong>
+                    </p>
+                </div>
+                <!-- End Header -->
+
+                <!-- Drop Zoon -->
+                <div id="dropZoon" class="upload-area__drop-zoon drop-zoon">
+                    <span class="drop-zoon__icon">
+                        <i class='bx bxs-file-image'></i>
+                    </span>
+                    <p class="drop-zoon__paragraph">Drop your file here or Click to browse</p>
+                    <span id="loadingText" class="drop-zoon__loading-text">Please Wait</span>
+                    <img @if (isset(auth()->guard('vendor')->user()->vendor_image)) src="{{ asset('vendor_image/' . auth()->guard('vendor')->user()->vendor_image) }}" @else src="" @endif
+                        alt="Preview Image" id="previewImage" class="drop-zoon__preview-image" draggable="false">
+                    <input type="file" id="fileInput" name="profile_image" class="drop-zoon__file-input"
+                        style="display:none;" accept="image/*">
+                </div>
+                <!-- End Drop Zoon -->
+
+                <!-- File Details -->
+                <div id="fileDetails" class="upload-area__file-details file-details">
+                    <h3 class="file-details__title">Uploaded File</h3>
+
+                    <div id="uploadedFile" class="uploaded-file">
+                        <div class="uploaded-file__icon-container">
+                            <i class='bx bxs-file-blank uploaded-file__icon'></i>
+                            <span class="uploaded-file__icon-text"></span> <!-- Data Will be Comes From Js -->
+                        </div>
+
+                        <div id="uploadedFileInfo" class="uploaded-file__info">
+                            <span class="uploaded-file__name">Proejct 1</span>
+                            <span class="uploaded-file__counter">0%</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- End File Details -->
             </div>
+            <!-- End Upload Area -->
 
 
 
@@ -451,12 +536,27 @@
                 <form id="personalInfoForm">
                     <div class="form-group">
                         <label for="username">Username:</label>
-                        <input type="text" id="username" name="username" required>
+
+
+                        <input type="text" value="{{ auth()->guard('vendor')->user()->name }}" id="username"
+                            name="username">
+                        <span id="name_error" style="color: #ff0000"></span>
+
                     </div>
 
                     <div class="form-group">
                         <label for="email">Email:</label>
-                        <input type="email" id="email" name="email" required>
+                        <input type="email" id="email" name="email"
+                            value="{{ auth()->guard('vendor')->user()->email }}">
+                        <span id="email_error" style="color: #ff0000"></span>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="phone_no">Phone Number:</label>
+                        <input type="phone" id="phone_no" name="phone_no"
+                            value="{{ auth()->guard('vendor')->user()->phone_no }}">
+                        <span id="email_error" style="color: #ff0000"></span>
                     </div>
                 </form>
             </div>
@@ -466,6 +566,7 @@
                     <div class="form-group">
                         <label for="password">Password:</label>
                         <input type="password" id="password" name="password" required>
+                        <span id="password_error" style="color: #ff0000"></span>
                     </div>
 
                     <div class="form-group">
@@ -474,7 +575,7 @@
                     </div>
                 </form>
             </div>
-            <div class="form-card">
+            {{-- <div class="form-card">
                 <h2>Bio</h2>
                 <form id="bioForm">
                     <div class="form-group">
@@ -482,8 +583,9 @@
                         <textarea id="bio" name="bio" rows="4" required></textarea>
                     </div>
                 </form>
-            </div>
-            <button type="submit" form="personalInfoForm" form="changePasswordForm" form="bioForm">Save Changes</button>
+            </div> --}}
+            <button type="submit" id="profilesave" form="personalInfoForm" form="changePasswordForm" form="bioForm">Save
+                Changes</button>
         </div>
     </div>
 @endsection
@@ -494,75 +596,74 @@
         ProfileEdit();
 
         function ProfileEdit() {
-
-
-            const uploadArea = document.querySelector("#uploadArea");
+            const uploadArea = document.querySelector('#uploadArea')
 
             // Select Drop-Zoon Area
-            const dropZoonEdit = document.querySelector("#dropZoonEdit");
+            const dropZoon = document.querySelector('#dropZoon');
 
             // Loading Text
-            const loadingTextEdit = document.querySelector("#loadingTextEdit");
+            const loadingText = document.querySelector('#loadingText');
 
-            // Slect File Input
-            const discount_banner_image_edit = document.querySelector("#discount_banner_image_edit");
+            // Slect File Input 
+            const fileInput = document.querySelector('#fileInput');
 
             // Select Preview Image
-            const previewImageedit = document.querySelector("#previewImageedit");
+            const previewImage = document.querySelector('#previewImage');
 
             // File-Details Area
-            const fileDetailsEdit = document.querySelector("#fileDetailsEdit");
+            const fileDetails = document.querySelector('#fileDetails');
 
             // Uploaded File
-            const uploadedFileEdit = document.querySelector("#uploadedFileEdit");
+            const uploadedFile = document.querySelector('#uploadedFile');
 
             // Uploaded File Info
-            const uploadedFileEditInfoedit = document.querySelector("#uploadedFileEditInfoedit");
+            const uploadedFileInfo = document.querySelector('#uploadedFileInfo');
 
             // Uploaded File  Name
-            const uploadedFileEditName = document.querySelector(".uploaded-file__name");
+            const uploadedFileName = document.querySelector('.uploaded-file__name');
 
             // Uploaded File Icon
-            const uploadedFileEditIconText = document.querySelector(
-                ".uploaded-file__icon-text"
-            );
+            const uploadedFileIconText = document.querySelector('.uploaded-file__icon-text');
 
             // Uploaded File Counter
-            const uploadedFileEditCounter = document.querySelector(
-                ".uploaded-file__counter"
-            );
+            const uploadedFileCounter = document.querySelector('.uploaded-file__counter');
 
             // ToolTip Data
-            const toolTipData = document.querySelector(".upload-area__tooltip-data");
+            const toolTipData = document.querySelector('.upload-area__tooltip-data');
 
             // Images Types
-            const imagesTypes = ["jpeg", "png", "svg", "gif"];
+            const imagesTypes = [
+                "jpeg",
+                "png",
+                "svg",
+                "gif"
+            ];
 
             // Append Images Types Array Inisde Tooltip Data
-            toolTipData.innerHTML = [...imagesTypes].join(", .");
+            toolTipData.innerHTML = [...imagesTypes].join(', .');
 
-            // When (drop-zoon) has (dragover) Event
-            dropZoonEdit.addEventListener("dragover", function(event) {
-                // Prevent Default Behavior
+            // When (drop-zoon) has (dragover) Event 
+            dropZoon.addEventListener('dragover', function(event) {
+                // Prevent Default Behavior 
                 event.preventDefault();
 
                 // Add Class (drop-zoon--over) On (drop-zoon)
-                dropZoonEdit.classList.add("drop-zoon--over");
+                dropZoon.classList.add('drop-zoon--over');
             });
 
-            // When (drop-zoon) has (dragleave) Event
-            dropZoonEdit.addEventListener("dragleave", function(event) {
+            // When (drop-zoon) has (dragleave) Event 
+            dropZoon.addEventListener('dragleave', function(event) {
                 // Remove Class (drop-zoon--over) from (drop-zoon)
-                dropZoonEdit.classList.remove("drop-zoon--over");
+                dropZoon.classList.remove('drop-zoon--over');
             });
 
-            // When (drop-zoon) has (drop) Event
-            dropZoonEdit.addEventListener("drop", function(event) {
-                // Prevent Default Behavior
+            // When (drop-zoon) has (drop) Event 
+            dropZoon.addEventListener('drop', function(event) {
+                // Prevent Default Behavior 
                 event.preventDefault();
 
                 // Remove Class (drop-zoon--over) from (drop-zoon)
-                dropZoonEdit.classList.remove("drop-zoon--over");
+                dropZoon.classList.remove('drop-zoon--over');
 
                 // Select The Dropped File
                 const file = event.dataTransfer.files[0];
@@ -571,14 +672,14 @@
                 uploadFile(file);
             });
 
-            // When (drop-zoon) has (click) Event
-            dropZoonEdit.addEventListener("click", function(event) {
-                // Click The (discount_banner_image_edit)
-                discount_banner_image_edit.click();
+            // When (drop-zoon) has (click) Event 
+            dropZoon.addEventListener('click', function(event) {
+                // Click The (fileInput)
+                fileInput.click();
             });
 
-            // When (discount_banner_image_edit) has (change) Event
-            discount_banner_image_edit.addEventListener("change", function(event) {
+            // When (fileInput) has (change) Event 
+            fileInput.addEventListener('change', function(event) {
                 // Select The Chosen File
                 const file = event.target.files[0];
 
@@ -590,126 +691,215 @@
             function uploadFile(file) {
                 // FileReader()
                 const fileReader = new FileReader();
-                // File Type
+                // File Type 
                 const fileType = file.type;
-                // File Size
+                // File Size 
                 const fileSize = file.size;
 
                 // If File Is Passed from the (File Validation) Function
                 if (fileValidate(fileType, fileSize)) {
                     // Add Class (drop-zoon--Uploaded) on (drop-zoon)
-                    dropZoonEdit.classList.add("drop-zoon--Uploaded");
+                    dropZoon.classList.add('drop-zoon--Uploaded');
 
                     // Show Loading-text
-                    loadingTextEdit.style.display = "block";
+                    loadingText.style.display = "block";
                     // Hide Preview Image
-                    previewImageedit.style.display = "none";
+                    previewImage.style.display = 'none';
 
-                    // Remove Class (uploaded-file--open) From (uploadedFileEdit)
-                    uploadedFileEdit.classList.remove("uploaded-file--open");
-                    // Remove Class (uploaded-file__info--active) from (uploadedFileEditInfoedit)
-                    uploadedFileEditInfoedit.classList.remove("uploaded-file__info--active");
+                    // Remove Class (uploaded-file--open) From (uploadedFile)
+                    uploadedFile.classList.remove('uploaded-file--open');
+                    // Remove Class (uploaded-file__info--active) from (uploadedFileInfo)
+                    uploadedFileInfo.classList.remove('uploaded-file__info--active');
 
-                    // After File Reader Loaded
-                    fileReader.addEventListener("load", function() {
-                        // After Half Second
+                    // After File Reader Loaded 
+                    fileReader.addEventListener('load', function() {
+                        // After Half Second 
                         setTimeout(function() {
                             // Add Class (upload-area--open) On (uploadArea)
-                            uploadArea.classList.add("upload-area--open");
+                            uploadArea.classList.add('upload-area--open');
 
                             // Hide Loading-text (please-wait) Element
-                            loadingTextEdit.style.display = "none";
+                            loadingText.style.display = "none";
                             // Show Preview Image
-                            previewImageedit.style.display = "block";
+                            previewImage.style.display = 'block';
 
-                            // Add Class (file-details--open) On (fileDetailsEdit)
-                            fileDetailsEdit.classList.add("file-details--open");
-                            // Add Class (uploaded-file--open) On (uploadedFileEdit)
-                            uploadedFileEdit.classList.add("uploaded-file--open");
-                            // Add Class (uploaded-file__info--active) On (uploadedFileEditInfoedit)
-                            uploadedFileEditInfoedit.classList.add("uploaded-file__info--active");
+                            // Add Class (file-details--open) On (fileDetails)
+                            fileDetails.classList.add('file-details--open');
+                            // Add Class (uploaded-file--open) On (uploadedFile)
+                            uploadedFile.classList.add('uploaded-file--open');
+                            // Add Class (uploaded-file__info--active) On (uploadedFileInfo)
+                            uploadedFileInfo.classList.add('uploaded-file__info--active');
                         }, 500); // 0.5s
 
-                        // Add The (fileReader) Result Inside (previewImageedit) Source
-                        previewImageedit.setAttribute("src", fileReader.result);
+                        // Add The (fileReader) Result Inside (previewImage) Source
+                        previewImage.setAttribute('src', fileReader.result);
 
                         // Add File Name Inside Uploaded File Name
-                        uploadedFileEditName.innerHTML = file.name;
+                        uploadedFileName.innerHTML = file.name;
 
                         // Call Function progressMove();
                         progressMove();
                     });
 
-                    // Read (file) As Data Url
+                    // Read (file) As Data Url 
                     fileReader.readAsDataURL(file);
-                } else {
-                    // Else
+                } else { // Else
 
                     this; // (this) Represent The fileValidate(fileType, fileSize) Function
-                }
-            }
+
+                };
+            };
 
             // Progress Counter Increase Function
             function progressMove() {
                 // Counter Start
                 let counter = 0;
 
-                // After 600ms
+                // After 600ms 
                 setTimeout(() => {
                     // Every 100ms
                     let counterIncrease = setInterval(() => {
-                        // If (counter) is equle 100
+                        // If (counter) is equle 100 
                         if (counter === 100) {
                             // Stop (Counter Increase)
                             clearInterval(counterIncrease);
-                        } else {
-                            // Else
+                        } else { // Else
                             // plus 10 on counter
                             counter = counter + 10;
-                            // add (counter) vlaue inisde (uploadedFileEditCounter)
-                            uploadedFileEditCounter.innerHTML = `${counter}%`;
+                            // add (counter) vlaue inisde (uploadedFileCounter)
+                            uploadedFileCounter.innerHTML = `${counter}%`
                         }
                     }, 100);
                 }, 600);
-            }
+            };
+
 
             // Simple File Validate Function
             function fileValidate(fileType, fileSize) {
                 // File Type Validation
-                let isImage = imagesTypes.filter(
-                    (type) => fileType.indexOf(`image/${type}`) !== -1
-                );
+                let isImage = imagesTypes.filter((type) => fileType.indexOf(`image/${type}`) !== -1);
 
                 // If The Uploaded File Type Is 'jpeg'
-                if (isImage[0] === "jpeg") {
-                    // Add Inisde (uploadedFileEditIconText) The (jpg) Value
-                    uploadedFileEditIconText.innerHTML = "jpg";
-                } else {
-                    // else
-                    // Add Inisde (uploadedFileEditIconText) The Uploaded File Type
-                    uploadedFileEditIconText.innerHTML = isImage[0];
-                }
+                if (isImage[0] === 'jpeg') {
+                    // Add Inisde (uploadedFileIconText) The (jpg) Value
+                    uploadedFileIconText.innerHTML = 'jpg';
+                } else { // else
+                    // Add Inisde (uploadedFileIconText) The Uploaded File Type 
+                    uploadedFileIconText.innerHTML = isImage[0];
+                };
 
                 // If The Uploaded File Is An Image
                 if (isImage.length !== 0) {
                     // Check, If File Size Is 2MB or Less
-                    if (fileSize <= 2000000) {
-                        // 2MB :)
+                    if (fileSize <= 2000000) { // 2MB :)
                         return true;
-                    } else {
-                        // Else File Size
-                        return alert("Please Your File Should be 2 Megabytes or Less");
-                    }
-                } else {
-                    // Else File Type
-                    return alert("Please make sure to upload An Image File Type");
-                }
+                    } else { // Else File Size
+                        return alert('Please Your File Should be 2 Megabytes or Less');
+                    };
+                } else { // Else File Type 
+                    return alert('Please make sure to upload An Image File Type');
+                };
+            };
+
+            // :)
 
 
-            }
 
 
         }
+
+
+        $('#profilesave').on('click', function(e) {
+            e.preventDefault();
+
+
+
+
+
+            var formData = new FormData();
+
+            let ProfileImage = $('input[name="profile_image"]')[0].files[0];
+
+            formData.append('name', $("#username").val());
+
+            formData.append('email', $("#email").val());
+
+            formData.append('password', $("#password").val());
+
+            formData.append('confirmPassword', $("#confirmPassword").val());
+
+            formData.append('profile_image', ProfileImage);
+
+            formData.append('phone_no', $('#phone_no').val());
+
+
+            $.ajax({
+                url: "{{ route('vendors.updateprofile') }}",
+                type: 'POST',
+                data: formData,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                },
+
+                beforeSend: function() {
+
+                },
+
+                success: (data) => {
+
+                    toastr.success(
+                        "Profile Updated Sucessfully"
+                    );
+
+
+
+
+
+
+                },
+                error: function(xhr, status, error) {
+
+                    if (xhr.status == 422) {
+
+                        toastr.error(
+                            "something gets wroung"
+                        );
+
+                        var errorMessageBrand = xhr.responseJSON.errormessage;
+
+                        for (fieldName in errorMessageBrand) {
+
+                            if (errorMessageBrand.hasOwnProperty(fieldName)) {
+
+                                $(`[id="${fieldName}_error"]`).html(errorMessageBrand[
+                                    fieldName][
+                                    0
+                                ]);
+
+                            }
+
+                        }
+
+
+
+
+
+                    }
+
+
+
+                }
+            });
+
+
+
+
+
+        });
     </script>
 
 

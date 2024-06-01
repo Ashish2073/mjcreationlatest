@@ -101,25 +101,29 @@
 
 
 
-                        {{-- 
-                        <a class="nav-link" href="pages/samples/login.html"><i class="ti-user menu-icon"> Vendors
-                                Profile</i></a> --}}
-                    </li>
-                    <li class="nav-item"> <a class="nav-link" href="pages/samples/login-2.html"><i
-                                class="ti-package menu-icon">Product List </i></a></li>
-                    <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"><i
-                                class="ti-hand-drag"> Vendor Commision </i></a>
+
                     </li>
 
+                    <li class="nav-item">
+                        <a class="nav-link {{ Route::is('vendors.commision') ? 'active' : '' }}"
+                            @if (!Route::is('vendors.commision')) wire:navigate  href="{{ route('vendors.commision') }}" @else href="javascript:void(0)" @endif>
+                            <i class="ti-hand-drag menu-icon"></i>
+                            <span class="menu-title">Commison </span>
+                        </a>
+
+
+
+
+
+                    </li>
+                </ul>
+            </div>
         </li>
-    </ul>
-    </div>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="documentation/documentation.html">
-            <i class="ti-write menu-icon"></i>
-            <span class="menu-title">Documentation</span>
-        </a>
-    </li>
+        <li class="nav-item">
+            <a class="nav-link" href="documentation/documentation.html">
+                <i class="ti-write menu-icon"></i>
+                <span class="menu-title">Documentation</span>
+            </a>
+        </li>
     </ul>
 </nav>

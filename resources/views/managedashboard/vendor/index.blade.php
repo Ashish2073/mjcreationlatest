@@ -225,7 +225,7 @@
                         if (xhr.status == 422) {
                             var errorMessageBrand = xhr.responseJSON.errormessage;
 
-                            toastr.success(
+                            toastr.error(
                                 "Somthing gets Wroung"
                             );
 
