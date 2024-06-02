@@ -15,7 +15,7 @@
     </style>
 
 
-    <section style="width: 100%">
+    <section style="width: 80%">
 
         <div id="commisionaddform" hidden class="form-sec mt-5 justify-content-center p-3 mb-2">
             @include('managedashboard.vendor.commision.add')
@@ -48,8 +48,72 @@
 
 
 
+            <div class="p-3 row shadow" style="background: #ffced785;">
+                <div class="col-md-12">
 
-            <table class="discount-list-data-table table table-striped" style="width:100%">
+                    <h3 style="font-family:serif">Category Wise Commision </h3>
+                    <table class="discount-list-data-table table table-striped category-commision"
+                        style="width:100%;    margin-left: -17px;">
+                        <thead>
+                            <tr>
+
+                                <th>Sr No.</th>
+                                <th>Vendor Name </th>
+                                <th>Vendor Profile Image</th>
+                                <th>Category Name</th>
+                                <th>Amount </th>
+                                <th>Type </th>
+                                <th>Commision Priority</th>
+
+                                <th>Created Date </th>
+                                <th>Updated Date </th>
+
+                                <th>Action</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+
+            <div class="p-3 row shadow mt-5" style="background: #ffced785;">
+                <div class="col-md-12">
+
+                    <h3 style="font-family:serif">Product Wise Commision </h3>
+                    <table class="discount-list-data-table table table-striped product-commision" style="width:100%;  ">
+                        <thead>
+                            <tr>
+
+                                <th>Sr No.</th>
+                                <th>Vendor Name </th>
+                                <th>Vendor Profile Image</th>
+                                <th>Product Name</th>
+                                <th>Product Image </th>
+                                <th>Amount </th>
+                                <th>Type </th>
+                                <th>Commision Priority</th>
+
+                                <th>Created Date </th>
+                                <th>Updated Date </th>
+
+                                <th>Action</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+
+
+            {{-- <table class="discount-list-data-table table table-striped" style="width:100%">
                 <thead>
                     <tr>
 
@@ -66,7 +130,30 @@
                 </thead>
                 <tbody>
                 </tbody>
-            </table>
+            </table> --}}
+
+
+            {{-- <table class="discount-list-data-table table table-striped" style="width:100%">
+                <thead>
+                    <tr>
+
+                        <th>Sr No.</th>
+                        <th>Discount Title </th>
+                        <th>Discount Baneer Image</th>
+                        <th>Start Date</th>
+
+                        <th>End Date </th>
+
+                        <th>Action</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table> --}}
+
+
+
         </div>
     </section>
 
@@ -76,6 +163,12 @@
 
     <script>
         dataTable();
+
+        vendorCategoryCommision();
+
+        vendorCommisionProductList();
+
+
 
         $(".productcommisiontype").select2({
             placeholder: "Select a product commission",
@@ -721,6 +814,309 @@
                 }
             });
 
+
+
+
+        }
+
+
+
+        function vendorCategoryCommision() {
+
+
+
+
+            var table = $('.category-commision').DataTable({
+
+                dom: '<"top"lfB>rt<"bottom"ip><"clear">', // Add this line to enable buttons
+                buttons: [{
+                        extend: 'copy',
+                        exportOptions: {
+                            columns: [0, 1, 3, 4, 5, 6, 7] // Exclude the action and product image columns
+                        }
+                    },
+                    {
+                        extend: 'csv',
+                        exportOptions: {
+                            columns: [0, 1, 3, 4, 5, 6, 7] // Exclude the action and product image columns
+                        }
+                    },
+                    {
+                        extend: 'excel',
+                        exportOptions: {
+                            columns: [0, 1, 3, 4, 5, 6, 7] // Exclude the action and product image columns
+                        }
+                    },
+                    {
+                        extend: 'pdf',
+                        exportOptions: {
+                            columns: [0, 1, 2, 4, 5, 6, 7] // Exclude the action and product image columns
+                        },
+
+                    },
+                    {
+                        extend: 'print',
+                        exportOptions: {
+                            columnns: [0, 1, 2, 4, 5, 6, 7] // Exclude the action and product image columns
+                        }
+                    }
+                ],
+
+                stateSave: true,
+                "bDestroy": true,
+                processing: true,
+                serverSide: true,
+                fixedHeader: true,
+
+                ajax: {
+                    url: "{{ route('vendors.vendorcommisioncategorylist') }}",
+                    type: "post",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+
+                    }
+                },
+                success: (data) => {
+
+                    console.log(data);
+
+
+                },
+                columns: [{
+                        data: 'DT_RowIndex', // Serial number column
+                        name: 'serial_number',
+                        orderable: false,
+                        searchable: false,
+
+                    },
+
+
+                    {
+                        data: 'name',
+                        name: 'vendors.name',
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
+                        data: 'vendor_profile_image',
+                        name: 'vendor_profile_image',
+                        orderable: true,
+                        searchable: true
+                    },
+
+                    {
+
+                        data: 'category_name',
+                        name: 'product_categories.name',
+                        orderable: true,
+                        searchable: true
+
+
+                    },
+                    {
+                        data: 'amount',
+                        name: 'vendor_commision_categories.amount ',
+                        orderable: true,
+                        searchable: true
+
+                    },
+                    {
+                        data: 'type',
+                        name: 'vendor_commision_categories.type',
+                        orderable: true,
+                        searchable: true
+
+                    },
+                    {
+                        data: 'commisionpriority',
+                        name: 'commisionpriority',
+                        orderable: true,
+                        searchable: false
+
+                    },
+
+
+                    {
+                        data: 'created_date',
+                        name: 'created_date',
+                        orderable: true,
+                        searchable: false
+                    },
+
+                    {
+                        data: 'updated_date',
+                        name: 'updated_date',
+                        orderable: true,
+                        searchable: false
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: true,
+                        searchable: false
+                    }
+
+
+                ],
+                language: {
+                    // Customization for the "Entries per page" text
+                    lengthMenu: "Show _MENU_ Entries per Page"
+                }
+
+
+            });
+
+
+
+        };
+
+
+        function vendorCommisionProductList() {
+            var table = $('.product-commision').DataTable({
+
+                dom: '<"top"lfB>rt<"bottom"ip><"clear">', // Add this line to enable buttons
+                buttons: [{
+                        extend: 'copy',
+                        exportOptions: {
+                            columns: [0, 1, 3, 5, 6, 7, 8, 9] // Exclude the action and product image columns
+                        }
+                    },
+                    {
+                        extend: 'csv',
+                        exportOptions: {
+                            columns: [0, 1, 3, 5, 6, 7, 8, 9] // Exclude the action and product image columns
+                        }
+                    },
+                    {
+                        extend: 'excel',
+                        exportOptions: {
+                            columns: [0, 1, 3, 5, 6, 7, 8, 9] // Exclude the action and product image columns
+                        }
+                    },
+                    {
+                        extend: 'pdf',
+                        exportOptions: {
+                            columns: [0, 1, 3, 5, 6, 7, 8, 9] // Exclude the action and product image columns
+                        },
+
+                    },
+                    {
+                        extend: 'print',
+                        exportOptions: {
+                            columns: [0, 1, 3, 5, 6, 7, 8, 9] // Exclude the action and product image columns
+                        }
+                    }
+                ],
+
+                stateSave: true,
+                "bDestroy": true,
+                processing: true,
+                serverSide: true,
+                fixedHeader: true,
+
+                ajax: {
+                    url: "{{ route('vendors.vendorcommisionproductlist') }}",
+                    type: "post",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+
+                    }
+                },
+                success: (data) => {
+
+                    console.log(data);
+
+
+                },
+                columns: [{
+                        data: 'DT_RowIndex', // Serial number column
+                        name: 'serial_number',
+                        orderable: false,
+                        searchable: false,
+
+                    },
+
+
+                    {
+                        data: 'name',
+                        name: 'vendors.name',
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
+                        data: 'vendor_profile_image',
+                        name: 'vendor_profile_image',
+                        orderable: true,
+                        searchable: true
+                    },
+
+                    {
+
+                        data: 'product_title',
+                        name: 'vendor_products.product_title',
+                        orderable: true,
+                        searchable: true
+
+
+                    },
+                    {
+                        data: 'product_image',
+                        name: 'product_image',
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
+                        data: 'amount',
+                        name: 'vendor_commision_products.amount ',
+                        orderable: true,
+                        searchable: true
+
+                    },
+                    {
+                        data: 'type',
+                        name: 'vendor_commision_products.type',
+                        orderable: true,
+                        searchable: true
+
+                    },
+                    {
+                        data: 'commisionpriority',
+                        name: 'commisionpriority',
+                        orderable: true,
+                        searchable: false
+
+                    },
+
+
+                    {
+                        data: 'created_date',
+                        name: 'created_date',
+                        orderable: true,
+                        searchable: false
+                    },
+
+                    {
+                        data: 'updated_date',
+                        name: 'updated_date',
+                        orderable: true,
+                        searchable: false
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: true,
+                        searchable: false
+                    }
+
+
+                ],
+                language: {
+                    // Customization for the "Entries per page" text
+                    lengthMenu: "Show _MENU_ Entries per Page"
+                }
+
+
+            });
 
 
 
