@@ -164,4 +164,6 @@ Route::prefix('vendors')->middleware('vendor.auth')->group(function () {
 
     Route::get('vendorcommision', [CommisionController::class, 'vendorcomission'])->name('vendors.commision');
 
+    Route::post('category', [CommisionController::class, 'vendorCategory'])->name('vendors.category');
+
 });

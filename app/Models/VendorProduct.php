@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\ProductPriceDetail;
 use App\Models\ProductDiscount;
 use App\Models\Discount;
+use App\Models\Productcategory;
 
 class VendorProduct extends Model
 {
@@ -83,6 +84,17 @@ class VendorProduct extends Model
   {
     return $this->belongsToMany(Discount::class, 'product_discounts')
       ->withTimestamps();
+  }
+
+  public static function vendorCategory($id)
+  {
+    $vendorProductCategories = Productcategory::select('product_categories.name as categoryname', 'product_categories.id as category_id')
+      ->join('vendor_products', 'vendor_products.product_category_id', '=', 'product_categories.id')
+      ->where('vendor_products.vendor_id', $id)
+      ->distinct()
+      ->get();
+
+    return $vendorProductCategories;
   }
 
 

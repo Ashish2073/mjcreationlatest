@@ -56,12 +56,23 @@ class VendorController extends Controller
 
                 })
 
+                ->addColumn('url', function ($row) {
+                    if (isset($row->vendor_image)) {
+                        $url = asset("vendor_image/{$row->vendor_image}");
+                    } else {
+                        $url = asset("vendor_image/vendor_vector.jpeg");
+                    }
+
+                    return $url;
+
+                })
 
 
 
 
 
-                ->rawColumns(['vendor_profile_image', 'status'])
+
+                ->rawColumns(['vendor_profile_image', 'status', 'url'])
                 ->make(true);
 
 

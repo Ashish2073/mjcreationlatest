@@ -18,4 +18,6 @@ class Vendor extends Authenticatable
         'email_verified_at',
         'password',
     ];
+
+
 }
