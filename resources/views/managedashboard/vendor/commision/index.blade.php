@@ -14,136 +14,60 @@
         }
     </style>
 
-    <section class="form-sec mt-5 justify-content-center p-3 mb-2">
 
-        <!-- First Card Row -->
-        <div class="row mb-3">
-            <div class="col-md-12">
-                <div class="card card-custom">
-                    <div class="card-body">
-                        <div id="vendorBox" class=" row border p-3 mb-3 d-flex justify-content-center">
-                            <h5>Vendor Details</h5>
-                            <p id="vendorInfo">Click on a table row to see details</p>
+    <section style="width: 100%">
 
-                        </div>
-                        <table class="table table-bordered vendor_data">
-                            <thead>
-                                <tr>
-                                    <th>Sr No</th>
-                                    <th>Vendor Name</th>
-                                    <th>Vendor Email </th>
-                                    <th>Vendor Image</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Second Card Row -->
-        <div class="row mb-3">
-            <div class="col-md-12">
-                <div class="card card-custom">
-                    <div class="card-body">
-                        <h5>Commission on Per Order</h5>
-                        <div class="form-group">
-                            <label for="amount">Amount</label>
-                            <input type="number" class="form-control" id="amount" placeholder="Enter amount">
-                        </div>
-                        <div class="form-group">
-                            <label for="type">Select Type</label>
-                            <select class="form-control productcommisiontype" id="ordertype">
-                                <option></option>
-                                <option value="flat">Flat</option>
-                                <option value="percentage">Percentage</option>
-                            </select>
-                        </div>
-                        <button class="btn btn-primary" onclick="saveData()">Save</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row mb-3">
-            <div class="col-md-12">
-                <div class="card card-custom">
-                    <div class="card-body">
-                        <h5>Commission on Category </h5>
-
-                        <div class="form-group">
-                            <label for="type">Select Type</label>
-                            <select class="form-control vendorcategories" id="vendorcategory">
-                                <option></option>
-
-                            </select>
-                        </div>
-
-
-
-                        <div class="form-group">
-                            <label for="amount">Amount</label>
-                            <input type="number" class="form-control" id="amount" placeholder="Enter amount">
-                        </div>
-                        <div class="form-group">
-                            <label for="type">Select Type</label>
-                            <select class="form-control productcommisiontype" id="categorytype">
-                                <option></option>
-                                <option value="flat">Flat</option>
-                                <option value="percentage">Percentage</option>
-                            </select>
-                        </div>
-                        <button class="btn btn-primary" onclick="saveData()">Save</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row mb-3">
-            <div class="col-md-12">
-                <div class="card card-custom">
-
-                    <div class="card-body">
-                        <h5>Commission on Vendor Product</h5>
-                        <div id="productBox" class="row border p-3 mb-3 d-flex justify-content-center">
-                            <h5>Selected Product</h5>
-                            <p id="productInfo">Choose a product</p>
-                        </div>
-                        <table class="table table-bordered vendor-product-table">
-                            <thead>
-                                <tr>
-                                    <th>Sr No</th>
-                                    <th>Product Name</th>
-                                    <th>Product Image</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                            </tbody>
-                        </table>
-
-                        <div class="form-group">
-                            <label for="productAmount">Amount</label>
-                            <input type="number" class="form-control" id="productAmount" placeholder="Enter amount">
-                        </div>
-                        <div class="form-group">
-                            <label for="productType">Select Type</label>
-                            <select class="form-control productcommisiontype" id="productType">
-                                <option></option>
-                                <option value="flat">Flat</option>
-                                <option value="percentage">Percentage</option>
-                            </select>
-                        </div>
-                        <button class="btn btn-primary" onclick="saveProductData()">Save</button>
-                    </div>
-                </div>
-            </div>
+        <div id="commisionaddform" hidden class="form-sec mt-5 justify-content-center p-3 mb-2">
+            @include('managedashboard.vendor.commision.add')
         </div>
 
 
+        <div class="container mt-5 table-responsive col-12" id="commisionmaintable">
+
+
+
+            <div class="content-header-right text-md-right col-md-3 col-12">
+                <div class="form-group">
+
+                    <button onclick="showAddForm()" class="btn-icon btn btn-primary btn-round btn-sm">
+                        <i class="ti-plus"></i>
+                    </button>
+
+
+
+
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+            <table class="discount-list-data-table table table-striped" style="width:100%">
+                <thead>
+                    <tr>
+
+                        <th>Sr No.</th>
+                        <th>Discount Title </th>
+                        <th>Discount Baneer Image</th>
+                        <th>Start Date</th>
+
+                        <th>End Date </th>
+
+                        <th>Action</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
     </section>
 
 @endsection
@@ -158,15 +82,33 @@
             allowClear: true
         });
 
-        $(".vendorcategories").select2({
-                placeholder: "Select a product commission",
+        $(".productcommisiontype").select2({
+                placeholder: "Select a product commission type",
                 allowClear: true
             }
 
         )
 
+        $(".vendorcategories").select2({
+                placeholder: "Select a product commission type",
+                allowClear: true
+            }
+
+        )
+
+        function showAddForm() {
+            $("#commisionaddform").removeAttr('hidden');
+            $("#commisionmaintable").attr('hidden', 'true');
+        }
+
+        function hideAddForm() {
+            $("#commisionaddform").attr('hidden', 'true');
+            $("#commisionmaintable").removeAttr('hidden');
+
+        }
+
         var choosedVendorProductId = [];
-        var choosrdVendorId = [];
+        var choosrdVendorId = "";
 
 
         function removeChossenProductElemet(id, productid) {
@@ -184,11 +126,7 @@
         function removeChossenvendorElemet(id, vendor_id) {
 
 
-            let index = choosrdVendorId.indexOf(vendor_id);
-
-            if (index !== -1) {
-                choosrdVendorId.splice(index, 1);
-            }
+            choosrdVendorId = "";
             $(`#${id}`).remove();
 
         }
@@ -263,7 +201,7 @@
                         console.log('Product Name:', data.name);
                         console.log('Product ID:', data.id);
 
-                        choosrdVendorId.push(data.id);
+                        choosrdVendorId = data.id;
 
 
 
@@ -467,18 +405,19 @@
 
                     for (let i = 0; i < vendorCategoryLength; i++) {
                         vendorCategoryHtml = vendorCategoryHtml +
-                            `<option id='${vendorCategory[i].category_id}'>${vendorCategory[i].categoryname}</option>`;
+                            `<option value='${vendorCategory[i].category_id}'>${vendorCategory[i].categoryname}</option>`;
 
                     }
 
 
 
 
+                    console.log(vendorCategoryHtml);
 
                     $("#vendorcategory").html(vendorCategoryHtml);
 
                     $(".vendorcategories").select2({
-                            placeholder: "Select a product commission",
+                            placeholder: "Select a product Category",
                             allowClear: true
                         }
 
@@ -512,6 +451,275 @@
                 }
             });
 
+
+
+
+
+        }
+
+
+        function saveDataOnPerOrderVendorCommmisionVendorCommmision() {
+
+            let formData = new FormData();
+
+            formData.append("vendor_id", choosrdVendorId)
+
+            formData.append('perorderamount', $('#perorderamount').val());
+
+            formData.append('perorderamount_commision_type', $('#ordertype').val());
+
+            $.ajax({
+                url: "{{ route('vendors.commisionperorder') }}",
+                type: 'POST',
+                data: formData,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                },
+
+                beforeSend: function() {
+
+                    $("#vendor_id_error").html("");
+
+                    $("#perorderamount_error").html(" ");
+
+                    $("#perorderamount_commision_type_error").html(" ");
+
+
+                },
+
+                success: (data) => {
+
+                    toastr.success(
+                        "Commison per order save Successfully"
+                    );
+
+
+
+                },
+                error: function(xhr, status, error) {
+
+                    if (xhr.status == 422) {
+
+                        toastr.error(
+                            "something gets wroung"
+                        );
+
+                        var errorMessageBrand = xhr.responseJSON.errormessage;
+
+                        for (fieldName in errorMessageBrand) {
+
+                            if (errorMessageBrand.hasOwnProperty(fieldName)) {
+
+                                $(`[id="${fieldName}_error"]`).html(errorMessageBrand[
+                                    fieldName][
+                                    0
+                                ]);
+
+                            }
+
+                        }
+
+
+
+
+
+
+                    }
+
+
+
+                }
+            });
+
+
+
+
+
+
+
+        }
+
+
+
+        function savecategorycommision() {
+
+            let formData = new FormData();
+
+            formData.append("vendor_id", choosrdVendorId)
+
+            formData.append('categoryamount', $('#category_commison_amount').val());
+
+            formData.append('category_commision_type', $('#categorytype').val());
+
+            formData.append('category_id', $('#vendorcategory').val());
+
+            $.ajax({
+                url: "{{ route('vendors.commisioncategory') }}",
+                type: 'POST',
+                data: formData,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                },
+
+                beforeSend: function() {
+
+                    $("#vendor_id_error").html("");
+
+                    $("#categoryamount_error").html(" ");
+
+                    $("#category_commision_type_error").html(" ");
+
+                    $("#category_id_error").html(" ");
+
+
+                },
+
+                success: (data) => {
+
+                    toastr.success(
+                        "Commison per order save Successfully"
+                    );
+
+
+
+                },
+                error: function(xhr, status, error) {
+
+                    if (xhr.status == 422) {
+
+                        toastr.error(
+                            "something gets wroung"
+                        );
+
+                        var errorMessageBrand = xhr.responseJSON.errormessage;
+
+                        for (fieldName in errorMessageBrand) {
+
+                            if (errorMessageBrand.hasOwnProperty(fieldName)) {
+
+                                $(`[id="${fieldName}_error"]`).html(errorMessageBrand[
+                                    fieldName][
+                                    0
+                                ]);
+
+                            }
+
+                        }
+
+
+
+
+
+
+                    }
+
+
+
+                }
+            });
+
+
+        }
+
+        function saveProductCommision() {
+
+            let formData = new FormData();
+
+            formData.append("vendor_id", choosrdVendorId)
+
+            formData.append('product_commison_amount', $('#product_commison_amount').val());
+
+            formData.append('product_commision_type', $('#product_commison_type').val());
+
+            let uniqueArraychoosedVendorProductId = [...new Set(choosedVendorProductId)];
+            let selectedProducts = uniqueArraychoosedVendorProductId;
+
+            if (selectedProducts) {
+                selectedProducts.forEach(productId => {
+                    formData.append('product_id[]', productId);
+                });
+            }
+
+
+
+
+
+            $.ajax({
+                url: "{{ route('vendors.commisionproduct') }}",
+                type: 'POST',
+                data: formData,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                },
+
+                beforeSend: function() {
+
+                    $("#vendor_id_error").html("");
+
+                    $("#product_commison_amount_error").html(" ");
+
+                    $("#product_commision_type_error").html(" ");
+
+                    $("#product_id_error").html(" ");
+
+
+                },
+
+                success: (data) => {
+
+                    toastr.success(
+                        "Commison on product apply  Successfully"
+                    );
+
+
+
+                },
+                error: function(xhr, status, error) {
+
+                    if (xhr.status == 422) {
+
+                        toastr.error(
+                            "something gets wroung"
+                        );
+
+                        var errorMessageBrand = xhr.responseJSON.errormessage;
+
+                        for (fieldName in errorMessageBrand) {
+
+                            if (errorMessageBrand.hasOwnProperty(fieldName)) {
+
+                                $(`[id="${fieldName}_error"]`).html(errorMessageBrand[
+                                    fieldName][
+                                    0
+                                ]);
+
+                            }
+
+                        }
+
+
+
+
+
+
+                    }
+
+
+
+                }
+            });
 
 
 
