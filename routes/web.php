@@ -170,10 +170,35 @@ Route::prefix('vendors')->middleware('vendor.auth')->group(function () {
 
     Route::post('commisioncategory', [CommisionController::class, 'vendorcommisioncategory'])->name('vendors.commisioncategory');
 
+    Route::post('editcommisioncategory', [CommisionController::class, 'editvendorcommisioncategory'])->name('vendors.editcommisioncategory');
+
+    Route::post('updatecommisioncategory', [CommisionController::class, 'updatecommisioncategory'])->name('vendors.updatecommisioncategory');
+
+
+    Route::post('deleteCategoryCommision', [CommisionController::class, 'deleteCategoryCommision'])->name('vendors.deleteCategoryCommision');
+
     Route::post('commisionproduct', [CommisionController::class, 'vendorcommisionproduct'])->name('vendors.commisionproduct');
+
+    Route::post('commisionproduct', [CommisionController::class, 'vendorcommisionproduct'])->name('vendors.commisionproduct');
+
+    Route::post('editvendorproductcommision', [CommisionController::class, 'editvendorproductcommision'])->name('vendors.editvendorproductcommision');
+
+
+    Route::post('updatecommisionproduct', [CommisionController::class, 'updatecommisionproduct'])->name('vendors.updatecommisionproduct');
+
+    Route::post('editordercommision', [CommisionController::class, 'editordercommision'])->name('vendors.editordercommision');
+
+    Route::post('updatordercommision', [CommisionController::class, 'updatordercommision'])->name('vendors.updatordercommision');
+
+    Route::post('deletevendorcommisionproduct', [CommisionController::class, 'deletevendorcommisionproduct'])->name('vendors.deletevendorcommisionproduct');
+
+    Route::post('deletevendorcommisionperorder', [CommisionController::class, 'deletevendorcommisionperorder'])->name('vendors.deletevendorcommisionperorder');
 
     Route::post('categorycommisonlist', [CommisionController::class, 'vendorcommisioncategorylist'])->name('vendors.vendorcommisioncategorylist');
 
     Route::post('vendorcommisionproductlist', [CommisionController::class, 'vendorcommisionproductlist'])->name('vendors.vendorcommisionproductlist');
+
+    Route::post('vendorcommisionperorderlist', [CommisionController::class, 'vendorcommisionperorderlist'])->name('vendors.vendorcommisionperorderlist');
+
 
 });

@@ -46,35 +46,63 @@
 
 
 
+            <div id="changecategorycommisionmodal" class="modal fade" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content" id="vendorCommisionCategoryModalContent">
+
+                    </div>
+                </div>
+            </div>
+
+            <div id="changeproductcommisionmodal" class="modal fade" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content" id="vendorCommisionProductModalContent">
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="changeordercommisionmodal" class="modal fade" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content" id="vendorCommisionOrderModalContent">
+
+                    </div>
+                </div>
+            </div>
+
+
+
 
 
             <div class="p-3 row shadow" style="background: #ffced785;">
                 <div class="col-md-12">
 
                     <h3 style="font-family:serif">Category Wise Commision </h3>
-                    <table class="discount-list-data-table table table-striped category-commision"
-                        style="width:100%;    margin-left: -17px;">
-                        <thead>
-                            <tr>
+                    <div style="overflow-x: auto; ">
+                        <table class="discount-list-data-table table table-striped category-commision" style="width:100%;">
+                            <thead>
+                                <tr>
 
-                                <th>Sr No.</th>
-                                <th>Vendor Name </th>
-                                <th>Vendor Profile Image</th>
-                                <th>Category Name</th>
-                                <th>Amount </th>
-                                <th>Type </th>
-                                <th>Commision Priority</th>
+                                    <th>Sr No.</th>
+                                    <th>Vendor Name </th>
+                                    <th>Vendor Profile Image</th>
+                                    <th>Category Name</th>
+                                    <th>Amount </th>
+                                    <th>Type </th>
+                                    <th>Commision Priority</th>
 
-                                <th>Created Date </th>
-                                <th>Updated Date </th>
+                                    <th>Created Date </th>
+                                    <th>Updated Date </th>
 
-                                <th>Action</th>
+                                    <th>Action</th>
 
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
 
@@ -84,29 +112,61 @@
                 <div class="col-md-12">
 
                     <h3 style="font-family:serif">Product Wise Commision </h3>
-                    <table class="discount-list-data-table table table-striped product-commision" style="width:100%;  ">
-                        <thead>
-                            <tr>
+                    <div style="overflow-x: auto; ">
+                        <table class="discount-list-data-table table table-striped product-commision" style="width:100%;">
+                            <thead>
+                                <tr>
 
-                                <th>Sr No.</th>
-                                <th>Vendor Name </th>
-                                <th>Vendor Profile Image</th>
-                                <th>Product Name</th>
-                                <th>Product Image </th>
-                                <th>Amount </th>
-                                <th>Type </th>
-                                <th>Commision Priority</th>
+                                    <th>Sr No.</th>
+                                    <th>Vendor Name </th>
+                                    <th>Vendor Profile Image</th>
+                                    <th>Product Name</th>
+                                    <th>Product Image </th>
+                                    <th>Amount </th>
+                                    <th>Type </th>
+                                    <th>Commision Priority</th>
 
-                                <th>Created Date </th>
-                                <th>Updated Date </th>
+                                    <th>Created Date </th>
+                                    <th>Updated Date </th>
 
-                                <th>Action</th>
+                                    <th>Action</th>
 
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="p-3 row shadow mt-5" style="background: #ffced785;">
+                <div class="col-md-12">
+
+                    <h3 style="font-family:serif">Order Wise Commision </h3>
+                    <div style="overflow-x: auto; ">
+                        <table class="discount-list-data-table table table-striped perorder-commision" style="width:100%;">
+                            <thead>
+                                <tr>
+
+                                    <th>Sr No.</th>
+                                    <th>Vendor Name </th>
+                                    <th>Vendor Profile Image</th>
+                                    <th>Amount </th>
+                                    <th>Type </th>
+                                    <th>Commision Priority</th>
+                                    <th>Created Date </th>
+                                    <th>Updated Date </th>
+                                    <th>Action</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
 
@@ -167,6 +227,8 @@
         vendorCategoryCommision();
 
         vendorCommisionProductList();
+
+        vendorCommisionPerorderList();
 
 
 
@@ -590,6 +652,9 @@
                         "Commison per order save Successfully"
                     );
 
+                    vendorCommisionPerorderList();
+                    hideAddForm();
+
 
 
                 },
@@ -681,7 +746,9 @@
                         "Commison per order save Successfully"
                     );
 
+                    vendorCategoryCommision();
 
+                    hideAddForm();
 
                 },
                 error: function(xhr, status, error) {
@@ -776,6 +843,9 @@
                         "Commison on product apply  Successfully"
                     );
 
+                    vendorCommisionProductList();
+
+                    hideAddForm();
 
 
                 },
@@ -1117,6 +1187,990 @@
 
 
             });
+
+
+
+        }
+
+        function vendorCommisionPerorderList() {
+            var table = $('.perorder-commision').DataTable({
+
+                dom: '<"top"lfB>rt<"bottom"ip><"clear">', // Add this line to enable buttons
+                buttons: [{
+                        extend: 'copy',
+                        exportOptions: {
+                            columns: [0, 1, 3, 5, 6, 7] // Exclude the action and product image columns
+                        }
+                    },
+                    {
+                        extend: 'csv',
+                        exportOptions: {
+                            columns: [0, 1, 3, 5, 6, 7] // Exclude the action and product image columns
+                        }
+                    },
+                    {
+                        extend: 'excel',
+                        exportOptions: {
+                            columns: [0, 1, 3, 5, 6, 7] // Exclude the action and product image columns
+                        }
+                    },
+                    {
+                        extend: 'pdf',
+                        exportOptions: {
+                            columns: [0, 1, 3, 5, 6, 7] // Exclude the action and product image columns
+                        },
+
+                    },
+                    {
+                        extend: 'print',
+                        exportOptions: {
+                            columns: [0, 1, 3, 5, 6, 7] // Exclude the action and product image columns
+                        }
+                    }
+                ],
+
+                stateSave: true,
+                "bDestroy": true,
+                processing: true,
+                serverSide: true,
+                fixedHeader: true,
+
+                ajax: {
+                    url: "{{ route('vendors.vendorcommisionperorderlist') }}",
+                    type: "post",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+
+                    }
+                },
+                success: (data) => {
+
+                    console.log(data);
+
+
+                },
+                columns: [{
+                        data: 'DT_RowIndex', // Serial number column
+                        name: 'serial_number',
+                        orderable: false,
+                        searchable: false,
+
+                    },
+
+
+                    {
+                        data: 'name',
+                        name: 'vendors.name',
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
+                        data: 'vendor_profile_image',
+                        name: 'vendor_profile_image',
+                        orderable: true,
+                        searchable: true
+                    },
+
+
+                    {
+                        data: 'amount',
+                        name: 'vendor_commision_orders.amount ',
+                        orderable: true,
+                        searchable: true
+
+                    },
+                    {
+                        data: 'type',
+                        name: 'vendor_commision_orders.type',
+                        orderable: true,
+                        searchable: true
+
+                    },
+                    {
+                        data: 'commisionpriority',
+                        name: 'commisionpriority',
+                        orderable: true,
+                        searchable: false
+
+                    },
+
+
+                    {
+                        data: 'created_date',
+                        name: 'created_date',
+                        orderable: true,
+                        searchable: false
+                    },
+
+                    {
+                        data: 'updated_date',
+                        name: 'updated_date',
+                        orderable: true,
+                        searchable: false
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: true,
+                        searchable: false
+                    }
+
+
+                ],
+                language: {
+                    // Customization for the "Entries per page" text
+                    lengthMenu: "Show _MENU_ Entries per Page"
+                }
+
+
+            });
+
+        }
+
+
+
+        function editCategoryCommision(id, vendor_id) {
+
+
+
+            var formData = new FormData();
+
+            formData.append('vendor_id', vendor_id);
+
+            formData.append('id', id);
+
+
+
+            $.ajax({
+                url: "{{ route('vendors.editcommisioncategory') }}",
+                type: 'POST',
+                data: formData,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                },
+
+                beforeSend: function() {
+
+                },
+
+                success: (data) => {
+
+
+                    console.log(data);
+
+                    let vendorCommisionEditModalHtml = `<div class="modal-header">
+                                                            <div class="container mt-5">
+                                                                        <div class="card">
+                                                                         <div class="row no-gutters">
+                                                                           <div class="col-md-4">
+                                                                            <img src="${data.url}" class="card-img" alt="Profile Image">
+                                                                             </div>
+                                                                          <div class="col-md-8">
+                                                                          <div class="card-body">
+                        <h5 class="card-title text-muted"  style="font-weight: 700;">Vendor Name</h5>
+                        <p class="card-text">${data.vendor_name}</p>
+                        <h6 class="card-subtitle mb-2 text-muted" style="font-weight: 700;">Category</h6>
+                        <p class="card-text">${data.category_name}</p>
+                        <div class="form-group">
+                            <label for="amount">Amount</label>
+                            <input type="text" class="form-control" value="${data.vendorcategorycommision.amount}" id="vendor_commision_category_amount_edit" placeholder="Enter amount">
+                       <span id="category_commision_amount_error_edit" style="color:red"></span>
+                       
+                            </div>
+                        <div class="form-group">
+                            <label for="options">Select Option</label>
+                            <select class="form-control" id="vendor_commision_category_type_edit">
+                                <option disabled>Please Select Option</option>
+                                
+                                <option  ${data.vendorcategorycommision.type == 'percentage' ? 'selected' : ''} style="font-weight: 700;"  value="percentage">Percentage</option>
+                                <option ${data.vendorcategorycommision.type == 'flat' ? 'selected' : ''} style="font-weight: 700;" value="flat">Flat</option>
+                            </select>
+                            <span id="category_commision_type_error_edit" style="color:red"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+                                                       
+
+                                                      
+                                                                 </div>
+                                                                 
+                                                                 <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" onclick="vendorCategoryCammisonupdate(${data.id})">Update</button>
+                        </div>`;
+
+                    $("#vendorCommisionCategoryModalContent").html(vendorCommisionEditModalHtml);
+
+
+
+                    $("#changecategorycommisionmodal").modal('show');
+
+
+
+
+
+
+                },
+                error: function(xhr, status, error) {
+
+                    if (xhr.status == 422) {
+
+                        toastr.error(
+                            "something gets wroung"
+                        );
+
+
+
+
+
+
+                    }
+
+
+
+                }
+            });
+
+
+        }
+
+
+
+        function vendorCategoryCammisonupdate(id) {
+
+            let commision_category_id = id;
+            let vendorCommisonUpdatedAmount = $("#vendor_commision_category_amount_edit").val();
+
+            let vendorCommisonUpdatedtype = $("#vendor_commision_category_type_edit").val();
+
+            let formData = new FormData();
+            formData.append('id', commision_category_id);
+            formData.append('category_commision_amount', vendorCommisonUpdatedAmount);
+            formData.append('category_commision_type', vendorCommisonUpdatedtype);
+
+            $.ajax({
+                url: "{{ route('vendors.updatecommisioncategory') }}",
+                type: "POST",
+                data: formData,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                },
+
+                beforeSend: function() {
+
+
+                },
+                success: (data) => {
+                    toastr.success(
+                        "Category Commision Updated Sucessfully");
+
+                    $("#changecategorycommisionmodal").modal('hide');
+
+                    var currentPage = $('.category-commision').DataTable().page();
+
+                    // Reinitialize the table and restore the page
+                    vendorCategoryCommision();
+                    var table = $('.category-commision').DataTable();
+                    table.page(currentPage).draw(false);
+
+
+
+
+
+
+                },
+                error: function(xhr, status, error) {
+
+                    if (xhr.status == 422) {
+
+                        errorMessage = xhr.responseJSON.errormessage;
+
+                        for (var fieldName in errorMessage) {
+
+                            if (errorMessage.hasOwnProperty(fieldName)) {
+                                $(`[id="${fieldName}_error_edit"]`).html(errorMessage[fieldName][
+                                    0
+                                ]);
+
+
+                            }
+
+                        }
+
+
+
+                        toastr.error(
+                            "Somthing get wroung"
+                        );
+
+
+
+
+
+                    }
+
+
+
+
+
+                }
+            });
+
+
+
+
+        }
+
+
+        function deleteCategoryCommision(id, vendor_id) {
+
+            let commision_category_id = id;
+
+
+            let formData = new FormData();
+            formData.append('id', commision_category_id);
+
+
+            $.ajax({
+                url: "{{ route('vendors.deleteCategoryCommision') }}",
+                type: "POST",
+                data: formData,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                },
+
+                beforeSend: function() {
+
+
+                },
+                success: (data) => {
+                    toastr.success(
+                        "Category Commision detleted Sucessfully");
+                    vendorCategoryCommision();
+
+                },
+                error: function(xhr, status, error) {
+
+                    if (xhr.status == 422) {
+
+                        errorMessage = xhr.responseJSON.errormessage;
+
+                        for (var fieldName in errorMessage) {
+
+                            if (errorMessage.hasOwnProperty(fieldName)) {
+                                $(`[id="${fieldName}_error_edit"]`).html(errorMessage[fieldName][
+                                    0
+                                ]);
+
+
+                            }
+
+                        }
+
+
+
+                        toastr.error(
+                            "Somthing get wroung"
+                        );
+
+
+
+
+
+                    }
+
+
+
+
+
+                }
+            });
+
+
+
+        }
+
+
+        function editVendorCommisionProduct(id) {
+
+
+            let formData = new FormData();
+            formData.append('id', id);
+
+
+            $.ajax({
+                url: "{{ route('vendors.editvendorproductcommision') }}",
+                type: "POST",
+                data: formData,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                },
+
+                beforeSend: function() {
+
+
+                },
+                success: (data) => {
+
+                    let vendorCommisionEditModalHtml = `
+    <div class="modal-header">
+        <div class="container mt-5">
+            <div class="card">
+                <div class="row no-gutters">
+                    <div class="col-md-4">
+                        <img src="${data.vendorimage}" class="card-img" alt="Vendor Image">
+                    </div>
+                    <div class="col-md-4">
+                        <img src="${data.productimageurl}" class="card-img" alt="Product Image">
+                    </div>
+                </div>
+                <div class="row no-gutters">
+                    <div class="col-md-12">
+                        <div class="card-body">
+                            <h5 class="card-title text-muted" style="font-weight: 700;">Vendor Name</h5>
+                            <p class="card-text">${data.vendor_name}</p>
+                            <h6 class="card-subtitle mb-2 text-muted" style="font-weight: 700;">Product Title</h6>
+                            <p class="card-text">${data.product_name}</p>
+                            <div class="form-group">
+                                <label for="amount">Amount</label>
+                                <input type="text" class="form-control" value="${data.amount}" id="vendor_commision_product_amount_edit" placeholder="Enter amount">
+                                <span id="product_commision_amount_error_edit" style="color:red"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="options">Select Option</label>
+                                <select class="form-control" id="vendor_commision_product_type_edit">
+                                    <option disabled>Please Select Option</option>
+                                    <option ${data.type == 'percentage' ? 'selected' : ''} style="font-weight: 700;" value="percentage">Percentage</option>
+                                    <option ${data.type == 'flat' ? 'selected' : ''} style="font-weight: 700;" value="flat">Flat</option>
+                                </select>
+                                <span id="product_commision_type_error_edit" style="color:red"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick="vendorProductCammisonupdate(${data.id})">Update</button>
+    </div>`;
+
+
+
+                    $('#vendorCommisionProductModalContent').html(vendorCommisionEditModalHtml);
+
+                    $("#changeproductcommisionmodal").modal('show');
+
+
+
+
+
+
+
+                },
+                error: function(xhr, status, error) {
+
+                    if (xhr.status == 422) {
+
+                        errorMessage = xhr.responseJSON.errormessage;
+
+                        for (var fieldName in errorMessage) {
+
+                            if (errorMessage.hasOwnProperty(fieldName)) {
+                                $(`[id="${fieldName}_error_edit"]`).html(errorMessage[fieldName][
+                                    0
+                                ]);
+
+
+                            }
+
+                        }
+
+
+
+                        toastr.error(
+                            "Somthing get wroung"
+                        );
+
+
+
+
+
+                    }
+
+
+
+
+
+                }
+            });
+
+        }
+
+
+        function vendorProductCammisonupdate(id) {
+
+
+            let vendorCommisonProductUpdatedAmount = $("#vendor_commision_product_amount_edit").val();
+
+            let vendorCommisonProductUpdatedtype = $("#vendor_commision_product_type_edit").val();
+
+            let formData = new FormData();
+            formData.append('id', id);
+            formData.append('product_commision_amount', vendorCommisonProductUpdatedAmount);
+            formData.append('product_commision_type', vendorCommisonProductUpdatedtype);
+
+            $.ajax({
+                url: "{{ route('vendors.updatecommisionproduct') }}",
+                type: "POST",
+                data: formData,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                },
+
+                beforeSend: function() {
+
+
+                },
+                success: (data) => {
+                    toastr.success(
+                        "Product Commision Updated Sucessfully");
+
+                    $("#changeproductcommisionmodal").modal('hide');
+
+                    var currentPage = $('.product-commision').DataTable().page();
+
+                    // Reinitialize the table and restore the page
+                    vendorCommisionProductList();
+                    var table = $('.product-commision').DataTable();
+                    table.page(currentPage).draw(false);
+
+
+
+
+
+
+                },
+                error: function(xhr, status, error) {
+
+                    if (xhr.status == 422) {
+
+                        errorMessage = xhr.responseJSON.errormessage;
+
+                        for (var fieldName in errorMessage) {
+
+                            if (errorMessage.hasOwnProperty(fieldName)) {
+                                $(`[id="${fieldName}_error_edit"]`).html(errorMessage[fieldName][
+                                    0
+                                ]);
+
+
+                            }
+
+                        }
+
+
+
+                        toastr.error(
+                            "Somthing get wroung"
+                        );
+
+
+
+
+
+                    }
+
+
+
+
+
+                }
+            });
+
+
+        }
+
+
+        function deleteVendorCommisionProduct(id) {
+
+
+
+
+            let formData = new FormData();
+            formData.append('id', id);
+
+
+            $.ajax({
+                url: "{{ route('vendors.deletevendorcommisionproduct') }}",
+                type: "POST",
+                data: formData,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                },
+
+                beforeSend: function() {
+
+
+                },
+                success: (data) => {
+                    toastr.success(
+                        "Product Commision detleted Sucessfully");
+                    var currentPage = $('.product-commision').DataTable().page();
+
+                    // Reinitialize the table and restore the page
+                    vendorCommisionProductList();
+                    var table = $('.product-commision').DataTable();
+                    table.page(currentPage).draw(false);
+
+                },
+                error: function(xhr, status, error) {
+
+                    if (xhr.status == 422) {
+
+                        errorMessage = xhr.responseJSON.errormessage;
+
+                        for (var fieldName in errorMessage) {
+
+                            if (errorMessage.hasOwnProperty(fieldName)) {
+                                $(`[id="${fieldName}_error_edit"]`).html(errorMessage[fieldName][
+                                    0
+                                ]);
+
+
+                            }
+
+                        }
+
+
+
+                        toastr.error(
+                            "Somthing get wroung"
+                        );
+
+
+
+
+
+                    }
+
+
+
+
+
+                }
+            });
+
+
+
+
+        }
+
+
+        function editordercommision(id) {
+
+            console.log(id);
+
+            let formData = new FormData();
+
+            formData.append('id', id);
+
+
+
+            $.ajax({
+                url: "{{ route('vendors.editordercommision') }}",
+                type: 'POST',
+                data: formData,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                },
+
+                beforeSend: function() {
+
+                },
+
+                success: (data) => {
+
+
+                    console.log(data);
+
+                    let vendorCommisionEditModalHtml = `<div class="modal-header">
+                                                            <div class="container mt-5">
+                                                                        <div class="card">
+                                                                         <div class="row no-gutters">
+                                                                           <div class="col-md-4">
+                                                                            <img src="${data.vendorimage}" class="card-img" alt="Profile Image">
+                                                                             </div>
+                                                                          <div class="col-md-8">
+                                                                          <div class="card-body">
+                        <h5 class="card-title text-muted"  style="font-weight: 700;">Vendor Name</h5>
+                        <p class="card-text">${data.vendor_name}</p>
+                      
+                        <div class="form-group">
+                            <label for="amount">Amount</label>
+                            <input type="text" class="form-control" value="${data.amount}" id="vendor_commision_order_amount_edit" placeholder="Enter amount">
+                       <span id="perorder_commision_amount_error_edit" style="color:red"></span>
+                       
+                            </div>
+                        <div class="form-group">
+                            <label for="options">Select Option</label>
+                            <select class="form-control" id="vendor_order_category_type_edit">
+                                <option disabled>Please Select Option</option>
+                                
+                                <option  ${data.type == 'percentage' ? 'selected' : ''} style="font-weight: 700;"  value="percentage">Percentage</option>
+                                <option ${data.type == 'flat' ? 'selected' : ''} style="font-weight: 700;" value="flat">Flat</option>
+                            </select>
+                            <span id="perorder_commision_type_error_edit" style="color:red"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+                                                       
+
+                                                      
+                                                                 </div>
+                                                                 
+                                                                 <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" onclick="vendorOrderCammisonupdate(${data.id})">Update</button>
+                        </div>`;
+
+                    $("#vendorCommisionOrderModalContent").html(vendorCommisionEditModalHtml);
+
+
+
+                    $("#changeordercommisionmodal").modal('show');
+
+
+
+
+
+
+                },
+                error: function(xhr, status, error) {
+
+                    if (xhr.status == 422) {
+
+                        toastr.error(
+                            "something gets wroung"
+                        );
+
+
+
+
+
+
+                    }
+
+
+
+                }
+            });
+
+
+        }
+
+
+        function vendorOrderCammisonupdate(id) {
+
+            let vendorCommisonOrderUpdatedAmount = $("#vendor_commision_order_amount_edit").val();
+
+            let vendorCommisonOrderUpdatedtype = $("#vendor_order_category_type_edit").val();
+
+            let formData = new FormData();
+            formData.append('id', id);
+            formData.append('perorder_commision_amount', vendorCommisonOrderUpdatedAmount);
+            formData.append('perorder_commision_type', vendorCommisonOrderUpdatedtype);
+
+            $.ajax({
+                url: "{{ route('vendors.updatordercommision') }}",
+                type: "POST",
+                data: formData,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                },
+
+                beforeSend: function() {
+
+
+                },
+                success: (data) => {
+                    toastr.success(
+                        "Perorder Commision Updated Sucessfully");
+
+                    $("#changeordercommisionmodal").modal('hide');
+
+                    var currentPage = $('.perorder-commision').DataTable().page();
+
+                    // Reinitialize the table and restore the page
+                    vendorCommisionPerorderList();
+                    var table = $('.perorder-commision').DataTable();
+                    table.page(currentPage).draw(false);
+
+
+
+
+
+
+                },
+                error: function(xhr, status, error) {
+
+                    if (xhr.status == 422) {
+
+                        errorMessage = xhr.responseJSON.errormessage;
+
+                        for (var fieldName in errorMessage) {
+
+                            if (errorMessage.hasOwnProperty(fieldName)) {
+                                $(`[id="${fieldName}_error_edit"]`).html(errorMessage[fieldName][
+                                    0
+                                ]);
+
+
+                            }
+
+                        }
+
+
+
+                        toastr.error(
+                            "Somthing get wroung"
+                        );
+
+
+
+
+
+                    }
+
+
+
+
+
+                }
+            });
+
+
+
+
+
+
+        }
+
+
+        function deleteordercommision(id) {
+
+
+
+
+            let formData = new FormData();
+            formData.append('id', id);
+
+
+            $.ajax({
+                url: "{{ route('vendors.deletevendorcommisionperorder') }}",
+                type: "POST",
+                data: formData,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                },
+
+                beforeSend: function() {
+
+
+                },
+                success: (data) => {
+                    toastr.success(
+                        "Per Order Commision detleted Sucessfully");
+                    $("#changeordercommisionmodal").modal('hide');
+
+                    var currentPage = $('.perorder-commision').DataTable().page();
+
+                    // Reinitialize the table and restore the page
+                    vendorCommisionPerorderList();
+                    var table = $('.perorder-commision').DataTable();
+                    table.page(currentPage).draw(false);;
+
+                },
+                error: function(xhr, status, error) {
+
+                    if (xhr.status == 422) {
+
+                        errorMessage = xhr.responseJSON.errormessage;
+
+                        for (var fieldName in errorMessage) {
+
+                            if (errorMessage.hasOwnProperty(fieldName)) {
+                                $(`[id="${fieldName}_error_edit"]`).html(errorMessage[fieldName][
+                                    0
+                                ]);
+
+
+                            }
+
+                        }
+
+
+
+                        toastr.error(
+                            "Somthing get wroung"
+                        );
+
+
+
+
+
+                    }
+
+
+
+
+
+                }
+            });
+
 
 
 
