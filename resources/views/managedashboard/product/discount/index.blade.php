@@ -538,7 +538,7 @@
 
         <!-- Button trigger modal -->
 
-        <div class="content-header-right text-md-right col-md-3 col-12">
+        <div class="content-header-right text-md-left col-12">
             <div class="form-group">
 
                 <button onclick="showAddForm()" class="btn-icon btn btn-primary btn-round btn-sm">

@@ -531,6 +531,7 @@
         enctype="multipart/form-data">
         @csrf
 
+
         @foreach ($discountData as $data)
             <div class="container">
 
@@ -625,7 +626,8 @@
                                             <p class="drop-zoon__paragraph">Upload Image</p>
                                             <span id="loadingTextEdit" class="drop-zoon__loading-text">Please
                                                 Wait</span>
-                                            <img src="{{ asset('product/banner/' . $data['banner_image']) }}"
+                                            <img @if (isset($data['banner_image'])) src="{{ asset('product/banner/' . $data['banner_image']) }}"
+                                            @else src="" @endif
                                                 alt="Preview Image" id="previewImageedit"
                                                 class="drop-zoon__preview-image" draggable="false"
                                                 style="display: block;" />
@@ -697,31 +699,33 @@
                                             <span id="product_error_edit" style="color: red;"></span>
 
 
+                                            @if (isset($data['products']))
+                                                @php  $productId=[]; @endphp
+                                                @foreach ($data['products'] as $product)
+                                                    @php $productId[]=$product['product_id'] ;@endphp
+                                                    <div class="col-lg-2 mb-3 d-flex align-items-stretch"
+                                                        id="productnewelementedit{{ $product['product_id'] }}">
+                                                        <div class="card position-relative">
 
-                                            @php  $productId=[]; @endphp
-                                            @foreach ($data['products'] as $product)
-                                                @php $productId[]=$product['product_id'] ;@endphp
-                                                <div class="col-lg-2 mb-3 d-flex align-items-stretch"
-                                                    id="productnewelementedit{{ $product['product_id'] }}">
-                                                    <div class="card position-relative">
-
-                                                        <img src="{{ asset('product/banner/' . $product['product_banner_image']) }}"
-                                                            class="card-img-top" alt="Card Image"
-                                                            style="width:8vw;object-fit:contain">
-
-
+                                                            <img src="{{ asset('product/banner/' . $product['product_banner_image']) }}"
+                                                                class="card-img-top" alt="Card Image"
+                                                                style="width:8vw;object-fit:contain">
 
 
-                                                        <div class="card-body d-flex flex-column">
-                                                            <h5 class="card-title">{{ $product['product_title'] }}</h5>
-                                                            <button type="button"
-                                                                onclick="removeChossenProductElemetEdit('productnewelementedit{{ $product['product_id'] }}',{{ $product['product_id'] }})"
-                                                                class="delete btn btn-danger "><i
-                                                                    class="ti-trash"></i></button>
+
+
+                                                            <div class="card-body d-flex flex-column">
+                                                                <h5 class="card-title">{{ $product['product_title'] }}
+                                                                </h5>
+                                                                <button type="button"
+                                                                    onclick="removeChossenProductElemetEdit('productnewelementedit{{ $product['product_id'] }}',{{ $product['product_id'] }})"
+                                                                    class="delete btn btn-danger "><i
+                                                                        class="ti-trash"></i></button>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            @endforeach
+                                                @endforeach
+                                            @endif
 
 
                                         </div>
@@ -1233,6 +1237,8 @@
 
         // Select Drop-Zoon Area
         const dropZoonEdit = document.querySelector("#dropZoonEdit");
+
+        console.log(dropZoonEdit);
 
         // Loading Text
         const loadingTextEdit = document.querySelector("#loadingTextEdit");

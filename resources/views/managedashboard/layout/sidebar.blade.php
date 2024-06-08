@@ -116,6 +116,21 @@
 
 
                     </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link {{ Route::is('vendors.orderlist') ? 'active' : '' }}"
+                            @if (!Route::is('vendors.orderlist')) wire:navigate  href="{{ route('vendors.orderlist') }}" @else href="javascript:void(0)" @endif>
+                            <i class="ti-list menu-icon"></i>
+                            <span class="menu-title">Orders List</span>
+                        </a>
+
+
+
+
+
+                    </li>
+
+
                 </ul>
             </div>
         </li>

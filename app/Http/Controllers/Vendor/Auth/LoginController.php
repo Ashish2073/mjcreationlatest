@@ -25,10 +25,17 @@ class LoginController extends Controller
 
         $vendor = Auth::guard('vendor')->getProvider()->retrieveByCredentials($credentials);
 
-        if ($vendor && $vendor->is_verified == 1 && $vendor->status == 1) {
+
+
+        if (($vendor && $vendor->is_verified == 1 && $vendor->status == 1) || !$vendor) {
             if (Auth::guard('vendor')->attempt($credentials)) {
                 $request->session()->regenerate();
                 return redirect()->intended('vendors/productlist');
+            } else {
+                return redirect()->back()->withErrors([
+                    'message' => 'Invalid Credentials.'
+                ]);
+
             }
         } elseif ($vendor && $vendor->status == 0) {
             return redirect()->back()->withErrors([

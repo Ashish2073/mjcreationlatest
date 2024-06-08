@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Discount;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Models\Productcategory;
@@ -24,6 +25,7 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Validation\Rule;
 
 
+
 class ProductDiscountController extends Controller
 {
 
@@ -42,11 +44,22 @@ class ProductDiscountController extends Controller
 
             } else {
 
-                $vendorProducts = VendorProduct::query()
-                    ->join('product_categories', 'vendor_products.product_category_id', '=', 'product_categories.id')
-                    ->join('product_brands', 'vendor_products.brand_id', '=', 'product_brands.id')
-                    ->select('vendor_products.*', \DB::raw("DATE_FORMAT(vendor_products.created_at ,'%d/%m/%Y') AS created_date"), 'product_categories.name as product_categories_name', 'product_brands.name as brandname')
-                    ->orderBy('vendor_products.created_at', 'desc');
+                if (Auth::guard('vendor')->user()->role == 1) {
+                    $vendorProducts = VendorProduct::query()
+                        ->join('product_categories', 'vendor_products.product_category_id', '=', 'product_categories.id')
+                        ->join('product_brands', 'vendor_products.brand_id', '=', 'product_brands.id')
+                        ->select('vendor_products.*', \DB::raw("DATE_FORMAT(vendor_products.created_at ,'%d/%m/%Y') AS created_date"), 'product_categories.name as product_categories_name', 'product_brands.name as brandname')
+                        ->orderBy('vendor_products.created_at', 'desc');
+                } else {
+                    $vendorProducts = VendorProduct::query()
+                        ->join('product_categories', 'vendor_products.product_category_id', '=', 'product_categories.id')
+                        ->join('product_brands', 'vendor_products.brand_id', '=', 'product_brands.id')
+                        ->where('vendor_id', Auth::guard('vendor')->user()->id)
+                        ->select('vendor_products.*', \DB::raw("DATE_FORMAT(vendor_products.created_at ,'%d/%m/%Y') AS created_date"), 'product_categories.name as product_categories_name', 'product_brands.name as brandname')
+                        ->orderBy('vendor_products.created_at', 'desc');
+
+
+                }
 
             }
 
@@ -244,6 +257,7 @@ class ProductDiscountController extends Controller
 
 
 
+
         $discountData = Discount::join('product_discounts', 'product_discounts.discount_id', '=', 'discounts.id')
             ->join('vendor_products', 'vendor_products.id', '=', 'product_discounts.product_id')
             ->where('discounts.id', $request->discountid)
@@ -293,6 +307,23 @@ class ProductDiscountController extends Controller
                 ];
             })
             ->toArray();
+
+
+        if (empty($discountData)) {
+            $discountData = Discount::where('id', $request->discountid)->get()->map(function ($item) {
+                return [
+                    'discount_id' => $item->id,
+                    'start_date' => $item->start_date,
+                    'end_date' => $item->end_date,
+                    'banner_image' => $item->banner_image,
+                    'discount_title' => $item->discount_title,
+                    'details' => $item->details,
+                    'discount_type' => $item->discount_type,
+                    'discount_data' => json_decode($item->discount_data, true),
+                ];
+            });
+        }
+
 
         $responseHtml = view::make('managedashboard.product.discount.edit', ['discountData' => $discountData])->render();
 

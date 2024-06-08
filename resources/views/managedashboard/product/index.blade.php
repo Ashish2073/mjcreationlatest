@@ -47,7 +47,7 @@
 
 
 
-        <div class="content-header-right text-md-right col-md-3 col-12">
+        <div class="content-header-right text-md-left  col-12">
             <div class="form-group">
 
                 <button onclick="showAddForm()" class="btn-icon btn btn-primary btn-round btn-sm">
@@ -104,6 +104,7 @@
                     {{-- <th>No</th> --}}
                     <th>Sr No.</th>
                     <th>Product Title </th>
+                    <th>SKU(Shope Kipping Unit)</th>
                     <th>Total Product Quantity</th>
                     <th>Product Image </th>
 
@@ -472,7 +473,15 @@
 
 
             var csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
+            if ($.fn.DataTable.isDataTable('.data-table')) {
+                $('.data-table').DataTable().destroy();
+                $('.data-table').find('*').not('tbody').remove();
+            }
+
+
             var table = $('.data-table').DataTable({
+
+
 
                 dom: '<"top"lfB>rt<"bottom"ip><"clear">', // Add this line to enable buttons
                 buttons: [{
@@ -542,6 +551,15 @@
                         name: 'product_title',
                         searchable: true
                     },
+
+
+                    {
+                        data: 'sku',
+                        name: 'sku',
+                        searchable: true
+                    },
+
+
                     {
                         data: 'product_total_stock_quantity',
                         name: 'product_total_stock_quantity',
@@ -1329,6 +1347,11 @@
         }
 
         function selectSubproductcategory(selectElement) {
+
+
+
+
+
             var selectedvalue = selectElement.value;
             var selectedtext = selectElement.options[selectElement.selectedIndex].text;
 
@@ -1365,6 +1388,9 @@
                 error: (error) => {},
             });
         }
+
+
+
 
         $("#savevendorproduct").on("click", function(e) {
             e.preventDefault();

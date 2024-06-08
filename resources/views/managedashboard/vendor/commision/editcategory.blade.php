@@ -5,7 +5,7 @@
         <option></option>
 
         @foreach ($vendorCategory as $data)
-            <option value={{ $data->category_id }}>{{ $data->categoryname }}</option>
+            <option value="{{ $data->category_id }}">{{ $data->categoryname }}</option>
         @endforeach
 
     </select>

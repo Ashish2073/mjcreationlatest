@@ -281,7 +281,7 @@ class CommisionController extends Controller
 
 
             ->addColumn('action', function ($row) {
-                $btn = '<button type="button" onclick="editCategoryCommision(' . $row->id . ',' . $row->vendor_id . ')" class="edit btn btn-primary mr-2" style="margin-right: 5px;"><i class="ti-pencil-alt"></i></button>';
+                $btn = '<button type="button" id="editcategorycommision' . $row->id . '" onclick="editCategoryCommision(' . $row->id . ',' . $row->vendor_id . ')" class="edit btn btn-primary mr-2" style="margin-right: 5px;"><i class="ti-pencil-alt"></i></button>';
                 $btn .= '<button type="button" onclick="deleteCategoryCommision(' . $row->id . ', ' . $row->vendor_id . ')" class="delete btn btn-danger "><i class="ti-trash"></i></button>';
                 return $btn;
             })
@@ -364,7 +364,7 @@ class CommisionController extends Controller
 
 
             ->addColumn('action', function ($row) {
-                $btn = '<button type="button" onclick="editVendorCommisionProduct(' . $row->id . ')" class="edit btn btn-primary mr-2" style="margin-right: 5px;"><i class="ti-pencil-alt"></i></button>';
+                $btn = '<button type="button" id="editVendorCommisionProduct' . $row->id . '" onclick="editVendorCommisionProduct(' . $row->id . ')" class="edit btn btn-primary mr-2" style="margin-right: 5px;"><i class="ti-pencil-alt"></i></button>';
                 $btn .= '<button type="button" onclick="deleteVendorCommisionProduct(' . $row->id . ')" class="delete btn btn-danger "><i class="ti-trash"></i></button>';
                 return $btn;
             })
@@ -439,7 +439,7 @@ class CommisionController extends Controller
 
 
             ->addColumn('action', function ($row) {
-                $btn = '<button type="button" onclick="editordercommision(' . $row->id . ')" class="edit btn btn-primary mr-2" style="margin-right: 5px;"><i class="ti-pencil-alt"></i></button>';
+                $btn = '<button type="button" id="editordercommision' . $row->id . '" onclick="editordercommision(' . $row->id . ')" class="edit btn btn-primary mr-2" style="margin-right: 5px;"><i class="ti-pencil-alt"></i></button>';
                 $btn .= '<button type="button" onclick="deleteordercommision(' . $row->id . ')" class="delete btn btn-danger "><i class="ti-trash"></i></button>';
                 return $btn;
             })
@@ -521,6 +521,9 @@ class CommisionController extends Controller
         return response()->json([
             'success' => true,
             "message" => "Updated Successfully",
+            "amount" => $vendorCommisionCategory->amount,
+            "type" => $vendorCommisionCategory->type,
+
         ], 200);
 
 
@@ -620,6 +623,8 @@ class CommisionController extends Controller
         return response()->json([
             'success' => true,
             "message" => "Updated Successfully",
+            "amount" => $vendorCommisionProduct->amount,
+            "type" => $vendorCommisionProduct->type,
         ], 200);
 
     }
@@ -713,6 +718,8 @@ class CommisionController extends Controller
         return response()->json([
             'success' => true,
             "message" => "Updated Successfully",
+            "amount" => $vendorCommisionOrder->amount,
+            "type" => $vendorCommisionOrder->type,
         ], 200);
 
 

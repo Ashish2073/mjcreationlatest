@@ -7,6 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @livewireStyles
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
     <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" type="text/css" media="screen" />
     <link rel="stylesheet" href="{{ asset('fontawesome/font-awesome.min.css') }}" type="text/css" media="screen" />
@@ -44,6 +46,9 @@
 
     <link rel="stylesheet" type="text/css" href="{{ asset('css/toaster.min.css') }}">
 
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 
 
@@ -131,6 +136,7 @@
     </style>
 
     <title>@yield('title')</title>
+
 </head>
 
 <body class="">
@@ -157,16 +163,31 @@
 
 
 
-    <script src="{{ asset('vendor/livewire/livewire.js') }}"></script>
+
     @yield('page-script')
+
+
+
+    <script src="{{ asset('vendor/livewire/livewire.js') }}"></script>
 
     <script src="{{ asset('js/template.js') }}"></script>
     <script>
+        $(window).on('popstate', function() {
+            location.reload(true);
+        });
+
+
+
+        console.log("hello");
         setTimeout(function() {
             $('#error-message').addClass('fade-out');
         }, 2000);
     </script>
-
+    {{-- <script>
+        console.log('Alpine.js version:', window.Alpine);
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2" defer></> --}}
 </body>
 
 </html>

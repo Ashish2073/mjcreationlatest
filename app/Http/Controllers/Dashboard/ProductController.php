@@ -147,6 +147,7 @@ class ProductController extends Controller
 
             $vendorProduct = new VendorProduct();
             $vendorProduct->vendor_id = Auth::guard('vendor')->user()->id;
+            $vendorProduct->sku = strtoupper(substr($request->product_title, 0, 3) . '-' . ($request->product_category[count($request->product_category) - 1]) . '-' . $request->product_brand_id . '-' . $request->product_measurment_parameter . '-' . $request->product_measurment_unit . '-' . date('dmY') . '-' . date('His'));
 
             $vendorProduct->product_category_id = $request->product_category[count($request->product_category) - 1];
             $vendorProduct->product_title = $request->product_title;

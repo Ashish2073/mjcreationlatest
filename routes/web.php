@@ -9,6 +9,7 @@ use App\Http\Controllers\Vendor\Auth\RegistrationController as VendorRegistratio
 use App\Http\Controllers\Vendor\Auth\LoginController as VendorLoginController;
 use App\Http\Controllers\Dashboard\VendorController as DashboardVendorController;
 use App\Http\Controllers\Dashboard\CommisionController;
+use App\Http\Controllers\Dashboard\VendorOrderManagmentController;
 
 
 
@@ -199,6 +200,8 @@ Route::prefix('vendors')->middleware('vendor.auth')->group(function () {
     Route::post('vendorcommisionproductlist', [CommisionController::class, 'vendorcommisionproductlist'])->name('vendors.vendorcommisionproductlist');
 
     Route::post('vendorcommisionperorderlist', [CommisionController::class, 'vendorcommisionperorderlist'])->name('vendors.vendorcommisionperorderlist');
+
+    Route::get('orders', [VendorOrderManagmentController::class, 'orderlist'])->name('vendors.orderlist');
 
 
 });

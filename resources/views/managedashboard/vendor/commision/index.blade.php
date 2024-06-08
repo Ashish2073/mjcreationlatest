@@ -1,10 +1,6 @@
-{{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script> --}}
-
 @extends('managedashboard.layout.main')
 @section('title', 'Vendor Commision')
-@include('managedashboard.layout.loader')
+
 @section('content')
 
     <style>
@@ -26,7 +22,7 @@
 
 
 
-            <div class="content-header-right text-md-right col-md-3 col-12">
+            <div class="content-header-right text-md-left  col-12">
                 <div class="form-group">
 
                     <button onclick="showAddForm()" class="btn-icon btn btn-primary btn-round btn-sm">
@@ -75,7 +71,7 @@
 
 
 
-            <div class="p-3 row shadow" style="background: #ffced785;">
+            <div class="p-3 row shadow ms-3" style="background: #ffced785;">
                 <div class="col-md-12">
 
                     <h3 style="font-family:serif">Category Wise Commision </h3>
@@ -108,7 +104,7 @@
 
             </div>
 
-            <div class="p-3 row shadow mt-5" style="background: #ffced785;">
+            <div class="p-3 row shadow ms-3 mt-5" style="background: #ffced785;">
                 <div class="col-md-12">
 
                     <h3 style="font-family:serif">Product Wise Commision </h3>
@@ -142,7 +138,7 @@
 
             </div>
 
-            <div class="p-3 row shadow mt-5" style="background: #ffced785;">
+            <div class="p-3 row shadow ms-3 mt-5" style="background: #ffced785;">
                 <div class="col-md-12">
 
                     <h3 style="font-family:serif">Order Wise Commision </h3>
@@ -218,6 +214,8 @@
     </section>
 
 @endsection
+
+
 
 @section('page-script')
 
@@ -1477,12 +1475,19 @@
 
                     $("#changecategorycommisionmodal").modal('hide');
 
-                    var currentPage = $('.category-commision').DataTable().page();
+                    var parentTr = $('#editcategorycommision' + id).closest('tr');
 
-                    // Reinitialize the table and restore the page
-                    vendorCategoryCommision();
-                    var table = $('.category-commision').DataTable();
-                    table.page(currentPage).draw(false);
+                    // Change the inner HTML of the 5th and 6th td elements
+                    parentTr.find('td').eq(4).html(data.amount); // 5th td element (index 4)
+                    parentTr.find('td').eq(5).html(data.html);
+
+                    // var currentPage = $('.category-commision').DataTable().page();
+
+
+                    // // Reinitialize the table and restore the page
+                    // vendorCategoryCommision();
+                    // var table = $('.category-commision').DataTable();
+                    // table.page(currentPage).draw(false);
 
 
 
@@ -1764,10 +1769,15 @@
 
                     var currentPage = $('.product-commision').DataTable().page();
 
+                    let parentTr = $('#editVendorCommisionProduct' + id).closest('tr');
+
+                    // Change the inner HTML of the 5th and 6th td elements
+                    parentTr.find('td').eq(5).html(data.amount); // 5th td element (index 4)
+                    parentTr.find('td').eq(6).html(data.html);
                     // Reinitialize the table and restore the page
-                    vendorCommisionProductList();
-                    var table = $('.product-commision').DataTable();
-                    table.page(currentPage).draw(false);
+                    // vendorCommisionProductList();
+                    // var table = $('.product-commision').DataTable();
+                    // table.page(currentPage).draw(false);
 
 
 
@@ -2038,12 +2048,18 @@
 
                     $("#changeordercommisionmodal").modal('hide');
 
-                    var currentPage = $('.perorder-commision').DataTable().page();
+                    var parentTr = $('#editordercommision' + id).closest('tr');
+
+                    // Change the inner HTML of the 5th and 6th td elements
+                    parentTr.find('td').eq(3).html(data.amount); // 5th td element (index 4)
+                    parentTr.find('td').eq(4).html(data.html);
+
+                    // var currentPage = $('.perorder-commision').DataTable().page();
 
                     // Reinitialize the table and restore the page
-                    vendorCommisionPerorderList();
-                    var table = $('.perorder-commision').DataTable();
-                    table.page(currentPage).draw(false);
+                    // vendorCommisionPerorderList();
+                    // var table = $('.perorder-commision').DataTable();
+                    // table.page(currentPage).draw(false);
 
 
 

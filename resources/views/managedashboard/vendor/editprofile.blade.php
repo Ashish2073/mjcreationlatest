@@ -556,7 +556,7 @@
                         <label for="phone_no">Phone Number:</label>
                         <input type="phone" id="phone_no" name="phone_no"
                             value="{{ auth()->guard('vendor')->user()->phone_no }}">
-                        <span id="email_error" style="color: #ff0000"></span>
+                        <span id="phone_no_error" style="color: #ff0000"></span>
                     </div>
                 </form>
             </div>
