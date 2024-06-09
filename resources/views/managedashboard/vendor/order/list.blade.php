@@ -40,12 +40,161 @@
         .table thead th {
             border-bottom: 2px solid #dee2e6;
         }
+
+        #orderactionid .modal-dialog {
+            width: 80%;
+            /* Adjust the width as needed */
+            max-width: none;
+            /* Override max-width */
+        }
+
+        #orderactionid .modal-content {
+            max-height: 90vh;
+            /* Adjust the height as needed */
+            overflow-y: auto;
+        }
+
+        .product-details-table-container {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+
+
+        .container .steps {
+            display: flex;
+            width: 100%;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .container .steps .circle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 50px;
+            width: 50px;
+            background-color: #fff;
+            border-radius: 50%;
+            color: #999;
+            font-size: 22px;
+            font-weight: 500;
+            border: 4px solid #e0e0e0;
+            transition: all 0.3s ease;
+            transition-delay: 0s;
+            z-index: 1;
+            /* Ensure circles are above progress bar */
+        }
+
+        .container .steps .circle.active {
+            transition-delay: 0.1s;
+            border-color: #4070f4;
+            color: #4070f4;
+        }
+
+        .container .steps .progress-bar {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            height: 4px;
+            width: 100%;
+            background-color: #e0e0e0;
+            z-index: 0;
+            /* Ensure progress bar is behind circles */
+            transform: translateY(-50%);
+            /* Center the progress bar vertically */
+        }
+
+        .container .steps .progress-bar .indicator {
+            position: absolute;
+            height: 100%;
+            width: 0%;
+            background-color: #4070f4;
+            transition: all 0.3s ease;
+        }
+
+        .container .buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .container .buttons button {
+            padding: 8px 16px;
+            border: none;
+            outline: none;
+            color: #fff;
+            background-color: #4070f4;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .container .buttons button:active {
+            transform: scale(0.97);
+        }
+
+        .container .buttons button:disabled {
+            background-color: #87a5f8;
+            cursor: not-allowed;
+        }
     </style>
 
 
     <!-- DataTables CSS -->
 
     <div class="container mt-5">
+
+        {{-- <div class="container">
+            <div class="steps">
+                <span class="circle active">1</span>
+                <span class="circle">2</span>
+                <span class="circle">3</span>
+                <span class="circle">4</span>
+                <div class="progress-bar">
+                    <span class="indicator"></span>
+                </div>
+            </div>
+            <div class="buttons">
+                <button id="prev" disabled>Previous</button>
+                <button id="next">Next</button>
+            </div>
+        </div> --}}
+        <!--Modal--->
+        <div id="orderactionid" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content" id="orderdetailsmodalcontent">
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+        <!--------->
+
+
+
+
+
+
+
+
+
+
+
+
         <h2 class="text-center"> Order List</h2>
 
         <!-- Tabs Navigation -->
@@ -74,20 +223,21 @@
                             <tr>
                                 <th>Sr No</th>
                                 <th>Order Id</th>
-                                <th>Product Name</th>
-                                <th>Product Image</th>
-                                <th>Product Measurment</th>
-                                <th>Product Quantity</th>
-                                <th>Product SQU Number</th>
+                                {{-- <th>Product Name</th> --}}
+                                {{-- <th>Product Image</th> --}}
+                                {{-- <th>Product Measurment</th>
+                                <th>Product Quantity</th> --}}
+                                {{-- <th>Product SQU Number</th> --}}
                                 <th>User Name </th>
                                 <th>User Email</th>
                                 <th>User Phone </th>
                                 <th>Order Amount</th>
                                 <th>Payment Amount </th>
-                                <th>Payment Method </th>
+                                {{-- <th>Payment Method </th> --}}
                                 <th>Payment Status </th>
                                 <th>Order Status </th>
                                 <th>Order Date </th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -237,35 +387,30 @@
                         orderable: true,
                         searchable: true
                     },
-                    {
-                        data: 'product_title',
-                        name: 'vendor_products.product_title',
-                        orderable: true,
-                        searchable: true
-                    },
-                    {
-                        data: 'product_image',
-                        name: 'product_image',
-                        searchable: false
-                    },
-                    {
-                        data: 'product_measurment',
-                        name: 'product_measurment',
-                        orderable: false,
-                        searchable: false
-                    },
-                    {
-                        data: 'quantity',
-                        name: 'order_items.quantity',
-                        orderable: true,
-                        searchable: true
-                    },
-                    {
-                        data: 'productsku',
-                        name: 'vendor_products.sku',
-                        orderable: true,
-                        searchable: true
-                    },
+                    // {
+                    //     data: 'product_title',
+                    //     name: 'vendor_products.product_title',
+                    //     orderable: true,
+                    //     searchable: true
+                    // },
+                    // {
+                    //     data: 'product_image',
+                    //     name: 'product_image',
+                    //     searchable: false
+                    // },
+                    // {
+                    //     data: 'product_measurment',
+                    //     name: 'product_measurment',
+                    //     orderable: false,
+                    //     searchable: false
+                    // },
+                    // {
+                    //     data: 'quantity',
+                    //     name: 'order_items.quantity',
+                    //     orderable: true,
+                    //     searchable: true
+                    // },
+
                     {
                         data: 'user_name',
                         name: 'users.name ',
@@ -296,12 +441,12 @@
                         orderable: true,
                         searchable: true
                     },
-                    {
-                        data: 'payment_method',
-                        name: 'payments.payment_method ',
-                        orderable: true,
-                        searchable: true
-                    },
+                    // {
+                    //     data: 'payment_method',
+                    //     name: 'payments.payment_method ',
+                    //     orderable: true,
+                    //     searchable: true
+                    // },
                     {
                         data: 'payment_status',
                         name: 'payment_status',
@@ -319,6 +464,12 @@
                         name: 'orders.created_at',
                         orderable: true,
                         searchable: true
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false
                     }
 
                 ],
@@ -327,6 +478,98 @@
                 }
             });
         };
+
+
+        function orderaction(id) {
+
+            $("#orderactionid").modal('show');
+
+            var formData = new FormData();
+            formData.append('id', id);
+
+
+            $.ajax({
+                url: "{{ route('vendors.userorderdetails') }}",
+                type: 'POST',
+                data: formData,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+                },
+                success: (data) => {
+
+                    $("#orderdetailsmodalcontent").html(data.responsehtml);
+
+                },
+                error: function(xhr) {
+                    if (xhr.status == 422) {
+                        var errorMessageBrand = xhr.responseJSON.errormessage;
+                        toastr.error("Something went wrong");
+                        for (fieldName in errorMessageBrand) {
+                            if (errorMessageBrand.hasOwnProperty(fieldName)) {
+                                // $(`[id="mesaurement_parameter_error_id"`).html(errorMessageBrand[
+                                //     fieldName][0]);
+                            }
+                        }
+                    }
+                }
+            });
+
+
+
+
+
+        }
+
+
+        progressBar();
+
+        function progressBar() {
+            const buttons = document.querySelectorAll("button");
+            const progressbar = document.querySelector(".indicator");
+            const circles = document.querySelectorAll(".circle");
+
+            let currentStep = 1;
+
+            const updateStep = (e) => {
+                //update current step based on button click
+                currentStep = e.target.id === "next" ? ++currentStep : --currentStep;
+
+                //loop circles and add or remove class active based on current step value
+
+                circles.forEach((circle, index) => {
+                    circle.classList[`${index < currentStep ? "add" : "remove"}`]("active");
+                });
+
+                //update progress bar based on current step value
+
+                progressbar.style.width = `${
+((currentStep - 1) / (circles.length - 1)) * 100
+}%`;
+
+                //checking if current step is last or first and enable or disable buttons
+
+                if (currentStep === circles.length) {
+                    buttons[1].disabled = true;
+                } else if (currentStep === 1) {
+                    buttons[0].disabled = true;
+                } else {
+                    buttons.forEach((button) => (button.disabled = false));
+                }
+            };
+
+            buttons.forEach((button) => {
+                button.addEventListener("click", updateStep);
+            });
+
+        }
+
+
+
+
 
         // function changeStatus(id) {
         //     let vendor_id = id;

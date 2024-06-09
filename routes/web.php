@@ -203,5 +203,7 @@ Route::prefix('vendors')->middleware('vendor.auth')->group(function () {
 
     Route::get('orders', [VendorOrderManagmentController::class, 'orderlist'])->name('vendors.orderlist');
 
+    Route::post('userorderdetails', [VendorOrderManagmentController::class, 'userorderdetails'])->name('vendors.userorderdetails');
+
 
 });
