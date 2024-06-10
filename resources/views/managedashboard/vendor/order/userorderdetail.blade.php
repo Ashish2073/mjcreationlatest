@@ -6,21 +6,49 @@
 </div>
 <div class="modal-body">
 
-    <div class="container">
+    <div class="container mb-5">
         <div class="steps">
-            <span class="circle active">1</span>
+            {{-- <span class="circle active">1</span>
             <span class="circle">2</span>
             <span class="circle">3</span>
             <span class="circle">4</span>
+            <span class="circle">5</span> --}}
+
+            <div class="step">
+                <span class="circle active">1</span>
+                <label class="steplebel labelproductactive">Order send to vendor</label>
+            </div>
+            <div class="step">
+                <span class="circle">2</span>
+                <label class="steplebel">Vendor Acept Order </label>
+            </div>
+            <div class="step">
+                <span class="circle">3</span>
+                <label class="steplebel">Order send for shipping</label>
+            </div>
+            <div class="step">
+                <span class="circle">4</span>
+                <label class="steplebel">Order dispatch</label>
+            </div>
+            <div class="step">
+                <span class="circle">5</span>
+                <label class="steplebel">Order delivered</label>
+            </div>
             <div class="progress-bar">
                 <span class="indicator"></span>
             </div>
         </div>
-        <div class="buttons">
-            <button id="prev" disabled>Previous</button>
-            <button id="next">Next</button>
-        </div>
+        {{-- <div class="progress-bar">
+            <span class="indicator"></span>
+        </div> --}}
     </div>
+
+
+    {{-- <div class="buttons">
+        <button id="prev" disabled>Previous</button>
+        <button id="next">Next</button>
+    </div> --}}
+
 
 
 
@@ -277,53 +305,59 @@
             </div>
         </div>
     @endforeach
+    <div class="row mt-4">
+        <!-- Order Accepted and Send to Shipment Options -->
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    Actions
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-check-label">Order Accepted</label><br>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="orderAccepted"
+                                        id="orderAcceptedYes" value="2">
+                                    <label class="form-check-label" for="orderAcceptedYes">Yes</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="orderAccepted"
+                                        id="orderAcceptedNo" value="1">
+                                    <label class="form-check-label" for="orderAcceptedNo">No</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-check-label">Send to Shipment</label><br>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="sendToShipment"
+                                        id="sendToShipmentYes" value="3">
+                                    <label class="form-check-label" for="sendToShipmentYes">Yes</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="sendToShipment"
+                                        id="sendToShipmentNo" value="2">
+                                    <label class="form-check-label" for="sendToShipmentNo">No</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-    <button type="button" class="btn btn-primary" id="savestauschanges">Save changes</button>
+    {{-- <button type="button" class="btn btn-primary" id="savestauschanges">Save changes</button> --}}
 </div>
 
 <script>
     /* Created by Tivotal */
-    progressBar();
-
-    function progressBar() {
-        const buttons = document.querySelectorAll("button");
-        const progressbar = document.querySelector(".indicator");
-        const circles = document.querySelectorAll(".circle");
-
-        let currentStep = 1;
-
-        const updateStep = (e) => {
-            //update current step based on button click
-            currentStep = e.target.id === "next" ? ++currentStep : --currentStep;
-
-            //loop circles and add or remove class active based on current step value
-
-            circles.forEach((circle, index) => {
-                circle.classList[`${index < currentStep ? "add" : "remove"}`]("active");
-            });
-
-            //update progress bar based on current step value
-
-            progressbar.style.width = `${
-    ((currentStep - 1) / (circles.length - 1)) * 100
-  }%`;
-
-            //checking if current step is last or first and enable or disable buttons
-
-            if (currentStep === circles.length) {
-                buttons[1].disabled = true;
-            } else if (currentStep === 1) {
-                buttons[0].disabled = true;
-            } else {
-                buttons.forEach((button) => (button.disabled = false));
-            }
-        };
-
-        buttons.forEach((button) => {
-            button.addEventListener("click", updateStep);
-        });
-
-    }
 </script>

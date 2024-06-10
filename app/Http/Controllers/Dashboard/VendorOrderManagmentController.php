@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Payment;
 use App\Models\OrderItem;
+use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\Datatables;
 use Illuminate\Support\Facades\View;
 use Illuminate\Validation\Rule;
@@ -16,7 +17,10 @@ class VendorOrderManagmentController extends Controller
 {
     public function pushOderToShipment(Request $request)
     {
-        $getResults = Order::pushOder($request->id);
+
+        $getResults = Order::pushOder($request->orderId);
+
+
 
         return response()->json([
             'status' => $getResults
@@ -26,24 +30,17 @@ class VendorOrderManagmentController extends Controller
     public function orderlist(Request $request)
     {
         if ($request->ajax()) {
-            $orderItemDetails = OrderItem::query()
-                ->join('orders', 'orders.id', '=', 'order_items.order_id')
-                ->join('vendor_products', 'vendor_products.id', '=', 'order_items.product_id')
+
+            $orderItemDetails = Order::query()
                 ->join('users', 'orders.user_id', '=', 'users.id')
                 ->join('payments', 'orders.id', '=', 'payments.order_id')
                 ->select(
                     'orders.id as id',
                     'orders.order_unique_id as order_unique_id',
-                    'vendor_products.product_title as product_title',
-                    'vendor_products.product_banner_image as product_image',
-                    \DB::raw("CONCAT(order_items.product_measurment_amount, ' ', order_items.product_measurment_unit) as product_measurment"),
-                    'order_items.quantity as quantity',
-                    'vendor_products.sku as productsku',
                     'users.name as user_name',
                     'users.email as user_email',
                     'users.phone_no as user_phone',
-
-
+                    'payments.payment_status as payment_status',
                     \DB::raw("CASE 
                     WHEN orders.currency = 'inr' THEN CONCAT('₹', orders.total_amount) 
                     WHEN orders.currency = 'usd' THEN CONCAT('$', orders.total_amount)
@@ -54,27 +51,27 @@ class VendorOrderManagmentController extends Controller
                                 WHEN payments.currency = 'usd' THEN CONCAT('$', payments.amount)
                                 ELSE CONCAT(payments.amount, ' ', payments.currency) 
                               END as payment_with_currency"),
-                    'payments.payment_method as payment_method',
-                    'payments.payment_status as payment_status',
                     'orders.status as order_status',
                     \DB::raw("DATE_FORMAT(orders.created_at ,'%d/%m/%Y %H:%i:%s') AS order_date")
-                )
-                ->orderBy('orders.created_at', 'desc');
+                );
+
+
+            if (isset($request->order_status) && $request->order_status == "3") {
+
+                $orderItemDetails->where('orders.status', $request->order_status)->orderBy('orders.created_at', 'desc');
+
+            } elseif (isset($request->order_status) && $request->order_status == "1") {
+                $orderItemDetails->where('orders.status', $request->order_status)->orderBy('orders.created_at', 'desc');
+
+            } else {
+                $orderItemDetails->orderBy('orders.created_at', 'desc');
+
+            }
+
+
 
             return Datatables::of($orderItemDetails)
                 ->addIndexColumn()
-                ->addColumn('product_image', function ($row) {
-                    if (isset($row->product_image)) {
-                        $url = asset("product/banner/{$row->product_image}");
-                    } else {
-                        $url = asset("vendor_image/vendor_vector.jpeg");
-                    }
-
-
-                    $productimg = "<img src={$url} width='30'  height='50' />";
-
-                    return $productimg;
-                })
 
                 ->addColumn('payment_status', function ($row) {
                     $status_text = $row->payment_status == "pending" ? 'pending' : 'success';
@@ -89,10 +86,25 @@ class VendorOrderManagmentController extends Controller
                 })
 
                 ->addColumn('order_status', function ($row) {
+                    $orderStatusMap = [
+                        1 => ['text' => 'No Action Taken', 'btn' => 'btn btn-danger'],
+                        2 => ['text' => 'Accepted By Vendor', 'btn' => 'btn btn-warning'],
+                        3 => ['text' => 'Order Shipped', 'btn' => 'btn btn-primary'],
+                        4 => ['text' => 'Order Dispatched', 'btn' => 'btn btn-info'],
+                        5 => ['text' => 'Order Delivered', 'btn' => 'btn btn-success'],
+                    ];
 
-                    $status_text = $row->order_status == "" ? 'NotProcessed' : 'Inactive';
+                    if (isset($orderStatusMap[$row->order_status])) {
+                        $status_text = $orderStatusMap[$row->order_status]['text'];
+                        $status_btn = $orderStatusMap[$row->order_status]['btn'];
+                    } else {
+                        // Default values if the status is not found
+                        $status_text = 'Unknown Status';
+                        $status_btn = 'btn btn-secondary';
+                    }
 
-                    $status_btn = $row->order_status == "" ? 'btn btn-danger' : 'btn btn-success';
+
+
 
                     $order_status = "<button type='button' id='orderstatuschange$row->id' onclick='orderchangeStatus($row->id)' 
                     class='$status_btn ml-2'>$status_text</button>";
@@ -271,6 +283,8 @@ class VendorOrderManagmentController extends Controller
 
 
 
+
+
         $respnseHtml = view::make('managedashboard.vendor.order.userorderdetail', ['orderDetails' => $orderDetails])->render();
 
 
@@ -278,6 +292,8 @@ class VendorOrderManagmentController extends Controller
 
         return response()->json([
             'sucess' => true,
+            'orderid' => $request->id,
+            'order_status' => $orderDetails[0]['order_status'],
             'responsehtml' => $respnseHtml
         ], 200);
 
@@ -289,6 +305,42 @@ class VendorOrderManagmentController extends Controller
 
 
 
+
+    public function orderstatuschange(Request $request)
+    {
+        // Find the order by ID
+        $order = Order::find($request->orderId);
+
+        // Inline custom validation
+        $validator = Validator::make($request->all(), [
+            'orderAccepted' => [
+                'required',
+                function ($attribute, $value, $fail) use ($order) {
+                    if ($order->status == 3) {
+                        $fail('You cannot change the order status because this order has been dispatched to the shipment company.');
+                    }
+                },
+            ],
+        ]);
+
+        // Check if validation fails
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        // Update the order status
+        $order->status = $request->orderAccepted;
+        $order->save();
+
+        // Return success response
+        return response()->json([
+            'success' => true,
+            'status' => $request->orderAccepted,
+        ], 200);
+    }
 
 
 

@@ -205,5 +205,8 @@ Route::prefix('vendors')->middleware('vendor.auth')->group(function () {
 
     Route::post('userorderdetails', [VendorOrderManagmentController::class, 'userorderdetails'])->name('vendors.userorderdetails');
 
+    Route::post('order-status-change', [VendorOrderManagmentController::class, 'orderstatuschange'])->name('vendors.orderstatuschange');
+
+    Route::post('order-sendordershipment', [VendorOrderManagmentController::class, 'pushOderToShipment'])->name('vendors.sendordershipment');
 
 });
