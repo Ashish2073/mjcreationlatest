@@ -307,7 +307,7 @@
             <!-- Pending Orders Tab -->
             <div class="tab-pane fade" id="pending-orders" role="tabpanel" aria-labelledby="pending-orders-tab">
                 <div class="table-responsive table-container" style="overflow-x: auto; ">
-                    <table class="table table-striped orders-no-action-data-table'">
+                    <table class="table table-striped orders-no-action-data-table">
                         <thead>
                             <tr>
                                 <th>Sr No</th>
@@ -346,8 +346,9 @@
     <script>
         $(document).ready(function() {
             orderDetailsDataTable();
-            orderDetailsShippedDataTable();
             orderDetailsNoActionDataTable();
+            orderDetailsShippedDataTable();
+
         });
 
         function orderDetailsDataTable() {
@@ -662,12 +663,14 @@
 
 
         function orderDetailsNoActionDataTable() {
+
             if ($.fn.DataTable.isDataTable('.orders-no-action-data-table')) {
                 $('.orders-no-action-data-table').DataTable().clear().destroy();
             }
 
+
             var csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
-            var table = $('.orders-no-action-data-table').DataTable({
+            var tablenoaction = $('.orders-no-action-data-table').DataTable({
                 dom: '<"top"lfB>rt<"bottom"ip><"clear">',
                 buttons: [{
                         extend: 'copy',

@@ -19,6 +19,10 @@
         gap: 20px;
     }
 
+    .select2-selection__rendered {
+        width: 287px;
+    }
+
     .form .grid .form-element {
         width: 200px;
         height: 200px;
@@ -251,8 +255,8 @@
                                 <div class="col-md-3 py-3">
                                     <label for="inputAddress" id="product_measurment_quantity"
                                         class="form-label">Product
-                                        Measurment Quantity</label>
-                                    <input type="number" name="product_measurment_price_detail[0][measurment_quantity]"
+                                        Measurment Amount</label>
+                                    <input type="text" name="product_measurment_price_detail[0][measurment_quantity]"
                                         class="form-control" id="product_measurment_quantity" autocomplete="off">
                                     <span id="product_measurment_price_detail.0.measurment_quantity"
                                         style="color: red;"></span>
@@ -273,6 +277,7 @@
                                     <select id="product_currency_type"
                                         name="product_measurment_price_detail[0][currency]" class="form-select">
                                         <option selected disabled> Please Select Currency type</option>
+
                                         <option value="inr">INR</option>
                                         <option value="usd">USD</option>
 
@@ -293,16 +298,11 @@
                                 <div id="colorstock">
                                     <div class="row" id="colorstockcontainer">
                                         <div class="col-md-5 py-3">
-                                            <label for="inputcurrency" class="form-label">Select color
+                                            <label for="inputcurrency" class="form-label">color
                                                 (optional)</label>
-                                            <select id="product_color_type"
+                                            <input type="text" id="product_color_type"
                                                 name="product_measurment_price_detail[0][color][]"
-                                                class="form-select">
-                                                <option selected> Please select option</option>
-                                                <option value="red">Red</option>
-                                                <option value="green">Green</option>
-
-                                            </select>
+                                                class="form-control" />
                                         </div>
 
                                         <div class="col-md-5 py-2">
@@ -594,12 +594,13 @@ id="specification_heading"
                             <label for="product_color" class="form-label">Product color</label>
                             <input type="text" name="product_color[]" class="form-control" id="product_color"
                                 autocompvare="off">
+                            <span id="product_color.0" style="color: red;"></span>
                         </div>
-                        <div class="col-md-3 py-3">
+                        {{-- <div class="col-md-3 py-3">
                             <label for="product_color_stock" class="form-label">Product color Stock</label>
                             <input type="number" name="product_color_stock[]" class="form-control"
                                 id="product_color_stock" autocompvare="off">
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
 

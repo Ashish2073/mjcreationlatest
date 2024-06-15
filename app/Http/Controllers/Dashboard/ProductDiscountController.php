@@ -420,19 +420,66 @@ class ProductDiscountController extends Controller
 
 
             if ($newdiscount) {
-                ProductDiscount::where('discount_id', $request->discount_id)->delete();
-                $productDiscounts = [];
-                foreach ($request->product as $productId) {
-                    $productDiscounts[] = [
+
+
+
+                $productIds = $request->product;
+                $currentProductDiscounts = ProductDiscount::where('discount_id', $request->discount_id)->get();
+                $currentProductIds = $currentProductDiscounts->pluck('product_id')->toArray();
+
+
+
+                $productsToAdd = array_diff($productIds, $currentProductIds);
+                $productsToRemove = array_diff($currentProductIds, $productIds);
+
+
+
+                // Insert new product discounts
+                // dd($productsToAdd);
+                // foreach ($productsToAdd as $productId) {
+                //     ProductDiscount::updateOrCreate(
+                //         ['discount_id' => $request->discount_id, 'product_id' => $productId],
+                //         ['discount_id' => $request->discount_id, 'product_id' => $productId]
+                //     );
+                // }
+
+                $insertData = [];
+                foreach ($productsToAdd as $productId) {
+                    $insertData[] = [
+                        'discount_id' => $request->discount_id,
                         'product_id' => $productId,
-                        'discount_id' => $newdiscount->id,
                         'created_at' => now(),
-                        'updated_at' => now(),
+                        'updated_at' => now()
                     ];
+                }
+                if (!empty($insertData)) {
+                    ProductDiscount::insert($insertData);
                 }
 
 
-                ProductDiscount::insert($productDiscounts);
+
+                // Remove old product discounts
+                ProductDiscount::where('discount_id', $request->discount_id)
+                    ->whereIn('product_id', $productsToRemove)
+                    ->delete();
+
+
+
+
+
+                // ProductDiscount::where('discount_id', $request->discount_id)->delete();
+                // $productDiscounts = [];
+                // foreach ($request->product as $productId) {
+                //     $productDiscounts[] = [
+                //         'product_id' => $productId,
+                //         'discount_id' => $newdiscount->id,
+                //         'created_at' => now(),
+                //         'updated_at' => now(),
+                //     ];
+                // }
+
+
+                // ProductDiscount::insert($productDiscounts);
             }
             DB::commit();
             return response()->json(['message' => 'Discount updated and applied to products successfully'], 201);

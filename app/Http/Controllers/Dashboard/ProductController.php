@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Rules\StockMatchesStockColorWise;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Models\Productcategory;
@@ -87,6 +88,7 @@ class ProductController extends Controller
 
 
 
+
         DB::beginTransaction();
 
         try {
@@ -105,7 +107,7 @@ class ProductController extends Controller
                 'product_measurment_price_detail.*.price' => 'required',
                 'product_measurment_price_detail.*.measurment_quantity' => 'required',
                 'product_measurment_price_detail.*.currency' => 'required',
-                'product_measurment_price_detail.*.stock' => 'required',
+                'product_measurment_price_detail.*.stock' => ['required', 'numeric', new StockMatchesStockColorWise()],
                 'product_specification.*.name' => 'required',
                 'product_specification.*.heading' => 'required',
 
@@ -118,7 +120,7 @@ class ProductController extends Controller
                 'product_measurment_price_detail.*.price' => 'Product price required',
                 'product_measurment_price_detail.*.measurment_quantity' => 'Product measurment quantity required',
                 'product_measurment_price_detail.*.currency' => 'Product currency type required',
-                'product_measurment_price_detail.*.stock' => 'Product stock required',
+                'product_measurment_price_detail.*.stock.required' => 'Product stock required',
                 'product_specification.*.name' => 'Product specfication required',
 
                 'product_specification.*.detail' => 'Product Specification detail required',
@@ -126,6 +128,20 @@ class ProductController extends Controller
                 'product_specification.*.heading' => 'Specification heading field is required',
             ]);
 
+            $validator->after(function ($validator) use ($request) {
+                $productColors = $request->input('product_color', []);
+                $productColorBannerImages = $request->file('product_color_banner_image', []);
+
+                if (count($productColors) !== count($productColorBannerImages)) {
+                    $validator->errors()->add('product_color', 'The number of product colors must match the number of product color banner images.');
+                }
+
+                foreach ($productColorBannerImages as $index => $image) {
+                    if (!isset($productColors[$index]) || empty($productColors[$index])) {
+                        $validator->errors()->add('product_color.' . $index, 'Each product color banner image must have a corresponding product color Name.');
+                    }
+                }
+            });
 
 
             if ($validator->fails()) {
@@ -160,6 +176,8 @@ class ProductController extends Controller
             $vendorProduct->measurment_parameter_name = $request->product_measurment_parameter;
 
             $vendorProduct->measurment_unit_name = $request->product_measurment_unit;
+
+            $vendorProduct->product_color = json_encode($request->product_color);
 
 
 
@@ -771,6 +789,7 @@ class ProductController extends Controller
 
 
 
+
         try {
 
 
@@ -794,7 +813,7 @@ class ProductController extends Controller
                 'product_measurment_price_detail.*.price' => 'required',
                 'product_measurment_price_detail.*.measurment_quantity' => 'required',
                 'product_measurment_price_detail.*.currency' => 'required',
-                'product_measurment_price_detail.*.stock' => 'required',
+                'product_measurment_price_detail.*.stock' => ['required', 'numeric', new StockMatchesStockColorWise()],
                 'product_specification.*.name' => 'required',
                 'product_specification.*.heading' => 'required',
 
@@ -807,11 +826,89 @@ class ProductController extends Controller
                 'product_measurment_price_detail.*.price' => 'Product price required',
                 'product_measurment_price_detail.*.measurment_quantity' => 'Product measurment quantity required',
                 'product_measurment_price_detail.*.currency' => 'Product currency type required',
-                'product_measurment_price_detail.*.stock' => 'Product stock required',
-                'product_specification.*.name' => 'Product specfication required',
+                'product_measurment_price_detail.*.stock.required' => 'Product stock required',
+                'product_specification.*.name' => 'Product Specification required',
                 'product_specification.*.detail' => 'Product Specification detail required',
                 'product_specification.*.heading' => 'Specification heading field is required',
             ]);
+
+
+
+
+            if (isset($request->product_color_banner_image_existing) && ($request->file('product_color_banner_image') == false)) {
+                $validator->after(function ($validator) use ($request) {
+                    $productColors = $request->input('product_color', []);
+                    $productColorBannerImages = $request->input('product_color_banner_image_existing', []);
+
+
+
+                    // if (count($productColors) !== count($productColorBannerImages)) {
+                    //     $validator->errors()->add('product_color', 'The number of product colors must match the number of product color banner images.');
+                    // }
+
+                    foreach ($productColorBannerImages as $index => $image) {
+                        if (!isset($productColors[$index]) || empty($productColors[$index])) {
+                            $validator->errors()->add('product_color.' . $index, 'Each product color banner image must have a corresponding product color Name.');
+                        }
+                    }
+                });
+
+            }
+
+
+
+            if ($request->file('product_color_banner_image') && !isset($request->product_color_banner_image_existing)) {
+                $validator->after(function ($validator) use ($request) {
+                    $productColorNew = $request->input('product_color', []);
+                    $productColorNewBannerImages = $request->file('product_color_banner_image', []);
+
+
+
+
+
+                    foreach ($productColorNewBannerImages as $index => $image) {
+                        if (!isset($productColorNew[$index]) || empty($productColorNew[$index])) {
+                            $validator->errors()->add('product_color.' . $index, 'Each product color banner image must have a corresponding product color Name.');
+                        }
+                    }
+
+                });
+            }
+
+
+            if ($request->file('product_color_banner_image') && isset($request->product_color_banner_image_existing)) {
+
+
+                $validator->after(function ($validator) use ($request) {
+                    $productColorBannerImageLength = count($request->file('product_color_banner_image'));
+                    $productExistingBannerImageLength = count($request->product_color_banner_image_existing);
+                    $productColorNew = $request->input('product_color', []);
+
+                    $sum = $productColorBannerImageLength + $productExistingBannerImageLength;
+
+
+
+
+
+
+
+
+
+                    for ($i = 0; $i < $sum; $i++) {
+                        if (!isset($productColorNew[$i]) || empty($productColorNew[$i])) {
+
+                            $validator->errors()->add('product_color.' . $i, 'Each product color banner image must have a corresponding product color Name.');
+                        }
+
+                    }
+
+                });
+
+
+
+            }
+
+
 
 
 
@@ -841,6 +938,7 @@ class ProductController extends Controller
             $vendorProduct->product_total_stock_quantity = $request->product_quantity;
             $vendorProduct->discription = $request->product_discription;
             $vendorProduct->product_warrenty = $request->product_warrenty;
+            $vendorProduct->product_color = json_encode($request->product_color);
 
 
             $vendorProduct->measurment_parameter_name = $request->product_measurment_parameter;

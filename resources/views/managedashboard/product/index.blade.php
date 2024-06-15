@@ -628,7 +628,7 @@
         $('#product_measurment_unit_main').select2();
         $('#product_currency_type').select2();
         $('#product_specification_heading').select2();
-        $('#product_color_type').select2();
+
 
 
 
@@ -865,14 +865,10 @@
                                                  <label for="product_color${addMoreImagefordiffentcolorContainerId}" class="form-label">Product color</label>
                                               <input type="text" name="product_color[]" class="form-control"
                                             id="product_color${addMoreImagefordiffentcolorContainerId}" autocompvare="off">
+                                            <span id="product_color.${addMoreImagefordiffentcolorContainerId}" style="color: red;"></span>
                                            </div>
 
-                                           <div class="col-md-3 py-3">
-                                                 <label for="product_color_stock${addMoreImagefordiffentcolorContainerId}" class="form-label">Product color</label>
-                                              <input type="number" name="product_color_stock[]" class="form-control"
-                                            id="product_color_stock${addMoreImagefordiffentcolorContainerId}" autocompvare="off">
-                                           </div>
-                                           </div>
+                                       
 
 
 
@@ -1101,15 +1097,10 @@
             var colorStcokHtml = `
             <div class="row" id="colorstockcontainer${colorStockContainerIndex}">
             <div class="col-md-5 py-3">
-                                            <label for="product_color_type" class="form-label">Select color
+                                            <label for="product_color_type" class="form-label">Color
                                                 (optional)</label>
-                                            <select id="product_color_type${colorStockContainerIndex}" name="product_measurment_price_detail[0][color][]"
-                                                class="form-select">
-                                                <option selected> Please select option</option>
-                                                <option value="red">Red</option>
-                                                <option value="green">Green</option>
-
-                                            </select>
+                                            <input id="product_color_type${colorStockContainerIndex}" name="product_measurment_price_detail[0][color][]"
+                                                class="form-control"/>
                                         </div>
 
                                         <div class="col-md-5 py-3">
@@ -1128,7 +1119,7 @@
                                          
                                         </div></div>`;
             $('#colorstock').append(colorStcokHtml);
-            $(`#product_color_type${colorStockContainerIndex}`).select2();
+
 
 
         }
@@ -1143,13 +1134,8 @@
             <div class="col-md-5 py-3">
                                             <label for="product_color_type${colorStockIndex}${newColorStockIndex}" class="form-label">Select color
                                                 (optional)</label>
-                                            <select id="product_color_type${colorStockIndex}${newColorStockIndex}" name="product_measurment_price_detail[${colorStockIndex}][color][]"
-                                                class="form-select">
-                                                <option selected> Please select option</option>
-                                                <option value="red">Red</option>
-                                                <option value="green">Green</option>
-
-                                            </select>
+                                            <input id="product_color_type${colorStockIndex}${newColorStockIndex}" name="product_measurment_price_detail[${colorStockIndex}][color][]"
+                                                class="form-control"/>
                                         </div>
 
                                         <div class="col-md-5 py-3">
@@ -1167,7 +1153,7 @@
                                         
                                         </div>`;
             $(`#newcolorstockcontainer${colorStockIndex}`).append(colorNewStockHtml);
-            $(`#product_color_type${colorStockIndex}${newColorStockIndex}`).select2();
+
 
         }
 
@@ -1184,7 +1170,7 @@
     <div class="col-md-3 py-3">
         <label for="product_measurment_quantity${productpricedetailId}" class="form-label">Product
             Measurment Quantity</label>
-        <input type="number" name="product_measurment_price_detail[${productpricedetailId}][measurment_quantity]"
+        <input type="text" name="product_measurment_price_detail[${productpricedetailId}][measurment_quantity]"
             class="form-control" id="product_measurment_quantity${productpricedetailId}" autocomplete="off">
         <span id="product_measurment_price_detail.${productpricedetailId}.measurment_quantity"
             style="color: red;"></span>
@@ -1228,13 +1214,8 @@
             <div class="col-md-5 py-3">
                 <label for="product_new_color_type${productpricedetailId}" class="form-label">Select color
                     (optional)</label>
-                <select id="product_new_color_type${productpricedetailId}"
-                    name="product_measurment_price_detail[${productpricedetailId}][color][]" class="form-select">
-                    <option selected> Please select option</option>
-                    <option value="red">Red</option>
-                    <option value="green">Green</option>
-
-                </select>
+                <input type="text" id="product_new_color_type${productpricedetailId}"
+                    name="product_measurment_price_detail[${productpricedetailId}][color][]" class="form-control" />
             </div>
 
             <div class="col-md-5 py-3">

@@ -313,8 +313,8 @@
                                         <div class="col-md-3 py-3">
                                             <label for="product_measurment_quantity_edit{{ $k }}"
                                                 class="form-label">Product
-                                                Measurment Quantity</label>
-                                            <input type="number"
+                                                Measurment Amount</label>
+                                            <input type="text"
                                                 name="product_measurment_price_detail[{{ $k }}][measurment_quantity]"
                                                 value="{{ $productpricedata->measurment_quantity }}"
                                                 class="form-control measurmentquantityindexchange"
@@ -365,7 +365,7 @@
                                             <label for="product_stock_quantity_edit{{ $k }}"
                                                 class="form-label">Product Stock
                                                 Quantity</label>
-                                            <input type="number"
+                                            <input type="text"
                                                 name="product_measurment_price_detail[{{ $k }}][stock]"
                                                 value="{{ $productpricedata->stock }}"
                                                 class="form-control measurmentstockindexchange"
@@ -377,6 +377,7 @@
                                         </div>
 
                                         @php $productColor=json_decode($productpricedata->color, true); @endphp
+                                        @php $productColorStock=json_decode($productpricedata->stock_color_wise,true); @endphp
 
                                         <div id="colorstockedit{{ $k }}" class="card mb-3">
                                             @for ($c = 0; $c < count($productColor); $c++)
@@ -385,18 +386,14 @@
                                                     <div class="col-md-5 py-3">
                                                         <label
                                                             for="product_color_type_edit{{ $k }}{{ $c }}"
-                                                            class="form-label">Select color
+                                                            class="form-label">Color
                                                             (optional)
                                                         </label>
-                                                        <select
+                                                        <input
                                                             id="product_color_type_edit{{ $k }}{{ $c }}"
+                                                            value="{{ $productColor[$c] }}"
                                                             name="product_measurment_price_detail[{{ $k }}][color][]"
-                                                            class="form-select">
-                                                            <option selected> Please select option</option>
-                                                            <option value="red">Red</option>
-                                                            <option value="green">Green</option>
-
-                                                        </select>
+                                                            class="form-control" />
                                                     </div>
 
 
@@ -409,7 +406,7 @@
                                                             Color wise (optional)</label>
                                                         <input type="number"
                                                             name="product_measurment_price_detail[{{ $k }}][stock_color_wise][]"
-                                                            class="form-control"
+                                                            class="form-control" value="{{ $productColorStock[$c] }}"
                                                             id="product_stock_quantity_color_edit{{ $k }}{{ $c }}"
                                                             autocompvare="off">
                                                     </div>
@@ -685,6 +682,9 @@
     @if (isset($productdata->product_color_banner_image))
         @php $productdatacolorbannerimage=json_decode($productdata->product_color_banner_image,true); @endphp
 
+        @php $productColor=json_decode($productdata->product_color,true); @endphp
+
+
         @php $productdatacolorbannerimagelength=count($productdatacolorbannerimage); @endphp
     @endif
 
@@ -749,14 +749,16 @@
                         <div class="row">
                             <div class="col-md-3 py-3">
                                 <label for="product_color" class="form-label">Product color</label>
-                                <input type="text" name="product_color[]" class="form-control" id="product_color"
+                                <input type="text" name="product_color[]" class="form-control product_color_edit"
+                                    id="product_color{{ $w }}" value="{{ $productColor[$w] ?? '' }}"
                                     autocompvare="off">
+                                <span id="product_color.{{ $w }}edit" style="color: red;"></span>
                             </div>
-                            <div class="col-md-3 py-3">
+                            {{-- <div class="col-md-3 py-3">
                                 <label for="product_color_stock" class="form-label">Product color Stock</label>
                                 <input type="number" name="product_color_stock[]" class="form-control"
                                     id="product_color_stock" autocompvare="off">
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
 
@@ -875,14 +877,15 @@
                 <div class="row">
                     <div class="col-md-3 py-3">
                         <label for="product_color" class="form-label">Product color</label>
-                        <input type="text" name="product_color[]" class="form-control" id="product_color"
-                            autocompvare="off">
+                        <input type="text" name="product_color[]" class="form-control product_color_edit"
+                            id="product_color" value="" autocompvare="off">
+                        <span id="product_color.0edit" style="color: red;"></span>
                     </div>
-                    <div class="col-md-3 py-3">
+                    {{-- <div class="col-md-3 py-3">
                         <label for="product_color_stock" class="form-label">Product color Stock</label>
                         <input type="number" name="product_color_stock[]" class="form-control"
                             id="product_color_stock" autocompvare="off">
-                    </div>
+                    </div> --}}
                 </div>
             </div>
 
@@ -967,16 +970,16 @@
     $('.selectspecficationindexchangeEdit').select2();
 
 
-    for (let i = 0; i < {{ $k }}; i++) {
+    // for (let i = 0; i < {{ $k }}; i++) {
 
-        for (let m = 0; m < {{ $c }}; m++) {
-            // $(`#product_currency_type_edit${i}`).select2();
-            $(`#product_color_type_edit${i}${m}`).select2();
+    //     for (let m = 0; m < {{ $c }}; m++) {
+    //         // $(`#product_currency_type_edit${i}`).select2();
+    //         $(`#product_color_type_edit${i}${m}`).select2();
 
-        }
+    //     }
 
 
-    }
+    // }
 
     var productspecificationTextareaEdit = [];
 
@@ -1500,15 +1503,12 @@
                                          <div class="row">
                                          <div class="col-md-3 py-3">
                                              <label for="product_color${addMoreImagefordiffentcolorContainerediteditId}" class="form-label">Product color</label>
-                                          <input type="text" name="product_color[]" class="form-control"
+                                          <input type="text" name="product_color[]" class="form-control product_color_edit" value=""
                                         id="product_color${addMoreImagefordiffentcolorContainerediteditId}" autocompvare="off">
+                                         <span id="product_color.${addMoreImagefordiffentcolorContainerediteditId-1}edit" style="color: red;"></span>
                                        </div>
 
-                                       <div class="col-md-3 py-3">
-                                             <label for="product_color_stock${addMoreImagefordiffentcolorContainerediteditId}" class="form-label">Product color</label>
-                                          <input type="number" name="product_color_stock[]" class="form-control"
-                                        id="product_color_stock${addMoreImagefordiffentcolorContainerediteditId}" autocompvare="off">
-                                       </div>
+                                      
                                        </div>
 
 
@@ -1743,15 +1743,10 @@
         var colorStcokHtml = `
         <div class="row " id="colorstockcontainer${domid}${colorStockContainerIndex}">
         <div class="col-md-5 py-3">
-                                        <label for="product_color_type_edit" class="form-label">Select color
+                                        <label for="product_color_type_edit" class="form-label">Color
                                             (optional)</label>
-                                        <select id="product_color_type_edit${domid}${colorStockContainerIndex}" name="product_measurment_price_detail[${domid}][color][]"
-                                            class="form-select">
-                                            <option selected> Please select option</option>
-                                            <option value="red">Red</option>
-                                            <option value="green">Green</option>
-
-                                        </select>
+                                        <input type="text" id="product_color_type_edit${domid}${colorStockContainerIndex}" name="product_measurment_price_detail[${domid}][color][]"/>
+                                                                           
                                     </div>
 
                                     <div class="col-md-5 py-3">
@@ -1770,7 +1765,7 @@
                                      
                                     </div></div>`;
         $(`#colorstockedit${domid}`).append(colorStcokHtml);
-        $(`#product_color_type_edit${domid}${colorStockContainerIndex}`).select2();
+        // $(`#product_color_type_edit${domid}${colorStockContainerIndex}`).select2();
 
 
     }
@@ -1828,7 +1823,7 @@
 <div class="col-md-3 py-3">
     <label for="product_measurment_quantity_edit${productpricedetailIdindexedit}" class="form-label">Product
         Measurment Quantity</label>
-    <input type="number" name="product_measurment_price_detail[${productpricedetailIdindexedit}][measurment_quantity]"
+    <input type="text" name="product_measurment_price_detail[${productpricedetailIdindexedit}][measurment_quantity]"
         class="form-control measurmentquantityindexchange" id="product_measurment_quantity_edit${productpricedetailIdindexedit}" autocomplete="off">
     <span  class="spanmeasurmentquantityindexchange"   id="product_measurment_price_detail.${productpricedetailIdindexedit}.measurment_quantityedit"
         style="color: red;"></span>
@@ -1870,15 +1865,11 @@
 <div id="newcolorstockcontainer${productpricedetailIdindexedit}" class="card mb-2" >
     <div class="row" id="colorstockedit${productpricedetailIdindexedit}">
         <div class="col-md-5 py-3">
-            <label for="product_new_color_type${productpricedetailIdindexedit}" class="form-label">Select color
+            <label for="product_new_color_type${productpricedetailIdindexedit}" class="form-label">Color
                 (optional)</label>
-            <select id="product_new_color_type${productpricedetailIdindexedit}"
-                name="product_measurment_price_detail[${productpricedetailIdindexedit}][color][]" class="form-select">
-                <option selected> Please select option</option>
-                <option value="red">Red</option>
-                <option value="green">Green</option>
-
-            </select>
+            <input id="product_new_color_type${productpricedetailIdindexedit}"
+                name="product_measurment_price_detail[${productpricedetailIdindexedit}][color][]" class="form-control"/>
+            
         </div>
 
         <div class="col-md-5 py-3">
@@ -1921,8 +1912,8 @@
         // $(`#product_currency_type_edit${productpricedetailIdindexedit}`).select2();
 
         $('.measurmentcurrencyindexchange').select2();
+        //   $(`#product_new_color_type${productpricedetailIdindexedit}`).select2();
 
-        $(`#product_new_color_type${productpricedetailIdindexedit}`).select2();
 
     }
 
@@ -2248,6 +2239,10 @@
 
 
 
+        $('.product_color_edit').each(function(index, element) {
+            console.log('Element ' + index + ':', element);
+            formData.append('product_color[]', $(this).val());
+        });
 
 
 

@@ -56,11 +56,12 @@ class VendorOrderManagmentController extends Controller
                 );
 
 
-            if (isset($request->order_status) && $request->order_status == "3") {
+            if (isset($request->order_status) && $request->order_status == "1") {
 
                 $orderItemDetails->where('orders.status', $request->order_status)->orderBy('orders.created_at', 'desc');
 
-            } elseif (isset($request->order_status) && $request->order_status == "1") {
+            } elseif (isset($request->order_status) && $request->order_status == "3") {
+
                 $orderItemDetails->where('orders.status', $request->order_status)->orderBy('orders.created_at', 'desc');
 
             } else {

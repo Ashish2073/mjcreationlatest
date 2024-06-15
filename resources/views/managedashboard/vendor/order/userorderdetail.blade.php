@@ -242,7 +242,11 @@
                                             {{ $discoun_data->amount ?? 'N/A' }}
                                         </td>
                                         <td>
-                                            {{ $discoun_data->amount_type == '1' ? 'Percentage' : 'Flat' }}
+                                            @if (isset($discoun_data->amount_type))
+                                                {{ $discoun_data->amount_type == '1' ? 'Percentage' : 'Flat' }}
+                                            @else
+                                                {{ 'N/A' }}
+                                            @endif
                                         </td>
                                         <td>{{ $discount['discount_start_date'] ?? 'N/A' }}</td>
                                         <td>{{ $discount['discount_start_date'] ?? 'N/A' }}</td>
