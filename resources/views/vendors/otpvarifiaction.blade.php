@@ -460,8 +460,10 @@
 
             function otpResend() {
 
+
                 let user_id = $("#user_id").val();
                 let user_contact = $("#user_contact").val();
+
                 $.ajax({
                     url: "{{ route('user-otpresend') }}",
                     type: "POST",

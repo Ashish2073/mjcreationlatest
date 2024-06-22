@@ -25,8 +25,12 @@
 @section('page-script')
     <script>
         $(document).ready(function() {
+
             vendorDetailsDataTable();
         });
+
+
+
 
         function vendorDetailsDataTable() {
             if ($.fn.DataTable.isDataTable('.vendors-data-table')) {

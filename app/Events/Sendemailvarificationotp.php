@@ -22,10 +22,12 @@ class Sendemailvarificationotp
     public $userdata;
     public $userotp;
 
-     public function __construct($otp,$data)
+    public function __construct($otp, $data)
     {
-        $this->userdata=$data;
-        $this->userotp=$otp;
+        $this->userdata = $data;
+        $this->userotp = $otp;
+
+
 
         Mail::to($this->userdata->email)->send(new Otpsendformetmail($this->userotp));
     }
